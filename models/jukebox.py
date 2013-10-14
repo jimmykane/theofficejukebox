@@ -81,6 +81,7 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 		return jukebox_dict
 
 
+	# this method will be depricated
 	@classmethod
 	def jukeboxes_and_queued_tracks_to_dict(cls, jukeboxes):
 		for i, jukebox in enumerate(jukeboxes):
