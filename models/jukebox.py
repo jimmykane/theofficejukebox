@@ -81,32 +81,6 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 		return jukebox_dict
 
 
-	# this method will be depricated
-	@classmethod
-	def jukeboxes_and_queued_tracks_to_dict(cls, jukeboxes):
-		for i, jukebox in enumerate(jukeboxes):
-			player = False
-			jukebox_queued_tracks = []
-			for queued_track in jukebox.queued_tracks:
-				queued_track_dict = QueuedTrack._to_dict(queued_track)
-				#logging.info(queued_track)
-				jukebox_queued_tracks.append(queued_track_dict)
-
-			#stub for now to return the player status
-			player = jukebox.player
-			# Quick convert to dict
-			player = {
-				"duration_on": player.duration_on,
-				"on": player.on
-			}
-
-			jukebox_dict = Jukebox._to_dict(jukebox)
-			jukebox_dict.update({'player': player})
-			#jukebox_dict.update({'queued_tracks': jukebox_queued_tracks})
-			jukeboxes[i] = jukebox_dict
-		return jukeboxes
-
-
 class JukeboxPlayer(ndb.Expando, DictModel, NDBCommonModel):
 
 	creation_date = ndb.DateTimeProperty(auto_now_add=True)

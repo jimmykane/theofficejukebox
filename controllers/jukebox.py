@@ -46,8 +46,17 @@ class GetJukeBoxesHandler(webapp2.RequestHandler, JSONHandler):
 			return
 
 		jukeboxes_dict_list = []
-		jukeboxes = Jukebox.jukeboxes_and_queued_tracks_to_dict(jukeboxes)
-		response = {'data': jukeboxes}
+		for jukebox in jukeboxes:
+			player = jukebox.player
+			# Quick convert to dict for now
+			player = {
+				"duration_on": player.duration_on,
+				"on": player.on
+			}
+			jukebox_dict = Jukebox._to_dict(jukebox)
+			jukebox_dict.update({'player': player})
+			jukeboxes_dict_list.append(jukebox_dict)
+		response = {'data': jukeboxes_dict_list}
 		response.update({'status': self.get_status()})
 		logging.info(response)
 		self.response.out.write(json.dumps(response))
@@ -310,43 +319,25 @@ class SaveJukeBoxeHandler(webapp2.RequestHandler, JSONHandler):
 			response = {'status': self.get_status(status_code=400, msg=repr(e))}
 			self.response.out.write(json.dumps(response))
 			return
-		#logging.info(jukebox_to_save)
-		jukebox = Jukebox.entity_from_dict(None, jukebox_to_save)
-		#logging.info(jukebox_to_save.title)
-		#logging.info(jukebox)
-		#this before put
-		# should also get before to be sure it exists and not
-		# sure.
 
+		jukebox = Jukebox.entity_from_dict(None, jukebox_to_save)
 		jukebox.put()
+
 		if not jukebox:
 			response = {'status': self.get_status(status_code=404)}
 			self.response.out.write(json.dumps(response))
 			return
-		jukeboxes = Jukebox.jukeboxes_and_queued_tracks_to_dict([jukebox])
-		response = {'data': jukeboxes[0]}
+
+		player = jukebox.player
+		# Quick convert to dict for now
+		player = {
+			"duration_on": player.duration_on,
+			"on": player.on
+		}
+		jukebox_dict = Jukebox._to_dict(jukebox)
+		jukebox_dict.update({'player': player})
+		response = {'data': jukeboxes_dict_list}
 		response.update({'status': self.get_status()})
 		#logging.info(response)
 		self.response.out.write(json.dumps(response))
 		return
-
-
-	#@ndb.transactional(retries=6)
-	#def _save_slides_transactional(self, slides_to_save):
-		#person = Person.get_current()
-		#if not person:
-			#return False
-		#slides = []
-		#for slide_to_save in slides_to_save:
-			#slide = Slide.entity_from_dict(person.key, slide_to_save)
-			#if not slide: # if cannot construct the slide something is wrong
-				#return False
-			#slide.put()
-			#slides.append(slide)
-			#for box_to_save in slide_to_save['boxes']:
-				#box = Box.entity_from_dict(slide.key, box_to_save)
-				#if not box:
-					#return False
-				#box.put()
-				## There is no need to get it again because the convert gets them
-		#return slides
