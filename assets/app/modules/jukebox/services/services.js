@@ -254,7 +254,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 	};
 
 	jukebox_service.check_if_jukebox_id_exists = function(jukebox_id) {
-		var jukebox_id = parseInt(jukebox_id); // always check int if int? not sure now
+		var jukebox_id = parseInt(jukebox_id); // always check int if int. due to id that is primary entity
 		var found_position = false;
 		for (var i = 0; i < jukeboxes.length; i++) {
 			if (jukeboxes[i].id === jukebox_id)
@@ -283,6 +283,8 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return true;
 	};
 	jukebox_service.update_or_insert_queued_track = function(jukebox, new_queued_track) {
+		// First check if it exists as an array and if not create it.
+		jukebox.queued_tracks = jukebox.queued_tracks || [];
 		var found_position = jukebox_service.check_if_queued_track_id_exists(jukebox, new_queued_track.id);
 		if (found_position === false){
 			jukebox_service.add_queued_track(jukebox, new_queued_track);
@@ -294,7 +296,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 
 	jukebox_service.check_if_queued_track_id_exists = function(jukebox, queued_track_id) {
 		console.log( queued_track_id)
-		var queued_track_id = queued_track_id; // always check int
+		var queued_track_id = queued_track_id;
 		var found_position = false;
 		for (var i = 0; i < jukebox.queued_tracks.length; i++) {
 			if (jukebox.queued_tracks[i].id === queued_track_id)

@@ -132,6 +132,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 				if (status.code === 200) {
 					//stub
 					$scope.get_playing_track($scope.jukeboxes[0]);
+					$scope.get_queued_tracks($scope.jukeboxes[0], {'archived': false});
 					$scope.get_queued_tracks($scope.jukeboxes[0], {'archived': true});
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
@@ -201,8 +202,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 				if (status.code === 200) {
 					ui.show_notification_info('Track added to queue... Enjoy');
 					$scope.new_queued_track.video_url = '';
-					//stub
-					//$scope.get_playing_track($scope.jukeboxes[0]);
 				}else if (status.code === 400) {
 					ui.show_notification_error('Bad request. Parameters are invailid... ? Are we serious here ?');
 				}else if (status.code === 401) {
