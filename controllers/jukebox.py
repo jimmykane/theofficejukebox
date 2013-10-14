@@ -81,7 +81,7 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 		archived = False
 		if filters:
 			if 'archived' in filters:
-				archived = True
+				archived = filters['archived']
 
 		if not jukebox_id:
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
@@ -93,13 +93,11 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 		queued_tracks = QueuedTrack.query(ancestor=jukebox_key).filter(QueuedTrack.archived==archived).order(-QueuedTrack.edit_date).fetch(1000)
 		queued_tracks_list = []
 		for queued_track in queued_tracks:
-			queued_track_id = queued_track.key.id()
-			queued_track = queued_track.to_dict(exclude=['queued_by_person_key','creation_date', 'edit_date'])
-			queued_track.update({'id': queued_track_id})
-			queued_tracks_list.append(queued_track)
-
+			queued_track_dict = QueuedTrack._to_dict(queued_track)
+			queued_tracks_list.append(queued_track_dict)
 
 		response = {'data': queued_tracks_list}
+		logging.info(response)
 		response.update({'status': self.get_status()})
 		self.response.out.write(json.dumps(response))
 		return

@@ -37,9 +37,9 @@
 				</div>
 				<form ng-submit="add_new_queued_track(jukebox)">
 					<input type="text" data-ng-model="new_queued_track.video_url" placeholder=" YouTube URL..."/>
-					<button>Queue Song</button>
-					<button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
-				</form>
+					<button type="submit">Queue Song</button>
+				</form><button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
+
 			</div>
 		</div>
 		<div style="height:50%;">
