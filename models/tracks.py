@@ -86,6 +86,20 @@ class QueuedTrack(ndb.Expando, DictModel, NDBCommonModel):
 		track = ndb.Key(Track, self.key.id()).get()
 		return track;
 
+	@classmethod
+	def _to_dict(cls, queued_track):
+		queued_track_id = queued_track.key.id()
+		person = queued_track.queued_by_person_key.get()
+		queued_track_dict = queued_track.to_dict(
+			exclude=['queued_by_person_key',
+			'creation_date', 'edit_date']
+		)
+		queued_track_dict.update({
+			'id': queued_track_id,
+			'queuedby_nick_name': person.info.nick_name
+		})
+		return queued_track_dict
+
 
 	'''
 	Hooks go here

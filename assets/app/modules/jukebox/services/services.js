@@ -190,11 +190,9 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 				deffered.resolve(response.status);
 				return;
 			}
-			// Should do check eg first one is consumed
-			var queued_tracks = response.data;
-			logging.ok("Got new queued tracks", queued_tracks);
-			for (var i = 0; i < queued_tracks.length; i++)
-				jukebox_service.update_or_insert_queued_track(jukebox, queued_tracks[i]);
+			var queued_track = response.data;
+			logging.ok("Track queued...", queued_track);
+			jukebox_service.update_or_insert_queued_track(jukebox, queued_track);
 			deffered.resolve(response.status);
 		})
 		.error(function(response, status, headers, config) {

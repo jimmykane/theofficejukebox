@@ -64,17 +64,10 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 		for i, jukebox in enumerate(jukeboxes):
 			jukebox_queued_tracks = []
 			for queued_track in jukebox.queued_tracks:
-				person = None
-				queued_track_id = queued_track.key.id()
-				#logging.info(track)
-				person = queued_track.queued_by_person_key.get()
-				#logging.info(person.info.nick_name)
-				queued_track = queued_track.to_dict(exclude=['queued_by_person_key','creation_date', 'edit_date'])
-				queued_track.update({'id': queued_track_id})
-				#should also move the person to hardcoded
-				queued_track.update({'person_nick_name': person.info.nick_name})
+				queued_track_dict = QueuedTrack._to_dict(queued_track)
 				#logging.info(queued_track)
-				jukebox_queued_tracks.append(queued_track)
+				jukebox_queued_tracks.append(queued_track_dict)
+
 			jukebox_id = jukebox.key.id()
 
 			#stub for now to return the player status

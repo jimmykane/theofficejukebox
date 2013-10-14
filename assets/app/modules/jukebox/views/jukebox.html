@@ -48,7 +48,7 @@
 				<br/>
 				<div data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:false}" >
 					<p><span class="med_font">{[{ $index + 1 }]}. {[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})</span>
-					<span class="small_font"> - by {[{ queued_track.person_nick_name }]}</span>
+					<span class="small_font"> - by {[{ queued_track.queuedby_nick_name }]}</span>
 					<div data-ng-if="user.email">
 						<button data-ng-if="is_owner(user, jukebox)" ng-click="start_playing_queued_track(jukebox, queued_track, 0)">Play Now!!!</button>
 						<button ng-click="remove_queued_track(jukebox, queued_track, true)">Archive</button>

@@ -124,6 +124,7 @@ class AddSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
 
 		# I think this should be above the track.
 		queued_track = ndb.Key(Jukebox, jukebox.key.id(), QueuedTrack, track.key.id()).get()
+
 		if queued_track:
 			logging.info('Track found unarchiving')
 			queued_track.archived = False
@@ -137,11 +138,10 @@ class AddSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
 				video_id=video_id,
 				queued_by_person_key=person.key
 			)
+
 		queued_track.put()
-		# Maybe also favourites
-		jukeboxes = [jukebox]
-		jukeboxes = Jukebox.jukeboxes_and_queued_tracks_to_dict(jukeboxes)
-		response = {'data': jukeboxes[0]['queued_tracks']}
+		queued_track_dict = QueuedTrack._to_dict(queued_track)
+		response = {'data': queued_track_dict}
 		response.update({'status': self.get_status()})
 		#logging.info(response)
 		self.response.out.write(json.dumps(response))

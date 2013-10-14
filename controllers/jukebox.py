@@ -48,6 +48,7 @@ class GetJukeBoxesHandler(webapp2.RequestHandler, JSONHandler):
 		jukeboxes = Jukebox.jukeboxes_and_queued_tracks_to_dict(jukeboxes)
 		response = {'data': jukeboxes}
 		response.update({'status': self.get_status()})
+		logging.info(response)
 		self.response.out.write(json.dumps(response))
 		return
 
