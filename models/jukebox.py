@@ -9,6 +9,7 @@ from google.appengine.api import users
 from models.tracks import *
 from models.ndb_models import *
 
+
 class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 
 	title = ndb.StringProperty(required=True)
@@ -16,10 +17,12 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 	edit_date = ndb.DateTimeProperty(auto_now=True)
 	owner_key = ndb.KeyProperty()
 
+
 	@property
 	def owner(self):
 		owner = owner_key.get()
 		return queued_tracks
+
 
 	@property
 	def archived_queued_tracks(self):
@@ -31,6 +34,7 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 	def queued_tracks(self):
 		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==False).order(QueuedTrack.edit_date).fetch(1000)
 		return queued_tracks
+
 
 	@property
 	def track_playing(self):
@@ -60,6 +64,24 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 
 
 	@classmethod
+	def _to_dict(cls, jukebox):
+		jukebox_id = jukebox.key.id()
+		jukebox_dict = jukebox.to_dict(
+			exclude=[
+				'creation_date',
+				'edit_date',
+				'on_datetime',
+				'owner_key'
+			]
+		)
+		jukebox_dict.update({
+			'id': jukebox_id,
+			'owner_key_id': jukebox.owner_key.id()
+		})
+		return jukebox_dict
+
+
+	@classmethod
 	def jukeboxes_and_queued_tracks_to_dict(cls, jukeboxes):
 		for i, jukebox in enumerate(jukeboxes):
 			jukebox_queued_tracks = []
@@ -68,21 +90,17 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 				#logging.info(queued_track)
 				jukebox_queued_tracks.append(queued_track_dict)
 
-			jukebox_id = jukebox.key.id()
-
 			#stub for now to return the player status
 			player = {
 				"duration_on": jukebox.player.duration_on,
 				"on": jukebox.player.on
 			}
-			owner_key_id = jukebox.owner_key.id()
-			jukebox = jukebox.to_dict(exclude=['creation_date', 'edit_date', 'on_datetime', 'owner_key'])
-			jukebox.update({'id': jukebox_id})
-			jukebox.update({'player': player})
-			jukebox.update({'owner_key_id': owner_key_id})
-			jukebox.update({'queued_tracks': jukebox_queued_tracks})
-			jukeboxes[i] = jukebox
-		#logging.info(jukeboxes[0])
+
+			jukebox_dict = Jukebox._to_dict(jukebox)
+
+			jukebox_dict.update({'player': player})
+			jukebox_dict.update({'queued_tracks': jukebox_queued_tracks})
+			jukeboxes[i] = jukebox_dict
 		return jukeboxes
 
 

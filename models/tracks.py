@@ -91,8 +91,10 @@ class QueuedTrack(ndb.Expando, DictModel, NDBCommonModel):
 		queued_track_id = queued_track.key.id()
 		person = queued_track.queued_by_person_key.get()
 		queued_track_dict = queued_track.to_dict(
-			exclude=['queued_by_person_key',
-			'creation_date', 'edit_date']
+			exclude=[
+				'queued_by_person_key',
+				'creation_date', 'edit_date'
+			]
 		)
 		queued_track_dict.update({
 			'id': queued_track_id,
