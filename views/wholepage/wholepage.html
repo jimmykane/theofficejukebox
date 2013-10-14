@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html data-ng-app="mainApp">
+	<head>
+
+		<!-- Define the base of the application -->
+		<base href="/">
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="description" content="{{ meta.description }}">
+		<meta name="keywords" content="{{ meta.keywords }}">
+		<meta property="og:url" content="{{ meta.url }}" />
+		<meta property="og:title" content="{{ meta.title }}" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="{{ meta.image }}" />
+		<meta property="og:description" content="{{ meta.description }}"/>
+		<meta property="og:site_name" content="{{ meta.title }}" />
+
+		<title>{{ meta.title }}</title>
+
+		<link rel="stylesheet" type="text/css" href="/assets/css/styles.css" />
+		<link rel="stylesheet" type="text/css" href="/assets/css/fonts.css" />
+
+		<!-- Fonts from google -->
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Tinos' rel='stylesheet' type='text/css'>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-route.js"></script>
+
+
+		<!-- Lets get rid of old explorers. I don't want to spend any more nimute coding for them -->
+		<!--[if lte IE 9]>
+			<meta http-equiv="refresh" content="0;http://www.ie6countdown.com/">
+		<![endif]-->
+		<!--[if IE]><script src="/assets/js/excanvas.min.js"></script><![endif]-->
+
+	</head>
+	<body>
+
+		<div class="max_width_height">
+			{{ app_content }}
+		</div>
+
+		<!-- Scripts -->
+		<script src="/assets/app/app.js"></script>
+		<script src="/assets/app/services.js"></script>
+		<script src="/assets/app/controllers.js"></script>
+
+		<script src="/assets/app/modules/jukebox/module.js"></script>
+		<script src="/assets/app/modules/jukebox/services/services.js"></script>
+		<script src="/assets/app/modules/jukebox/controllers/controllers.js"></script>
+		<script src="/assets/app/modules/jukebox/directives/youtube/youtube.js"></script>
+		<!--
+		<script type="text/javascript" src="/assets/app/directives/ckeditor/libs/ckeditor.js"></script>
+		<script type="text/javascript" src="/assets/app/directives/ckeditor/ckeditor.js"></script>
+		<script type="text/javascript" src="/assets/app/directives/jscolor/jscolor.js"></script>
+		-->
+
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-44464387-1']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+
+	</body>
+</html>

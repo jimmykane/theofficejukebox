@@ -1,0 +1,277 @@
+/*===============================
+* The  notifications:
+* All from [http://tympanus.net/codrops/2012/06/25/timed-notifications-with-css-animations/]
+* with some extra styles mods etc...
+================================*/
+
+.notifications_bar{
+	position: absolute;
+	top: 70%;
+	right:0px;
+	z-index: 999;
+	max-height: 80%;
+	overflow-y: hidden;
+}
+
+.tn-box {
+	width: 360px;
+	position: relative;
+	margin: 0 auto 20px auto;
+	padding: 25px 15px;
+	text-align: left;
+	opacity: 0;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	cursor: default;
+	display: none;
+}
+
+.tn-box p {
+	margin: 0;
+	padding: 0 10px 0 60px;
+	text-shadow: 0 1px 1px rgba(0,0,0,1);
+
+}
+
+.tn-box-color-1 p:before{
+	text-align: center;
+	border: 2px solid rgba(255, 255, 255, 1);
+	margin-top: -17px;
+	top: 50%;
+	left: 20px;
+	width: 30px;
+	content: 'V';
+	font-size: 30px;
+	color: rgba(255, 255, 255, 1);
+	position: absolute;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 10%;
+}
+
+.tn-box-color-2 p:before{
+	text-align: center;
+	border: 2px solid rgba(255, 255, 255, 1);
+	margin-top: -17px;
+	top: 50%;
+	left: 20px;
+	width: 30px;
+	content: 'I';
+	font-size: 30px;
+	color: rgba(255, 255, 255, 1);
+	position: absolute;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 10%;
+}
+
+.tn-box-color-3 p:before{
+	text-align: center;
+	border: 2px solid rgba(255, 255, 255, 1);
+	margin-top: -17px;
+	top: 50%;
+	left: 20px;
+	width: 30px;
+	content: 'X';
+	font-size: 30px;
+	color: rgba(255, 255, 255, 1);
+	position: absolute;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 10%;
+
+}
+
+.tn-progress {
+	width: 0;
+	height: 2px;
+	background: rgba(255,255,255,0.9);
+	position: absolute;
+	bottom: 5px;
+	left: 2%;
+	border-radius: 1px;
+	box-shadow:
+		inset 0 1px 1px rgba(0,0,0,0.05),
+		0 -1px 0 rgba(255,255,255,0.6);
+}
+
+/* Colors */
+
+.tn-box-color-1{
+	background: rgba(128, 119, 127, 1);
+}
+.tn-box-color-1 p {
+	color: #FFFFFF;
+}
+
+.tn-box-color-2{
+	background: rgba(128, 119, 127, 1);
+}
+.tn-box-color-2 p {
+
+}
+
+.tn-box-color-3{
+	background: rgba(128, 119, 127, 1);
+}
+.tn-box-color-3 p {
+
+}
+
+/* If you use JavaScript you could add a class instead: */
+
+.tn-box.info, .tn-box.warning, .tn-box.error {
+	display: block;
+	background: transparent;
+	-webkit-animation: fadeOut 5s linear forwards;
+	-moz-animation: fadeOut 5s linear forwards;
+	-o-animation: fadeOut 5s linear forwards;
+	-ms-animation: fadeOut 5s linear forwards;
+	animation: fadeOut 5s linear forwards;
+}
+
+.tn-box .tn-progress {
+	-webkit-animation: runProgress 4s linear forwards 0.5s;
+	-moz-animation: runProgress 4s linear forwards 0.5s;
+	-o-animation: runProgress 4s linear forwards 0.5s;
+	-ms-animation: runProgress 4s linear forwards 0.5s;
+	animation: runProgress 4s linear forwards 0.5s;
+}
+
+
+@-webkit-keyframes fadeOut {
+	0% { opacity: 0; }
+	10% { opacity: 0.8; }
+	90% { opacity: 0.8; -webkit-transform: translateY(0px);}
+	99% { opacity: 0; -webkit-transform: translateY(-30px);}
+	100% { opacity: 0; }
+}
+
+@-moz-keyframes fadeOut {
+	0% { opacity: 0; }
+	10% { opacity: 0.8; }
+	90% { opacity: 0.8; -moz-transform: translateY(0px);}
+	99% { opacity: 0; -moz-transform: translateY(-30px);}
+	100% { opacity: 0; }
+}
+
+@-o-keyframes fadeOut {
+	0% { opacity: 0; }
+	10% { opacity: 0.8; }
+	90% { opacity: 0.8; -o-transform: translateY(0px);}
+	99% { opacity: 0; -o-transform: translateY(-30px);}
+	100% { opacity: 0; }
+}
+
+@-ms-keyframes fadeOut {
+	0% { opacity: 0; }
+	10% { opacity: 0.8; }
+	90% { opacity: 0.8; -ms-transform: translateY(0px);}
+	99% { opacity: 0; -ms-transform: translateY(-30px);}
+	100% { opacity: 0; }
+}
+
+@keyframes fadeOut {
+	0% { opacity: 0; }
+	10% { opacity: 0.8; }
+	90% { opacity: 0.8; transform: translateY(0px);}
+	99% { opacity: 0; transform: translateY(-30px);}
+	100% { opacity: 0; }
+}
+
+@-webkit-keyframes runProgress {
+	0%{ width: 0%; background: rgba(255,255,255,0.3); }
+	100%{ width: 96%; background: rgba(255,255,255,1); }
+}
+
+@-moz-keyframes runProgress {
+	0%{ width: 0%; background: rgba(255,255,255,0.3); }
+	100%{ width: 96%; background: rgba(255,255,255,1); }
+}
+
+@-o-keyframes runProgress {
+	0%{ width: 0%; background: rgba(255,255,255,0.3); }
+	100%{ width: 96%; background: rgba(255,255,255,1); }
+}
+
+@-ms-keyframes runProgress {
+	0%{ width: 0%; background: rgba(255,255,255,0.3); }
+	100%{ width: 96%; background: rgba(255,255,255,1); }
+}
+
+@keyframes runProgress {
+	0%{ width: 0%; background: rgba(255,255,255,0.3); }
+	100%{ width: 96%; background: rgba(255,255,255,1); }
+}
+
+
+/* Let's add some different durations for the demo */
+
+.tn-box.warning {
+	background: url('/assets/app/modules/jukebox/css/img/bg.png');
+	-webkit-animation-duration: 6s;
+	-moz-animation-duration: 6s;
+	-o-animation-duration: 6s;
+	-ms-animation-duration: 6s;
+	animation-duration: 6s;
+
+	-webkit-animation-delay: 0.2s;
+	-moz-animation-delay: 0.2s;
+	-o-animation-delay: 0.2s;
+	-ms-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+.tn-box.warning .tn-progress {
+	-webkit-animation-duration: 5s;
+	-moz-animation-duration: 5s;
+	-o-animation-duration: 5s;
+	-ms-animation-duration: 5s;
+	animation-duration: 5s;
+
+	-webkit-animation-delay: 0.7s;
+	-moz-animation-delay: 0.7s;
+	-o-animation-delay: 0.7s;
+	-ms-animation-delay: 0.7s;
+	animation-delay: 0.7s;
+}
+
+.tn-box.error {
+	background: url('/assets/app/modules/jukebox/css/img/bg.png');
+	-webkit-animation-duration: 9s;
+	-moz-animation-duration: 9s;
+	-o-animation-duration: 9s;
+	-ms-animation-duration: 9s;
+	animation-duration: 9s;
+
+	-webkit-animation-delay: 0.4s;
+	-moz-animation-delay: 0.4s;
+	-o-animation-delay: 0.4s;
+	-ms-animation-delay: 0.4s;
+	animation-delay: 0.4s;
+}
+
+.tn-box.error .tn-progress {
+	-webkit-animation-duration: 7.5s;
+	-moz-animation-duration: 7.5s;
+	-o-animation-duration: 7.5s;
+	-ms-animation-duration: 7.5s;
+	animation-duration: 7.5s;
+
+	-webkit-animation-delay: 0.9s;
+	-moz-animation-delay: 0.9s;
+	-o-animation-delay: 0.9s;
+	-ms-animation-delay: 0.9s;
+	animation-delay: 0.9s;
+}
+
+/* Last example pauses on hover (causes problems in WebKit browsers) */
+
+.tn-box.tn-box-hoverpause:hover,
+.tn-box.tn-box-hoverpause:hover .tn-progress{
+	-webkit-animation-play-state: paused;
+	-moz-animation-play-state: paused;
+	-o-animation-play-state: paused;
+	-ms-animation-play-state: paused;
+	animation-play-state: paused;
+}

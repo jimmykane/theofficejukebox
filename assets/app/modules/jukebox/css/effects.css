@@ -1,0 +1,78 @@
+.hidden {
+	-ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+	-moz-animation-duration: 0.5s;
+	-webkit-animation-duration: 0.5s;
+	-moz-animation-name: fadeOut;
+	-webkit-animation-name: fadeOut;
+	-moz-animation-timing-function: ease-in-out;
+	-webkit-animation-timing-function: ease-in-out;
+	display: none;
+}
+
+.unhidden {
+	-ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=1)";
+	filter: alpha(opacity=1);
+	opacity: 1;
+	-moz-animation-duration: 0.5s;
+	-webkit-animation-duration: 0.5s;
+	-moz-animation-name: fadeIn;
+	-webkit-animation-name: fadeIn;
+	-moz-animation-timing-function: ease-in-out;
+	-webkit-animation-timing-function: ease-in-out;
+}
+
+.effect_color_change{
+	-moz-transition: background-color 1.0s ease-in-out;
+	-webkit-transition: background-color 1.0s ease-in-out;
+	-o-transition: background-color 1.0s ease-in-out;
+	transition: background-color 1.0s ease-in-out;
+}
+
+.effect_doaroll{
+
+	-webkit-transition-duration: 0.8s;
+	-moz-transition-duration: 0.8s;
+	-o-transition-duration: 0.8s;
+	transition-duration: 0.8s;
+	-webkit-transition-property: -webkit-transform;
+	-moz-transition-property: -moz-transform;
+	-o-transition-property: -o-transform;
+	transition-property: transform;
+	overflow:hidden;
+}
+
+.effect_doaroll:hover{
+	-webkit-transform:rotate(360deg);
+	-moz-transform:rotate(360deg);
+	-o-transform:rotate(360deg);
+}
+
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 0.5;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@-webkit-keyframes fadeOut{
+	0% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0.5;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}

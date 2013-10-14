@@ -1,0 +1,44 @@
+application: devenviromentapp
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+default_expiration: "1d 0h"
+
+builtins:
+- appstats: on
+- remote_api: on
+
+libraries:
+- name: jinja2
+  version: latest
+
+- name: webapp2
+  version: latest
+
+- name: PIL
+  version: latest
+
+handlers:
+
+- url: /_ah/login_required
+  script: login_required.app
+
+- url: /playercommands/.*
+  script: controllers.commandplayer.app
+  login: admin
+
+- url: /assets
+  static_dir: assets
+
+- url: /favicon.ico
+  static_files: assets/img/favicon.png
+  upload: assets/img/favicon.png
+
+- url: /admin/.*
+  script: google.appengine.ext.admin.application
+  login: admin
+
+- url: .*
+  script: main.app
