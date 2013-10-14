@@ -24,9 +24,9 @@ class SetupHandler(webapp2.RequestHandler):
 			self.response.out.write('Nope you won\'t')
 			return
 
-		jukebox = Jukebox(title='Movenext', owner_key=person.key).get()
-		if jukebox:
-			return
+		jukebox = Jukebox(title='Movenext', owner_key=person.key)
+		#if jukebox:
+			#return
 		jukebox_key = jukebox.put()
 		player_key = JukeboxPlayer(
 				parent=jukebox_key,
