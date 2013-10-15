@@ -13,6 +13,7 @@
 .queued_track_list{
 
 	background: url('/assets/app/modules/jukebox/css/img/bg.png');
+	opacity: 0.93;
 	overflow-y: auto;
 	display: inline-block;
 	width: 100%;

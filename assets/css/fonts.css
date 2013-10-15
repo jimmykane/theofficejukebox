@@ -22,23 +22,3 @@ Fonts first ladies
 	font-weight: normal;
 	font-style: normal;
 }
-
-@font-face{
-	font-family: 'LeagueJunction';
-	src: url('/assets/webfonts/Junction-webfont.eot');
-	src: url('/assets/webfonts/Junction-webfont.eot?#iefix') format('embedded-opentype'),
-	url('/assets/webfonts/Junction-webfont.woff') format('woff'),
-	url('/assets/webfonts/Junction-webfont.ttf') format('truetype'),
-	url('/assets/webfonts/Junction-webfont.svg#LeagueJunction') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face{
-	font-family: 'LeagueChunkfive';
-	src: url('/assets/webfonts/Chunkfive-webfont.eot');
-	src: url('/assets/webfonts/Chunkfive-webfont.eot?#iefix') format('embedded-opentype'),
-	url('/assets/webfonts/Chunkfive-webfont.woff') format('woff'),
-	url('/assets/webfonts/Chunkfive-webfont.ttf') format('truetype'),
-	url('/assets/webfonts/Chunkfive-webfont.svg#LeagueChunkfive') format('svg');
-}
