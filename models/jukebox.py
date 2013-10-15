@@ -12,7 +12,7 @@ from models.ndb_models import *
 
 class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 
-	title = ndb.StringProperty(required=True)
+	title = ndb.StringProperty()
 	creation_date = ndb.DateTimeProperty(auto_now_add=True)
 	edit_date = ndb.DateTimeProperty(auto_now=True)
 	owner_key = ndb.KeyProperty()
