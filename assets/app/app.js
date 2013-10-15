@@ -10,6 +10,7 @@
 
 var mainApp = angular.module('mainApp', [
 		'ngRoute',
+		'ngAnimate',
 		'mainApp.jukebox'
 	],
 	function($interpolateProvider) {
