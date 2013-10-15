@@ -110,8 +110,7 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 		# First lets try to get the data and then logic
 		try:
 			data = json.loads(self.request.body)
-			#logging.info(self.request.body)
-			jukebox_id = data
+			jukebox_id = data['jukebox_id']
 			# inside the try due to wrong posts etc of id
 			jukebox = ndb.Key(Jukebox, jukebox_id).get()
 		except Exception as e:

@@ -130,7 +130,9 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 	jukebox_service.get_playing_track_async = function(jukebox_id) {
 		var deffered = $q.defer();
 		$http.post('/AJAX/jukebox/get/playing_track',
-			 jukebox_id
+			{
+				'jukebox_id': jukebox_id,
+			}
 		)
 		.success(function(response, status, headers, config) {
 			if (response.status.code !== 200){
@@ -254,7 +256,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 	};
 
 	jukebox_service.check_if_jukebox_id_exists = function(jukebox_id) {
-		var jukebox_id = parseInt(jukebox_id); // always check int if int. due to id that is primary entity
+		var jukebox_id = jukebox_id
 		var found_position = false;
 		for (var i = 0; i < jukeboxes.length; i++) {
 			if (jukeboxes[i].id === jukebox_id)
@@ -295,7 +297,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 	};
 
 	jukebox_service.check_if_queued_track_id_exists = function(jukebox, queued_track_id) {
-		console.log( queued_track_id)
+		console.log(queued_track_id)
 		var queued_track_id = queued_track_id;
 		var found_position = false;
 		for (var i = 0; i < jukebox.queued_tracks.length; i++) {

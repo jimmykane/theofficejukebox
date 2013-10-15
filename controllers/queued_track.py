@@ -135,7 +135,6 @@ class AddSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
 				id=track.key.id(),
 				duration=track.duration,
 				title=track.title,
-				video_id=video_id,
 				queued_by_person_key=person.key
 			)
 

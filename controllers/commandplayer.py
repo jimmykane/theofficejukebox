@@ -23,7 +23,7 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 		logging.info('Jukebox Player Going to next track')
 		# First lets try to get the data and then logic
 		try:
-			jukebox_id = int(self.request.get('jukebox_id'))
+			jukebox_id = self.request.get('jukebox_id')
 			track_key_id = self.request.get('track_key_id')
 			track_queued_on = self.request.get('track_queued_on')
 			#Watch out track_queued_on is in iso format.
