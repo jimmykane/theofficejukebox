@@ -285,11 +285,15 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		if ($scope.player_status.state == 0){//ended and now?
 			console.log('Going to next')
 			// Stub again 2 secs
-			$timeout(function(){
-				$scope.start_playing($scope.jukeboxes[0]);
+			$timeout(
+				function(){
+					$scope.get_playing_track($scope.jukeboxes[0]);
+					$scope.get_queued_tracks($scope.jukeboxes[0], {'archived': false});
+					$scope.get_queued_tracks($scope.jukeboxes[0], {'archived': true});
+					$scope.start_playing($scope.jukeboxes[0]);
 				}, 2000
 			);
-			$scope.get_jukeboxes();
+			//$scope.get_jukeboxes();
 		}
 	});
 

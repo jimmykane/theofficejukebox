@@ -23,6 +23,8 @@
 					by {[{ track_playing.person_nick_name }]}
 				</h3>
 				<br/>
+				<button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
+				<br/><br/>
 			</div>
 			<div data-ng-if="user.email" class="rotate-in">
 				<div data-ng-switch data-on="player_status.state">
@@ -39,7 +41,6 @@
 					-->
 					<button data-ng-click="start_playing_queued_track(jukebox, track_playing, player_status.current_time)" data-ng-switch-when="5" data-ng-if="is_owner(user, jukebox)">Start and sync Jukebox</button>
 				</div>
-				<button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
 			</div>
 		</div>
 		<div style="height:50%;max-height:50%;">
