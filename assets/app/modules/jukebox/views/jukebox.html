@@ -65,10 +65,14 @@
 			<div id="player"></div>
 		</div>
 		<div style="text-align:center; width: 95%; height:50%; max-height:50%;">
-			<h3>Last tracks played</h3>
+			<h3 style="float:left">Last tracks played</h3>
+			<div style="float:right;">
+				<input type="text" data-ng-model="queued_track_search" placeholder=" Search for something"/>
+				<button>Search</button>
+			</div>
 			<div class="queued_track_list" >
 				<br/>
-				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true}"  class="queued_track_list-item">
+				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search"  class="queued_track_list-item">
 					<p style="text-align: left;">{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
 					<button ng-click="add_new_queued_track(jukeboxes[0], queued_track.video_id)">Queue It!!!</button></p>
 				</div>
