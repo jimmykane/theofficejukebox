@@ -85,7 +85,7 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 					function(status) {
 						if (status.code === 200) {
 							$scope.player.cueVideoById({
-								'videoId': jukebox_service.get_track_playing().video_id,
+								'videoId': jukebox_service.get_track_playing().id,
 								//'startSeconds': jukebox_service.get_track_playing().start_seconds
 							});
 							//console.log('look',jukebox_service.get_track_playing())
