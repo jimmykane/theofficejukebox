@@ -6,7 +6,7 @@
 
 <div class="max_width_height view_port" >
 	<div data-ng-repeat="jukebox in jukeboxes" style="margin-left: 5%;padding-left:5% ;width: 40%;height:100%;float: left;background-color: rgba(0, 0, 0, 0.52);">
-		<div style="height:50%;">
+		<div style="height:50%;max-height:50%;">
 			<div style="float:left;">
 			<h1><b>{[{ jukebox.title }]}</b></h1>
 			</div>
@@ -39,10 +39,9 @@
 					<input type="text" data-ng-model="new_queued_track.video_url" placeholder=" YouTube URL..."/>
 					<button type="submit">Queue Song</button>
 				</form><button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
-
 			</div>
 		</div>
-		<div style="height:50%;">
+		<div style="height:50%;max-height:50%;">
 			<h3>Upcoming tracks &nbsp; {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukebox)) }]}&nbsp;</h3>
 			<div class="queued_track_list">
 				<br/>
@@ -59,15 +58,15 @@
 			</div>
 		</div>
 	</div>
-	<div style="background-color: rgba(0, 0, 0, 0.52); float: left; width: 45%; height: 100%; margin-right:5%;">
-		<div you-tube style="text-align:center;height:50%; widht: 100%;">
+	<div style="background-color: rgba(0, 0, 0, 0.52); float: left; width: 40%; height: 100%; margin-right:5%;padding-right:5%;">
+		<div you-tube style="text-align:center;height:50%;max-height:50%; widht: 100%;">
 			<div id="player"></div>
 		</div>
-		<div style="text-align:center; width: 100%; height:50%;">
+		<div style="text-align:center; width: 95%; height:50%; max-height:50%;">
 			<h3>Last tracks played</h3>
 			<div class="queued_track_list" >
 				<br/>
-				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true}" >
+				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true}"  class="queued_track_list-item">
 					<p style="text-align: left;"><span class="med_font">{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})</span>
 					<button ng-click="add_new_queued_track(jukeboxes[0], queued_track.video_id)">Queue It!!!</button></p>
 				</div>
