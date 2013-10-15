@@ -17,7 +17,7 @@
 			</div>
 			<br style="clear: both;"/>
 			<div>
-				<h3 ng-if="track_playing.start_seconds" class="toggle">
+				<h3>
 					{[{ track_playing.title }]}
 					{[{ duration_to_HHMMSS(track_playing.start_seconds) }]} / {[{ duration_to_HHMMSS(track_playing.duration) }]}
 					by {[{ track_playing.person_nick_name }]}
@@ -26,7 +26,7 @@
 				<button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
 				<br/><br/>
 			</div>
-			<div data-ng-if="user.email" class="rotate-in">
+			<div >
 				<div data-ng-switch data-on="player_status.state">
 					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="-1">Start Playing</button>
 					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="0">Start Playing (Ended)</button>
