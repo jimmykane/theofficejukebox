@@ -1,0 +1,671 @@
+/* ------------------------------------------- */
+/* Mixins
+/* ------------------------------------------- */
+/* ------------------------------------------- */
+/* Toggle Fade
+/* ------------------------------------------- */
+/* line 59, ../sass/ng-animation.scss */
+.toggle {
+	-webkit-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+	-webkit-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+}
+
+/* line 63, ../sass/ng-animation.scss */
+.toggle.ng-enter {
+	opacity: 0;
+}
+
+/* line 67, ../sass/ng-animation.scss */
+.toggle.ng-enter-active {
+	opacity: 1;
+}
+
+/* line 71, ../sass/ng-animation.scss */
+.toggle.ng-leave {
+	opacity: 1;
+}
+
+/* line 75, ../sass/ng-animation.scss */
+.toggle.ng-leave-active {
+	opacity: 0;
+}
+
+/* line 79, ../sass/ng-animation.scss */
+.slide-right, .slide-left, .slide-top, .slide-down {
+	-webkit-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+	-webkit-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+}
+
+/* ------------------------------------------- */
+/* Slide Top
+/* ------------------------------------------- */
+/* line 87, ../sass/ng-animation.scss */
+.slide-top.ng-enter {
+	transform: translateY(60px);
+	-ms-transform: translateY(60px);
+	-webkit-transform: translateY(60px);
+	opacity: 0;
+}
+
+/* line 92, ../sass/ng-animation.scss */
+.slide-top.ng-enter-active {
+	transform: translateY(0);
+	-ms-transform: translateY(0);
+	-webkit-transform: translateY(0);
+	opacity: 1;
+}
+
+/* line 97, ../sass/ng-animation.scss */
+.slide-top.ng-leave {
+	transform: translateY(0);
+	-ms-transform: translateY(0);
+	-webkit-transform: translateY(0);
+	opacity: 1;
+}
+
+/* line 102, ../sass/ng-animation.scss */
+.slide-top.ng-leave-active {
+	transform: translateY(60px);
+	-ms-transform: translateY(60px);
+	-webkit-transform: translateY(60px);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Slide Rigth
+/* ------------------------------------------- */
+/* line 112, ../sass/ng-animation.scss */
+.slide-right.ng-enter {
+	transform: translateX(60px);
+	-ms-transform: translateX(60px);
+	-webkit-transform: translateX(60px);
+	opacity: 0;
+}
+
+/* line 117, ../sass/ng-animation.scss */
+.slide-right.ng-enter-active {
+	transform: translateX(0);
+	-ms-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	opacity: 1;
+}
+
+/* line 122, ../sass/ng-animation.scss */
+.slide-right.ng-leave {
+	transform: translateX(0);
+	-ms-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	opacity: 1;
+}
+
+/* line 127, ../sass/ng-animation.scss */
+.slide-right.ng-leave-active {
+	transform: translateX(60px);
+	-ms-transform: translateX(60px);
+	-webkit-transform: translateX(60px);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Slide Left
+/* ------------------------------------------- */
+/* line 137, ../sass/ng-animation.scss */
+.slide-left.ng-enter {
+	transform: translateX(-60px);
+	-ms-transform: translateX(-60px);
+	-webkit-transform: translateX(-60px);
+	opacity: 0;
+}
+
+/* line 142, ../sass/ng-animation.scss */
+.slide-left.ng-enter-active {
+	transform: translateX(0);
+	-ms-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	opacity: 1;
+}
+
+/* line 147, ../sass/ng-animation.scss */
+.slide-left.ng-leave {
+	transform: translateX(0);
+	-ms-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	opacity: 1;
+}
+
+/* line 152, ../sass/ng-animation.scss */
+.slide-left.ng-leave-active {
+	transform: translateX(-60px);
+	-ms-transform: translateX(-60px);
+	-webkit-transform: translateX(-60px);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Slide Down
+/* ------------------------------------------- */
+/* line 161, ../sass/ng-animation.scss */
+.slide-down.ng-enter {
+	transform: translateY(-60px);
+	-ms-transform: translateY(-60px);
+	-webkit-transform: translateY(-60px);
+	opacity: 0;
+}
+
+/* line 166, ../sass/ng-animation.scss */
+.slide-down.ng-enter-active {
+	transform: translateY(0);
+	-ms-transform: translateY(0);
+	-webkit-transform: translateY(0);
+	opacity: 1;
+}
+
+/* line 171, ../sass/ng-animation.scss */
+.slide-down.ng-leave {
+	transform: translateY(0);
+	-ms-transform: translateY(0);
+	-webkit-transform: translateY(0);
+	opacity: 1;
+}
+
+/* line 176, ../sass/ng-animation.scss */
+.slide-down.ng-leave-active {
+	transform: translateY(-60px);
+	-ms-transform: translateY(-60px);
+	-webkit-transform: translateY(-60px);
+	opacity: 0;
+}
+
+/* line 182, ../sass/ng-animation.scss */
+.bouncy-slide-right, .bouncy-slide-left, .bouncy-slide-top, .bouncy-slide-down {
+	-webkit-transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1);
+	/* older webkit */
+	-webkit-transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-moz-transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-ms-transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-o-transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	/* easeOutBack */
+	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1);
+	/* older webkit */
+	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	-moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	-ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	-o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	/* custom */
+}
+
+/* ------------------------------------------- */
+/* Bouncy Slide Top
+/* ------------------------------------------- */
+/* line 190, ../sass/ng-animation.scss */
+.bouncy-slide-top.ng-enter {
+	transform: translateY(240px);
+	-ms-transform: translateY(240px);
+	-webkit-transform: translateY(240px);
+	opacity: 0;
+}
+
+/* line 195, ../sass/ng-animation.scss */
+.bouncy-slide-top.ng-enter-active {
+	transform: translateY(0);
+	-ms-transform: translateY(0);
+	-webkit-transform: translateY(0);
+	opacity: 1;
+}
+
+/* line 200, ../sass/ng-animation.scss */
+.bouncy-slide-top.ng-leave {
+	transform: translateY(0);
+	-ms-transform: translateY(0);
+	-webkit-transform: translateY(0);
+	opacity: 1;
+}
+
+/* line 205, ../sass/ng-animation.scss */
+.bouncy-slide-top.ng-leave-active {
+	transform: translateY(240px);
+	-ms-transform: translateY(240px);
+	-webkit-transform: translateY(240px);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Bouncy Slide Rigth
+/* ------------------------------------------- */
+/* line 214, ../sass/ng-animation.scss */
+.bouncy-slide-right.ng-enter {
+	transform: translateX(240px);
+	-ms-transform: translateX(240px);
+	-webkit-transform: translateX(240px);
+	opacity: 0;
+}
+
+/* line 219, ../sass/ng-animation.scss */
+.bouncy-slide-right.ng-enter-active {
+	transform: translateX(0);
+	-ms-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	opacity: 1;
+}
+
+/* line 224, ../sass/ng-animation.scss */
+.bouncy-slide-right.ng-leave {
+	transform: translateX(0);
+	-ms-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	opacity: 1;
+}
+
+/* line 229, ../sass/ng-animation.scss */
+.bouncy-slide-right.ng-leave-active {
+	transform: translateX(240px);
+	-ms-transform: translateX(240px);
+	-webkit-transform: translateX(240px);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Bouncy Slide Left
+/* ------------------------------------------- */
+/* line 239, ../sass/ng-animation.scss */
+.bouncy-slide-left.ng-enter {
+	transform: translateX(-240px);
+	-ms-transform: translateX(-240px);
+	-webkit-transform: translateX(-240px);
+	opacity: 0;
+}
+
+/* line 244, ../sass/ng-animation.scss */
+.bouncy-slide-left.ng-enter-active {
+	transform: translateX(0);
+	-ms-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	opacity: 1;
+}
+
+/* line 249, ../sass/ng-animation.scss */
+.bouncy-slide-left.ng-leave {
+	transform: translateX(0);
+	-ms-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	opacity: 1;
+}
+
+/* line 254, ../sass/ng-animation.scss */
+.bouncy-slide-left.ng-leave-active {
+	transform: translateX(-240px);
+	-ms-transform: translateX(-240px);
+	-webkit-transform: translateX(-240px);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Bouncy Slide Down
+/* ------------------------------------------- */
+/* line 263, ../sass/ng-animation.scss */
+.bouncy-slide-down.ng-enter {
+	transform: translateY(-240px);
+	-ms-transform: translateY(-240px);
+	-webkit-transform: translateY(-240px);
+	opacity: 0;
+}
+
+/* line 268, ../sass/ng-animation.scss */
+.bouncy-slide-down.ng-enter-active {
+	transform: translateY(0);
+	-ms-transform: translateY(0);
+	-webkit-transform: translateY(0);
+	opacity: 1;
+}
+
+/* line 273, ../sass/ng-animation.scss */
+.bouncy-slide-down.ng-leave {
+	transform: translateY(0);
+	-ms-transform: translateY(0);
+	-webkit-transform: translateY(0);
+	opacity: 1;
+}
+
+/* line 278, ../sass/ng-animation.scss */
+.bouncy-slide-down.ng-leave-active {
+	transform: translateY(-240px);
+	-ms-transform: translateY(-240px);
+	-webkit-transform: translateY(-240px);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Scale Fade
+/* ------------------------------------------- */
+/* line 289, ../sass/ng-animation.scss */
+.scale-fade {
+	-webkit-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+	-webkit-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+}
+
+/* line 293, ../sass/ng-animation.scss */
+.scale-fade.ng-enter {
+	transform: scale(0.7);
+	-ms-transform: scale(0.7);
+	-webkit-transform: scale(0.7);
+	opacity: 0;
+}
+
+/* line 298, ../sass/ng-animation.scss */
+.scale-fade.ng-enter-active {
+	transform: scale(1);
+	-ms-transform: scale(1);
+	-webkit-transform: scale(1);
+	opacity: 1;
+}
+
+/* line 303, ../sass/ng-animation.scss */
+.scale-fade.ng-leave {
+	transform: scale(1);
+	-ms-transform: scale(1);
+	-webkit-transform: scale(1);
+	opacity: 1;
+}
+
+/* line 308, ../sass/ng-animation.scss */
+.scale-fade.ng-leave-active {
+	transform: scale(0.7);
+	-ms-transform: scale(0.7);
+	-webkit-transform: scale(0.7);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Spin Fade
+/* ------------------------------------------- */
+/* line 317, ../sass/ng-animation.scss */
+.spin-toggle {
+	-webkit-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+	-webkit-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+}
+
+/* line 321, ../sass/ng-animation.scss */
+.spin-toggle.ng-enter {
+	transform: rotate(225deg);
+	-ms-transform: rotate(225deg);
+	-webkit-transform: rotate(225deg);
+	opacity: 0;
+}
+
+/* line 326, ../sass/ng-animation.scss */
+.spin-toggle.ng-enter-active {
+	transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	opacity: 1;
+}
+
+/* line 331, ../sass/ng-animation.scss */
+.spin-toggle.ng-leave {
+	transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	opacity: 1;
+}
+
+/* line 336, ../sass/ng-animation.scss */
+.spin-toggle.ng-leave-active {
+	transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Scale in Fade
+/* ------------------------------------------- */
+/* line 346, ../sass/ng-animation.scss */
+.scale-fade-in {
+	-webkit-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+	-webkit-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+}
+
+/* line 350, ../sass/ng-animation.scss */
+.scale-fade-in.ng-enter {
+	transform: scale(3);
+	-ms-transform: scale(3);
+	-webkit-transform: scale(3);
+	opacity: 0;
+}
+
+/* line 355, ../sass/ng-animation.scss */
+.scale-fade-in.ng-enter-active {
+	transform: scale(1);
+	-ms-transform: scale(1);
+	-webkit-transform: scale(1);
+	opacity: 1;
+}
+
+/* line 360, ../sass/ng-animation.scss */
+.scale-fade-in.ng-leave {
+	transform: scale(1);
+	-ms-transform: scale(1);
+	-webkit-transform: scale(1);
+	opacity: 1;
+}
+
+/* line 365, ../sass/ng-animation.scss */
+.scale-fade-in.ng-leave-active {
+	transform: scale(3);
+	-ms-transform: scale(3);
+	-webkit-transform: scale(3);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Bouncy Scale in Fade
+/* ------------------------------------------- */
+/* line 375, ../sass/ng-animation.scss */
+.bouncy-scale-in {
+	-webkit-transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1);
+	/* older webkit */
+	-webkit-transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-moz-transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-ms-transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-o-transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	transition: all 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	/* easeOutBack */
+	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1);
+	/* older webkit */
+	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	-moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	-ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	-o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	/* custom */
+}
+
+/* line 379, ../sass/ng-animation.scss */
+.bouncy-scale-in.ng-enter {
+	transform: scale(3);
+	-ms-transform: scale(3);
+	-webkit-transform: scale(3);
+	opacity: 0;
+}
+
+/* line 384, ../sass/ng-animation.scss */
+.bouncy-scale-in.ng-enter-active {
+	transform: scale(1);
+	-ms-transform: scale(1);
+	-webkit-transform: scale(1);
+	opacity: 1;
+}
+
+/* line 389, ../sass/ng-animation.scss */
+.bouncy-scale-in.ng-leave {
+	transform: scale(1);
+	-ms-transform: scale(1);
+	-webkit-transform: scale(1);
+	opacity: 1;
+}
+
+/* line 394, ../sass/ng-animation.scss */
+.bouncy-scale-in.ng-leave-active {
+	transform: scale(3);
+	-ms-transform: scale(3);
+	-webkit-transform: scale(3);
+	opacity: 0;
+}
+
+/* ------------------------------------------- */
+/* Flip In
+/* ------------------------------------------- */
+/* line 404, ../sass/ng-animation.scss */
+.flip-in {
+	-webkit-transition: all 900ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition: all 900ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition: all 900ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition: all 900ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition: all 900ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+	-webkit-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	/* easeOutQuad */
+}
+
+/* line 408, ../sass/ng-animation.scss */
+.flip-in.ng-enter {
+	transform: perspective(300px) rotateX(90deg);
+	-ms-transform: perspective(300px) rotateX(90deg);
+	-webkit-transform: perspective(300px) rotateX(90deg);
+	opacity: 0.7;
+}
+
+/* line 413, ../sass/ng-animation.scss */
+.flip-in.ng-enter-active {
+	transform: perspective(300px) rotateX(0deg);
+	-ms-transform: perspective(300px) rotateX(0deg);
+	-webkit-transform: perspective(300px) rotateX(0deg);
+	opacity: 1;
+}
+
+/* line 418, ../sass/ng-animation.scss */
+.flip-in.ng-leave {
+	transform: perspective(300px) rotateX(0deg);
+	-ms-transform: perspective(300px) rotateX(0deg);
+	-webkit-transform: perspective(300px) rotateX(0deg);
+	opacity: 1;
+}
+
+/* line 423, ../sass/ng-animation.scss */
+.flip-in.ng-leave-active {
+	transform: perspective(300px) rotateX(135deg);
+	-ms-transform: perspective(300px) rotateX(135deg);
+	-webkit-transform: perspective(300px) rotateX(135deg);
+	opacity: 0.7;
+}
+
+/* ------------------------------------------- */
+/* Rotate In
+/* ------------------------------------------- */
+/* line 432, ../sass/ng-animation.scss */
+.rotate-in {
+	-webkit-transition: all 550ms cubic-bezier(0.175, 0.885, 0.32, 1);
+	/* older webkit */
+	-webkit-transition: all 550ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-moz-transition: all 550ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-ms-transition: all 550ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-o-transition: all 550ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	transition: all 550ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	/* easeOutBack */
+	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1);
+	/* older webkit */
+	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	-moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	-ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	-o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	transition-timing-function: cubic-bezier(0.175, 0.885, 0.45, 1.595);
+	/* custom */
+}
+
+/* line 436, ../sass/ng-animation.scss */
+.rotate-in.ng-enter {
+	transform: perspective(300px) rotateY(40deg);
+	-ms-transform: perspective(300px) rotateY(40deg);
+	-webkit-transform: perspective(300px) rotateY(40deg);
+	opacity: 0.7;
+}
+
+/* line 441, ../sass/ng-animation.scss */
+.rotate-in.ng-enter-active {
+	transform: perspective(300px) rotateY(0deg);
+	-ms-transform: perspective(300px) rotateY(0deg);
+	-webkit-transform: perspective(300px) rotateY(0deg);
+	opacity: 1;
+}
+
+/* line 446, ../sass/ng-animation.scss */
+.rotate-in.ng-leave {
+	transform: perspective(300px) rotateY(0deg);
+	-ms-transform: perspective(300px) rotateY(0deg);
+	-webkit-transform: perspective(300px) rotateY(0deg);
+	opacity: 1;
+}
+
+/* line 451, ../sass/ng-animation.scss */
+.rotate-in.ng-leave-active {
+	transform: perspective(300px) rotateY(-40deg);
+	-ms-transform: perspective(300px) rotateY(-40deg);
+	-webkit-transform: perspective(300px) rotateY(-40deg);
+	opacity: 0.7;
+}
