@@ -6,7 +6,7 @@
 
 <div class="max_width_height view_port" >
 	<div data-ng-repeat="jukebox in jukeboxes" style="margin-left: 5%;padding-left:5% ;width: 40%;height:100%;float: left;background-color: rgba(0, 0, 0, 0.52);">
-		<div style="height:50%;max-height:50%;">
+		<div style="height:45%; padding-top: 5%;">
 			<div style="float:left;">
 			<h1><b>{[{ jukebox.title }]}</b></h1>
 			</div>
@@ -45,7 +45,7 @@
 			<h3>Upcoming tracks &nbsp; {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukebox)) }]}&nbsp;</h3>
 			<div class="queued_track_list">
 				<br/>
-				<div data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:false}" >
+				<div data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:false}" class="queued_track_list-item" >
 					<p><span class="med_font">{[{ $index + 1 }]}. {[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})</span>
 					<span class="small_font"> - by {[{ queued_track.queuedby_nick_name }]}</span>
 					<div data-ng-if="user.email">
@@ -59,7 +59,7 @@
 		</div>
 	</div>
 	<div style="background-color: rgba(0, 0, 0, 0.52); float: left; width: 40%; height: 100%; margin-right:5%;padding-right:5%;">
-		<div you-tube style="text-align:center;height:50%;max-height:50%; widht: 100%;">
+		<div you-tube style="text-align:center;height:50%;max-height:50%; width: 100%;">
 			<div id="player"></div>
 		</div>
 		<div style="text-align:center; width: 95%; height:50%; max-height:50%;">

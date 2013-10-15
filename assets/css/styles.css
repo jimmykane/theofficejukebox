@@ -3,8 +3,9 @@
 */
 
 body, body *{
-	font-family: 'Roboto', sans-serif;
-	font-weight: 300;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	font-size: 14px;
 	background: transparent;
 	color: #FFFFFF;
 	margin: 0 auto;
@@ -26,24 +27,21 @@ body, html{
 }
 
 h1, h2, h3{
-	font: 1.7em/1.0 "LeagueOstrichRegular", sans-serif;
+	font-family: "LeagueOstrichRegular", sans-serif;
+	font-size: 1.7em ;
 	vertical-align: bottom;
 }
 
 h1 strong, h1 b {
-	font: 1.7em/1.2 "LeagueOstrichBold", sans-serif;
-	text-transform: uppercase;
-	vertical-align: baseline;
+	font-family: "LeagueOstrichBold", sans-serif;
+	font-size: 1.7em;
+
 }
 
 h3{
 	font-size: 1.3em;
 }
 
-label{
-	font: 1.2em/1.0 "LeagueOstrichRegular", sans-serif;
-	font-size: 1.2em;
-}
 
 
 input{
@@ -77,13 +75,11 @@ button:hover, .button:hover{
 }
 
 .med_font{
-	font: 1.2em/1.2 "LeagueOstrichRegular", sans-serif;
-	font-size: 1.2em;
+
 }
 
 .small_font{
-	font: 1.0em/1.0 "LeagueOstrichRegular", sans-serif;
-	font-size: 1.0em;
+
 }
 
 .max_width_height{

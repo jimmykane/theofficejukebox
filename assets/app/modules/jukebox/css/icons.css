@@ -1,6 +1,4 @@
 .led-red {
-    margin: 20px auto;
-    width: 12px;
     height: 12px;
     background-color: #940;
     border-radius: 50%;
@@ -8,7 +6,7 @@
 }
 
 .led-yellow {
-    margin: 20px auto;
+
     width: 12px;
     height: 12px;
     background-color: #A90;
@@ -17,7 +15,6 @@
 }
 
 .led-green {
-    margin: 20px auto;
     width: 12px;
     height: 12px;
     background-color: #690;
@@ -26,7 +23,6 @@
 }
 
 .led-blue {
-    margin: 20px auto;
     width: 12px;
     height: 12px;
     background-color: #4AB;
