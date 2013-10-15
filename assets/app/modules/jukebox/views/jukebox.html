@@ -36,14 +36,15 @@
 					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="5">Play</button>
 					<button data-ng-click="start_playing_queued_track(jukebox, track_playing, player_status.current_time)" data-ng-switch-when="5" data-ng-if="is_owner(user, jukebox)">Start and sync Jukebox</button>
 				</div>
-				<form ng-submit="add_new_queued_track(jukebox)">
-					<input type="text" data-ng-model="new_queued_track.video_url" placeholder=" YouTube URL..."/>
-					<button type="submit">Queue Song</button>
-				</form><button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
+				<button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
 			</div>
 		</div>
 		<div style="height:50%;max-height:50%;">
-			<h3>Upcoming tracks &nbsp; {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukebox)) }]}&nbsp;</h3>
+			<h3 style="float:left;">Upcoming tracks &nbsp; {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukebox)) }]}&nbsp;</h3>
+			<form style="float:right;" ng-submit="add_new_queued_track(jukebox)">
+				<input type="text" data-ng-model="new_queued_track.video_url" placeholder=" YouTube URL..."/>
+				<button type="submit">Queue Song</button>
+			</form>
 			<div class="queued_track_list">
 				<br/>
 				<div data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:false}" class="queued_track_list-item" >
