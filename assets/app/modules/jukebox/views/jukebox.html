@@ -33,7 +33,9 @@
 					<button data-ng-click="start_playing_queued_track(jukebox, track_playing, player_status.current_time)" data-ng-switch-when="1" data-ng-if="is_owner(user, jukebox)">Force sync Jukebox</button>
 					<button data-ng-click="start_playing_queued_track(jukebox, track_playing, player_status.current_time)" data-ng-switch-when="2" data-ng-if="is_owner(user, jukebox)">Resume and sync Jukebox</button>
 					<p data-ng-switch-when="3">Buffering... please wait</p>
+					<!-- is this needed idr
 					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="5">Play</button>
+					-->
 					<button data-ng-click="start_playing_queued_track(jukebox, track_playing, player_status.current_time)" data-ng-switch-when="5" data-ng-if="is_owner(user, jukebox)">Start and sync Jukebox</button>
 				</div>
 				<button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
@@ -74,7 +76,7 @@
 				<br/>
 				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search"  class="queued_track_list-item">
 					<p style="text-align: left;">{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
-					<button ng-click="add_new_queued_track(jukeboxes[0], queued_track.video_id)">Queue It!!!</button></p>
+					<button ng-click="add_new_queued_track(jukeboxes[0], queued_track.id)">Queue It!!!</button></p>
 				</div>
 			</div>
 		</div>
