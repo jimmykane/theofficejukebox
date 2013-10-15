@@ -24,12 +24,16 @@ class SetupHandler(webapp2.RequestHandler):
 			self.response.out.write('Nope you won\'t')
 			return
 
-		jukebox = Jukebox(title='Movenext', owner_key=person.key)
-		#if jukebox:
-			#return
-		jukebox_key = jukebox.put()
+		jukebox = Jukebox.get_or_insert(person.key.id()) #create same as person
+		jukebox.title = 'Movenext'
+		jukebox.owner_key = person.key
+		jukebox.put()
+		if jukebox.player:
+			self.response.out.write('done...')
+			return
+		#logging.info(jukebox.key)
 		player_key = JukeboxPlayer(
-				parent=jukebox_key,
+				parent=jukebox.key,
 				last_track_queued_on=datetime.datetime.now(),
 				last_track_duration=0
 		).put()
