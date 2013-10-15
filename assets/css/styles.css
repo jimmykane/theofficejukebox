@@ -4,7 +4,7 @@
 
 body, body *{
 	font-family: 'Open Sans', sans-serif;
-	font-weight: 400;
+	font-weight: 300;
 	font-size: 14px;
 	background: transparent;
 	color: #FFFFFF;
@@ -27,14 +27,12 @@ body, html{
 }
 
 h1, h2, h3{
-	font-family: "LeagueOstrichRegular", sans-serif;
-	font-size: 1.7em ;
-	vertical-align: bottom;
+	font-size: 2em ;
 }
 
 h1 strong, h1 b {
 	font-family: "LeagueOstrichBold", sans-serif;
-	font-size: 1.7em;
+	font-size: 2em;
 
 }
 
@@ -47,6 +45,7 @@ h3{
 input{
 	border: 1px solid;
 	border-color: rgb(229, 151, 0);
+
 }
 
 .list p{
@@ -54,9 +53,10 @@ input{
 }
 
 button, .button{ /* should be done only class please */
-	font: 1.2em/1.2 "LeagueOstrichRegular", sans-serif;
+	font-size: 1.2em;
 	border: 0px;
 	text-align: center;
+	background-color: rgba(0, 0, 0, 0.32);
 	/* some effects, so that we dont apply the same class */
 	-moz-transition: color 0.5s ease-in-out;
 	-webkit-transition: color 0.5s ease-in-out;
@@ -74,6 +74,9 @@ button:hover, .button:hover{
 	transition: color 0.5s ease-in-out;
 }
 
+p{
+	font-weight: normal;
+}
 .med_font{
 
 }

@@ -16,11 +16,12 @@
 			</div>
 			<br style="clear: both;"/>
 			<div>
-				<p  ng-if="track_playing.start_seconds">
+				<h3 ng-if="track_playing.start_seconds">
 					{[{ track_playing.title }]}
 					{[{ duration_to_HHMMSS(track_playing.start_seconds) }]} / {[{ duration_to_HHMMSS(track_playing.duration) }]}
 					by {[{ track_playing.person_nick_name }]}
-				</p>
+				</h3>
+				<br/>
 			</div>
 			<div data-ng-if="user.email">
 				<div data-ng-switch data-on="player_status.state">
@@ -46,8 +47,8 @@
 			<div class="queued_track_list">
 				<br/>
 				<div data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:false}" class="queued_track_list-item" >
-					<p><span class="med_font">{[{ $index + 1 }]}. {[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})</span>
-					<span class="small_font"> - by {[{ queued_track.queuedby_nick_name }]}</span>
+					<p>{[{ $index + 1 }]}. {[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
+					<span> - by {[{ queued_track.queuedby_nick_name }]}</span>
 					<div data-ng-if="user.email">
 						<button data-ng-if="is_owner(user, jukebox)" ng-click="start_playing_queued_track(jukebox, queued_track, 0)">Play Now!!!</button>
 						<button ng-click="remove_queued_track(jukebox, queued_track, true)">Archive</button>
@@ -67,7 +68,7 @@
 			<div class="queued_track_list" >
 				<br/>
 				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true}"  class="queued_track_list-item">
-					<p style="text-align: left;"><span class="med_font">{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})</span>
+					<p style="text-align: left;">{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
 					<button ng-click="add_new_queued_track(jukeboxes[0], queued_track.video_id)">Queue It!!!</button></p>
 				</div>
 			</div>
