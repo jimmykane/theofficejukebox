@@ -6,11 +6,11 @@
 /* ------------------------------------------- */
 /* line 59, ../sass/ng-animation.scss */
 .toggle {
-	-webkit-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	-moz-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	-ms-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	-o-transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-webkit-transition: all 950ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-moz-transition: all 950ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-ms-transition: all 950ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	-o-transition: all 950ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	transition: all 950ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	/* easeOutQuad */
 	-webkit-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	-moz-transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);

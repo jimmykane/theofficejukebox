@@ -44,6 +44,7 @@ h3{
 
 input{
 	border: 1px solid;
+	border-bottom: 0;
 	border-color: rgb(229, 151, 0);
 
 }
@@ -59,19 +60,20 @@ button, .button{ /* should be done only class please */
 	background-color: rgba(0, 0, 0, 0.32);
 	/* some effects, so that we dont apply the same class */
 	-moz-transition: color 0.5s ease-in-out;
-	-webkit-transition: color 0.5s ease-in-out;
-	-o-transition: color 0.5s ease-in-out;
-	transition: color 0.5s ease-in-out;
+	-webkit-transition: color 0.9s ease-in-out;
+	-o-transition: color 0.9s ease-in-out;
+	transition: color 0.9s ease-in-out;
 }
 
 button:hover, .button:hover{
 	cursor: pointer;
 	color: rgb(74, 111, 228);
+	background-color: rgba(0, 0, 0, 0.80);
 	/* some effects, so that we dont apply the same class */
-	-moz-transition: color 0.5s ease-in-out;
-	-webkit-transition: color 0.5s ease-in-out;
-	-o-transition: color 0.5s ease-in-out;
-	transition: color 0.5s ease-in-out;
+	-moz-transition: color 0.9s ease-in-out;
+	-webkit-transition: color 0.9s ease-in-out;
+	-o-transition: color 0.9s ease-in-out;
+	transition: color 0.9s ease-in-out;
 }
 
 p{
