@@ -26,13 +26,13 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 
 	@property
 	def archived_queued_tracks(self):
-		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==True).order(QueuedTrack.creation_date).fetch(1000)
+		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==True).order(QueuedTrack.edit_date).fetch(1000)
 		return queued_tracks
 
 
 	@property
 	def queued_tracks(self):
-		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==False).order(-QueuedTrack.edit_date).fetch(1000)
+		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==False).order(QueuedTrack.edit_date).fetch(1000)
 		return queued_tracks
 
 

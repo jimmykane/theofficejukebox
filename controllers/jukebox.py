@@ -90,7 +90,7 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 		jukebox_key = ndb.Key(Jukebox, jukebox_id)
 
 		# only queued tracks
-		queued_tracks = QueuedTrack.query(ancestor=jukebox_key).filter(QueuedTrack.archived==archived).order(-QueuedTrack.edit_date).fetch(1000)
+		queued_tracks = QueuedTrack.query(ancestor=jukebox_key).filter(QueuedTrack.archived==archived).order(QueuedTrack.edit_date).fetch(1000)
 		queued_tracks_list = []
 		for queued_track in queued_tracks:
 			queued_track_dict = QueuedTrack._to_dict(queued_track)
