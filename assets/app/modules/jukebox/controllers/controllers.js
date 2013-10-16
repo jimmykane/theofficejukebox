@@ -287,7 +287,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			// Stub again 2 secs
 			$timeout(
 				function(){
-					$scope.get_playing_track($scope.jukeboxes[0]);
 					$scope.get_queued_tracks($scope.jukeboxes[0], {'archived': false});
 					$scope.get_queued_tracks($scope.jukeboxes[0], {'archived': true});
 					$scope.start_playing($scope.jukeboxes[0]);
