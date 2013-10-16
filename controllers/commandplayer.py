@@ -32,6 +32,12 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 			return
 
 		jukebox = ndb.Key(Jukebox, jukebox_id).get()
+
+		if not jukebox:
+			logging.info(jukebox_id)
+			logging.warning('No jukebox found. Aborting')
+			return
+
 		if not jukebox.player.on:
 			logging.info('Jukebox player is off. Aborting')
 			return
