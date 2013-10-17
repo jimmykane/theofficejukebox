@@ -26,6 +26,7 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 
 	@property
 	def archived_queued_tracks(self):
+		# Here always edit date on shorting
 		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==True).order(QueuedTrack.edit_date).fetch(1000)
 		return queued_tracks
 
