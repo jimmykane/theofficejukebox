@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<div style="height:50%;max-height:50%;">
-			<h3 style="float:left;">Upcoming tracks &nbsp; {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukebox)) }]}&nbsp;</h3>
+			<h3 style="float:left;">Upcoming tracks &nbsp; <!-- {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukebox)) }]}&nbsp; --></h3>
 			<form data-ng-if="user.email" style="float:right;" class="slide-top" ng-submit="add_new_queued_track(jukebox)">
 				<input type="text" data-ng-model="new_queued_track.video_url" placeholder=" YouTube URL..."/>
 				<button type="submit">Queue Song</button>

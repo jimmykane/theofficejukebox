@@ -49,6 +49,10 @@ input{
 
 }
 
+input:focus{
+	outline: 0;
+}
+
 .list p{
 	font-size: 0.9em;
 }
