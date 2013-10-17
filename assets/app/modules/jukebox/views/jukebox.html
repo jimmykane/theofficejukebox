@@ -51,7 +51,7 @@
 			</form>
 			<div class="queued_track_list">
 				<br/>
-				<div data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:false} | orderBy:'edit_date'" class="flip-in queued_track_list-item" flip-in>
+				<div data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:false} | orderBy:'-edit_date'" class="flip-in queued_track_list-item" flip-in>
 					<p>{[{ $index + 1 }]}. {[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
 					<span> - by {[{ queued_track.queuedby_nick_name }]}</span>
 					<div data-ng-if="user.email">
@@ -76,7 +76,7 @@
 			</div>
 			<div class="queued_track_list" >
 				<br/>
-				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search "  class="flip-in queued_track_list-item ">
+				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search | orderBy:'edit_date'"  class="flip-in queued_track_list-item ">
 					<p style="text-align: left;">{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
 					<button ng-click="add_new_queued_track(jukeboxes[0], queued_track.id)">Queue It!!!</button></p>
 				</div>
