@@ -16,7 +16,7 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 				$scope.player = new YT.Player('player', {
 					height: '150',
 					width: '250',
-					controls: '0', //wtf doesnt it work?
+					playerVars: { 'autoplay': 1, 'controls': 0 },
 					//videoId: $scope.live_track.video_id,
 					events: {
 						'onReady': $scope.onPlayerReady,
@@ -87,12 +87,8 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 							$scope.player.cueVideoById({
 								'videoId': jukebox_service.get_track_playing().id,
 								'suggestedQuality': 'default'
-								//'startSeconds': jukebox_service.get_track_playing().start_seconds
 							});
-							//console.log('look',jukebox_service.get_track_playing())
 							$scope.player.seekTo(jukebox_service.get_track_playing().start_seconds);
-							//$scope.player.playVideo();
-							//console.log(jukebox_service.get_track_playing().start_seconds)
 
 						}else if (status.code === 403) {
 							ui.show_notification_warning('Server says: "' + status.message
