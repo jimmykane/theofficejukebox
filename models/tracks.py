@@ -98,7 +98,9 @@ class QueuedTrack(ndb.Expando, DictModel, NDBCommonModel):
 		)
 		queued_track_dict.update({
 			'id': queued_track_id,
-			'queuedby_nick_name': person.info.nick_name
+			'queuedby_nick_name': person.info.nick_name,
+			'creation_date': queued_track.creation_date.isoformat(),
+			'edit_date': queued_track.edit_date.isoformat(),
 		})
 		return queued_track_dict
 
