@@ -78,25 +78,25 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
+		jukebox_key = ndb.Key(Jukebox, jukebox_id)
+
+		# initialize a query instance
+		query = QueuedTrack.query(ancestor=jukebox_key)
+
 		archived = False
 		order = 'edit_date'
 		if filters:
 			if 'archived' in filters:
-				archived = filters['archived']
+				query = query.filter(QueuedTrack.archived==filters['archived'])
+
 			if 'order' in filters:
-				order = filters['order']
-
-		if not jukebox_id:
-			response = {'status':self.get_status(status_code=400, msg=repr(e))}
-			self.response.out.write(json.dumps(response))
-
-		jukebox_key = ndb.Key(Jukebox, jukebox_id)
+				query = query.order(ndb.GenericProperty(filters['order']))
+				if 'short_desc' in filters:
+					query = query.order(-ndb.GenericProperty(filters['order']))
 
 		# only queued tracks and wrap it in a try. Might explode...
 		try:
-			queued_tracks = QueuedTrack.query(ancestor=jukebox_key)\
-				.filter(QueuedTrack.archived==archived)\
-				.order(ndb.GenericProperty(order)).fetch(30)
+			queued_tracks = query.fetch(30)
 		except Exception as e:
 			logging.error('Unconvertable Parameters' + repr(e))
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
