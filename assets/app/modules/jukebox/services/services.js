@@ -275,6 +275,9 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 
 
 	jukebox_service.add_queued_track = function(jukebox, queued_track) {
+		// Here I need to do the conversion to date obj from json string
+		queued_track.creation_date = Date(queued_track.creation_date)
+		queued_track.edit_date = Date(queued_track.edit_date)
 		jukebox.queued_tracks.push(queued_track);
 		return true;
 	};
