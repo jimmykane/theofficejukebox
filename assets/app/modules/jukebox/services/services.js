@@ -297,6 +297,8 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 			return true;
 		}
 		jukebox.queued_tracks[found_position] = new_queued_track;
+		jukebox.queued_tracks[found_position].creation_date = new Date(jukebox.queued_tracks[found_position].creation_date)
+		jukebox.queued_tracks[found_position].edit_date = new Date(jukebox.queued_tracks[found_position].edit_date)
 		return true;
 	};
 
