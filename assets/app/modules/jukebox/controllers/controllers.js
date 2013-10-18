@@ -21,6 +21,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	$scope.track_playing = jukebox_service.get_track_playing();
 	$scope.new_queued_track = {};
 	$scope.player_status = false;
+	$scope.player_status.state = -1;
 
 	/* Function to check if the logged in user is the same with the jukebox owner */
 	$scope.is_owner = function(user, jukebox){
@@ -303,7 +304,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 				'short_desc': true
 			});
 			$scope.start_playing($scope.jukeboxes[0]);
-			//$scope.get_jukeboxes();
 		}
 	});
 

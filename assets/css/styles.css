@@ -63,7 +63,8 @@ button, .button{ /* should be done only class please */
 	font-size: 1.2em;
 	border: 0px;
 	text-align: center;
-	background-color: rgba(0, 0, 0, 0.32);
+	color: rgb(154, 167, 163);
+	background-color: rgba(0, 0, 0, 0.40);
 	/* some effects, so that we dont apply the same class */
 	-moz-transition: color 0.5s ease-in-out;
 	-webkit-transition: color 0.9s ease-in-out;
@@ -90,7 +91,7 @@ p{
 }
 
 .small_font{
-
+	font-size: 0.75em;
 }
 
 .max_width_height{
