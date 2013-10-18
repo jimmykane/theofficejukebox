@@ -6,10 +6,10 @@
 
 .notifications_bar{
 	position: absolute;
-	top: 70%;
+	bottom: 0%;
 	right:0px;
 	z-index: 999;
-	max-height: 80%;
+	max-height: 50%;
 	overflow-y: hidden;
 }
 
