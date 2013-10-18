@@ -19,9 +19,9 @@ mainApp.controller('notifications_controller', function($scope, $timeout, notifi
 	$scope.notifications = [];
 
 	$scope.timeouts = {
-		'info': 5000, //5000 in css
-		'warning': 6200, //6200 in css
-		'error': 9400 //9400 in css
+		'info': 5000 + 400, //5000 in css
+		'warning': 6200 + 400, //6200 in css
+		'error': 9400 + 400 //9400 in css
 	};
 
 	$scope.$on('handleNotification', function() {

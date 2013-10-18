@@ -7,7 +7,7 @@
 	background: url('/assets/app/modules/jukebox/css/img/background_1920x1440.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
-	background-position: center;
+	background-position: center center;
 }
 
 .queued_track_list{

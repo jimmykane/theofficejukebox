@@ -26,13 +26,15 @@ body, html{
 	display: inline;
 }
 
-h1, h2, h3{
+h1, h2 {
 	font-size: 2em ;
+
 }
 
 h1 strong, h1 b {
 	font-family: "LeagueOstrichBold", sans-serif;
 	font-size: 2em;
+	-webkit-font-smoothing: antialiased;
 
 }
 

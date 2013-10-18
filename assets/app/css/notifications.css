@@ -9,14 +9,14 @@
 	bottom: 0%;
 	right:0px;
 	z-index: 999;
-	max-height: 50%;
+	max-height: 90%;
 	overflow-y: hidden;
 }
 
 .tn-box {
 	width: 360px;
 	position: relative;
-	margin: 0 auto 20px auto;
+	margin: 0 auto 0px auto;
 	padding: 25px 15px;
 	text-align: left;
 	opacity: 0;
@@ -24,6 +24,7 @@
 	filter: alpha(opacity=0);
 	cursor: default;
 	display: none;
+	border-bottom: 1px solid #FFFFFF;
 }
 
 .tn-box p {
