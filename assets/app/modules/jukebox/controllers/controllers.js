@@ -60,7 +60,11 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 					console.log('Found track to play');
 					$scope.get_playing_track(jukebox);
 					jukebox.player.on=true;
-					$scope.get_queued_tracks(jukebox, {'archived': true});
+					$scope.get_queued_tracks(jukebox, {
+						'archived': true,
+						'order': 'edit_date',
+						'short_desc': true
+					});
 					$scope.start_playing(jukebox);
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
@@ -132,8 +136,14 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 				if (status.code === 200) {
 					//stub
 					$scope.get_playing_track($scope.jukeboxes[0]);
-					$scope.get_queued_tracks($scope.jukeboxes[0], {'archived': false});
-					$scope.get_queued_tracks($scope.jukeboxes[0], {'archived': true});
+					$scope.get_queued_tracks($scope.jukeboxes[0], {
+						'archived': false
+					});
+					$scope.get_queued_tracks($scope.jukeboxes[0], {
+						'archived': true,
+						'order': 'edit_date',
+						'short_desc': true
+					});
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
 					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
