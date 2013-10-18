@@ -16,10 +16,6 @@ class Person(ndb.Expando):
 		info = PersonInfo.query(ancestor=self.key).get()
 		return info
 
-	@property
-	def slides(self):
-		slides = Slides.query(ancestor=self.key).fetch(1000)
-		return slides
 
 	@classmethod
 	def get_current(cls):
