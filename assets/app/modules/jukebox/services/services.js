@@ -219,9 +219,11 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 				deffered.resolve(response.status);
 				return;
 			}
-			if (archive)
+			if (archive){
 				queued_track.archived = true;
-			else
+				 // Forcing it. Probably server is about 2sec earlier
+				queued_track.edit_date = new Date();
+			}else
 				jukebox_service.remove_queued_track(jukebox, queued_track);
 		})
 		.error(function(response, status, headers, config) {
@@ -233,7 +235,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 
 	/* jukebox: Modification functions for jukebox array */
 	jukebox_service.add_jukebox = function(jukebox) {
-
 		jukeboxes.push(jukebox);
 		return true;
 	};
@@ -283,9 +284,11 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return true;
 	};
 	jukebox_service.remove_queued_track = function(jukebox, queued_track) {
-		var index = jukebox.queued_tracks.indexOf(queued_track);
-		jukebox.queued_tracks.splice(index, 1);
-		console.log('cjeck',jukebox.queued_tracks)
+		var found_position = jukebox_service.check_if_queued_track_id_exists(jukebox, queued_track.id);
+		if (found_position === false){
+			return false;
+		}
+		jukebox.queued_tracks.splice(found_position, 1);
 		return true;
 	};
 	jukebox_service.update_or_insert_queued_track = function(jukebox, new_queued_track) {
