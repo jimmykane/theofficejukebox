@@ -55,12 +55,10 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 			logging.warning(player)
 			return
 
-		next_track = None
 		# the next song is the first queued
-		queued_tracks = jukebox.queued_tracks
-		if queued_tracks:
-			next_track = queued_tracks[0]
-		#logging.info(track_playing)
+		next_track = QueuedTrack.query(ancestor=self.key)\
+			.filter(QueuedTrack.archived==False)\
+			.order(QueuedTrack.edit_date).get()
 
 		if not next_track:
 			logging.info('No next track queued. Queuing random...')

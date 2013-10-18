@@ -82,18 +82,18 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 
 		# initialize a query instance
 		query = QueuedTrack.query(ancestor=jukebox_key)
-
+		logging.info(filters)
 		archived = False
 		order = 'edit_date'
 		if filters:
 			if 'archived' in filters:
 				query = query.filter(QueuedTrack.archived==filters['archived'])
-
 			if 'order' in filters:
+				logging.info(111)
 				query = query.order(ndb.GenericProperty(filters['order']))
 				if 'short_desc' in filters:
 					query = query.order(-ndb.GenericProperty(filters['order']))
-
+		logging.info(query)
 		# only queued tracks and wrap it in a try. Might explode...
 		try:
 			queued_tracks = query.fetch(30)
