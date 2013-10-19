@@ -35,7 +35,6 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 				$scope.$apply(function(){
 					logging.info("Playa is ready");
 					logging.info($scope.player);
-					$scope.player.controls = 0; //wtf doesnt it work?
 					// Lets also broadcast a change state for the others to catch up
 					player_service.broadcast_change_state({"state": $scope.player.getPlayerState()});
 				});
@@ -51,7 +50,6 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 						player_service.broadcast_change_state({
 							"state": -1,
 							"current_time": $scope.player.getCurrentTime()
-							//"current_time": $scope.player.getCurrentTime()
 						});
 					}
 					// ended
@@ -113,7 +111,7 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 								'suggestedQuality': 'default'
 							});
 							$scope.player.seekTo(jukebox_service.get_track_playing().start_seconds);
-
+							//console.log($scope.player)
 						}else if (status.code === 403) {
 							ui.show_notification_warning('Server says: "' + status.message
 							+ '" I asked the backend about the reason and replied: "' + status.info +'"');
