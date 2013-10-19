@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/app/modules/jukebox/css/ng_animate.css" />
 <link rel="stylesheet" type="text/css" href="/assets/app/modules/jukebox/css/icons.css" />
 
-<div class="max_width_height view_port" style="" >
+<div class="max_width_height view_port">
 	<div data-ng-repeat="jukebox in jukeboxes" style="margin-left: 5%;padding-left:5% ;width: 40%;height:100%;float: left;background-color: rgba(0, 0, 0, 0.52);">
 		<div style="height:45%; padding-top: 5%;" >
 			<div style="float:left;">
@@ -28,9 +28,9 @@
 			</div>
 			<div >
 				<div data-ng-switch data-on="player_status.state">
-					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="-1">Start Playing</button>
+					<button data-ng-click="start_playing(jukebox)"  data-ng-switch-when="-1" data-ng-if="track_playing.title" >Stream Now!!!</button>
 					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="0">Start Playing (Ended)</button>
-					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="1" data-ng-if="is_owner(user, jukebox) === false">Sync Play</button>
+					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="1" data-ng-if="is_owner(user, jukebox) === false">Sync Play [Rsync]</button>
 					<p data-ng-switch-when="3">Buffering... please wait</p>
 				</div>
 			</div>
