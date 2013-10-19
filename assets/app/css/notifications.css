@@ -99,21 +99,21 @@
 /* Colors */
 
 .tn-box-color-1{
-	background: rgba(128, 119, 127, 1);
+	background: rgba(255, 0, 0, 1);
 }
 .tn-box-color-1 p {
 	color: #FFFFFF;
 }
 
 .tn-box-color-2{
-	background: rgba(128, 119, 127, 1);
+	background: rgba(255, 0, 0, 1);
 }
 .tn-box-color-2 p {
 
 }
 
 .tn-box-color-3{
-	background: rgba(128, 119, 127, 1);
+	background: rgba(255, 0, 0, 1);
 }
 .tn-box-color-3 p {
 
@@ -208,6 +208,35 @@
 
 /* Let's add some different durations for the demo */
 
+.tn-box.info {
+	background: url('/assets/app/modules/jukebox/css/img/bg.png');
+	-webkit-animation-duration: 6s;
+	-moz-animation-duration: 6s;
+	-o-animation-duration: 6s;
+	-ms-animation-duration: 6s;
+	animation-duration: 6s;
+
+	-webkit-animation-delay: 0.2s;
+	-moz-animation-delay: 0.2s;
+	-o-animation-delay: 0.2s;
+	-ms-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+.tn-box.info .tn-progress {
+	-webkit-animation-duration: 5s;
+	-moz-animation-duration: 5s;
+	-o-animation-duration: 5s;
+	-ms-animation-duration: 5s;
+	animation-duration: 5s;
+
+	-webkit-animation-delay: 0.7s;
+	-moz-animation-delay: 0.7s;
+	-o-animation-delay: 0.7s;
+	-ms-animation-delay: 0.7s;
+	animation-delay: 0.7s;
+}
+
 .tn-box.warning {
 	background: url('/assets/app/modules/jukebox/css/img/bg.png');
 	-webkit-animation-duration: 6s;
@@ -224,6 +253,7 @@
 }
 
 .tn-box.warning .tn-progress {
+
 	-webkit-animation-duration: 5s;
 	-moz-animation-duration: 5s;
 	-o-animation-duration: 5s;
