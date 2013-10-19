@@ -30,16 +30,7 @@
 				<div data-ng-switch data-on="player_status.state">
 					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="-1">Start Playing</button>
 					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="0">Start Playing (Ended)</button>
-					<button data-ng-click="stop_playing(jukebox)" data-ng-switch-when="1" data-ng-if="is_owner(user, jukebox)">Stop</button>
-					<button data-ng-click="pause_playing(jukebox)" data-ng-switch-when="1" data-ng-if="is_owner(user, jukebox) === false">Pause</button>
-					<button data-ng-click="resume_playing(jukebox)" data-ng-switch-when="2">Resume</button>
-					<button data-ng-click="start_playing_queued_track(jukebox, track_playing.id, player_status.current_time)" data-ng-switch-when="1" data-ng-if="is_owner(user, jukebox)">Force sync Jukebox</button>
-					<button data-ng-click="start_playing_queued_track(jukebox, track_playing.id, player_status.current_time)" data-ng-switch-when="2" data-ng-if="is_owner(user, jukebox)">Resume and sync Jukebox</button>
 					<p data-ng-switch-when="3">Buffering... please wait</p>
-					<!-- is this needed idr
-					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="5">Play</button>
-					-->
-					<button data-ng-click="start_playing_queued_track(jukebox, track_playing.id, player_status.current_time)" data-ng-switch-when="5" data-ng-if="is_owner(user, jukebox)">Continue ></button>
 				</div>
 			</div>
 		</div>
@@ -55,7 +46,7 @@
 					<p>{[{ $index + 1 }]}. {[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
 					<span> - by {[{ queued_track.queuedby_nick_name }]}</span>
 					<div data-ng-if="user.email">
-						<button class="small_font" data-ng-if="is_owner(user, jukebox)" ng-click="start_playing_queued_track(jukebox, queued_track.id, 0)">Play Now!!!</button>
+						<button class="small_font" data-ng-if="is_owner(user, jukebox)" ng-click="start_playing_queued_track(jukebox, queued_track.id, 0, true)">Play Now!!!</button>
 						<button class="small_font" ng-click="remove_queued_track(jukebox, queued_track, true)">Archive</button>
 						<button class="small_font" data-ng-if="is_owner(user, jukebox)" ng-click="remove_queued_track(jukebox, queued_track, false)">Delete</button>
 					</div>

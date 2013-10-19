@@ -55,11 +55,11 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 
 	/* jukebox_player: Send command to start playing specific track at specific time*/
-	$scope.start_playing_queued_track = function(jukebox, queued_track_id, seek) {
+	$scope.start_playing_queued_track = function(jukebox, queued_track_id, seek, autostart) {
 		jukebox_service.start_playing_async(jukebox.id, queued_track_id, seek).then(
 			function(status) {
 				if (status.code === 200) {
-					// a lot of stubs
+					// If all went well the player dictates start
 					console.log('Found track to play');
 					$scope.get_playing_track(jukebox);
 					jukebox.player.on=true;
@@ -68,7 +68,10 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 						'order': 'edit_date',
 						'short_desc': true
 					});
-					$scope.start_playing(jukebox);
+
+					if (autostart)
+						$scope.start_playing(jukebox);
+
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
 					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
@@ -326,7 +329,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			if (prev_state === 1 && state.state === 2)// seeking or stop
 				$scope.stop_playing($scope.jukeboxes[0]);
 			if (prev_state === 2 && state.state === 1)// from paused or seek to apply play
-				$scope.start_playing_queued_track($scope.jukeboxes[0], track_playing, state.current_time);
+				$scope.start_playing_queued_track($scope.jukeboxes[0], $scope.track_playing.id, state.current_time, false);
 		}
 
 		//// Last common actions

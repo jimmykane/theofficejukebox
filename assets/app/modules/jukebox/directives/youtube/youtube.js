@@ -51,6 +51,7 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 						player_service.broadcast_change_state({
 							"state": -1,
 							"current_time": $scope.player.getCurrentTime()
+							//"current_time": $scope.player.getCurrentTime()
 						});
 					}
 					// ended
