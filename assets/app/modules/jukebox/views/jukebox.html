@@ -30,6 +30,7 @@
 				<div data-ng-switch data-on="player_status.state">
 					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="-1">Start Playing</button>
 					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="0">Start Playing (Ended)</button>
+					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="1" data-ng-if="is_owner(user, jukebox) === false">Sync Play</button>
 					<p data-ng-switch-when="3">Buffering... please wait</p>
 				</div>
 			</div>
