@@ -294,35 +294,56 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 	// Contains a lot of $scope.jukeboxes[0] stubs. take care
 	$scope.$on('handlePlayerChangedState', function(event, state) {
+
+		// Here we need to know also the prev state to understand what
+		// the user is trying to do. Stop, seek, wtf?
 		logging.info('Player changed state');
-		// Should be reseting the current time?
-		logging.info(state);
+		var prev_state = false;
+		if ($scope.player_status.state)
+			prev_state = $scope.player_status.state;
+
+		//-1 (unstarted)
+		//0 (ended)
+		//1 (playing)
+		//2 (paused)
+		//3 (buffering)
+		//5 (video cued)
+
+		// State changes eg when. Take care
+		// seeking 1, 2, 1
+		// Start playing -1, 5, 1
+
+		console.log('prev state', prev_state);
+		console.log('new state', state.state);
 
 		// First actions when it's not an admin/owner
-
 		if ($scope.is_owner($scope.user, $scope.jukeboxes[0]) === false){
-
+			if (prev_state === 1 && state.state === 2)// seeking or stop
+				$scope.stop_playing($scope.jukeboxes[0]);
 		}
 
 		// Then if he is admin/owner
 		if ($scope.is_owner($scope.user, $scope.jukeboxes[0]) === true){
-			if (state.state === 2)
-			$scope.stop_playing($scope.jukeboxes[0]);
+			//if (state.state === 2)
+				//$scope.stop_playing($scope.jukeboxes[0]);
+
 		}
 
-		// Last common actions
-		if (state.state == 0){//ended and now?
-			console.log('Going to next')
-			$scope.get_queued_tracks($scope.jukeboxes[0], {
-				'archived': false,
-			});
-			$scope.get_queued_tracks($scope.jukeboxes[0], {
-				'archived': true,
-				'order': 'edit_date',
-				'short_desc': true
-			});
-			$scope.start_playing($scope.jukeboxes[0]);
-		}
+		//// Last common actions
+		//if (state.state == 0){//ended and now?
+			//console.log('Going to next')
+			//$scope.get_queued_tracks($scope.jukeboxes[0], {
+				//'archived': false,
+			//});
+			//$scope.get_queued_tracks($scope.jukeboxes[0], {
+				//'archived': true,
+				//'order': 'edit_date',
+				//'short_desc': true
+			//});
+			//$scope.start_playing($scope.jukeboxes[0]);
+		//}
+
+		//if (state.state === 1)
 
 		// Finally cahnge the state...
 		$scope.player_status = state;

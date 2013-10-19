@@ -137,7 +137,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		.success(function(response, status, headers, config) {
 			if (response.status.code !== 200){
 				deffered.resolve(response.status);
-				//track_playing = {}; //reset
+				track_playing = {}; //reset
 				return;
 			}
 			// Should do check eg first one is consumed
