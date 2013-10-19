@@ -32,17 +32,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		return false;
 	};
 
-
-	/* Polling function */
-	$scope.poll = function (time){
-		$scope.get_jukeboxes();
-		$timeout($scope.start_poll);
-	}
-	$scope.start_poll = function (){
-		$timeout($scope.poll, 3000000);
-	}
-
-
 	/* Funtion to convert query param slide_id to int */
 	$scope.current_jukebox_id = function(){
 		// stub for getting id
