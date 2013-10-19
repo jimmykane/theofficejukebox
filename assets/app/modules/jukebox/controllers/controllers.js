@@ -52,15 +52,15 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 					console.log('Found track to play');
 					$scope.get_playing_track(jukebox);
 					jukebox.player.on=true;
+
+					if (!autostart)
+						return;
+					$scope.start_playing(jukebox);
 					$scope.get_queued_tracks(jukebox, {
 						'archived': true,
 						'order': 'edit_date',
 						'short_desc': true
 					});
-
-					if (autostart)
-						$scope.start_playing(jukebox);
-
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
 					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
@@ -231,6 +231,8 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 				if (status.code === 200) {
 					$scope.get_jukeboxes([jukebox.id]);
 					ui.show_notification_info('Jukebox changed state');
+				}else if (status.code === 401) {
+					ui.show_notification_warning('Unauthorized... Nope dont do that ' + status.message);
 				}else if (status.code === 403) {
 					ui.show_notification_warning('hmmmm ' + status.message);
 				}else if (status.code === 404) {
@@ -345,7 +347,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 				if (status.code === 200) {
 					console.log('Stopping video');
 					jukebox.player.on = false;
-					//player_service.broadcast_stop_playing(jukebox.id);
 				}else if (status.code === 401) {
 					ui.show_notification_warning('Unauthorized!!!');
 				}else if (status.code === 403) {
