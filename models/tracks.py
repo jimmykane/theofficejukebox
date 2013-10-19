@@ -88,8 +88,11 @@ class QueuedTrack(ndb.Expando, DictModel, NDBCommonModel):
 
 	@classmethod
 	def _to_dict(cls, queued_track):
+		nick_name = 'Unknown'
 		queued_track_id = queued_track.key.id()
 		person = queued_track.queued_by_person_key.get()
+		if person:
+			nick_name = person.info.nick_name
 		queued_track_dict = queued_track.to_dict(
 			exclude=[
 				'queued_by_person_key',
@@ -98,7 +101,7 @@ class QueuedTrack(ndb.Expando, DictModel, NDBCommonModel):
 		)
 		queued_track_dict.update({
 			'id': queued_track_id,
-			'queuedby_nick_name': person.info.nick_name,
+			'queuedby_nick_name': nick_name,
 			'creation_date': queued_track.creation_date.isoformat(),
 			'edit_date': queued_track.edit_date.isoformat(),
 		})
