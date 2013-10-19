@@ -24,7 +24,8 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 					//videoId: $scope.live_track.video_id,
 					events: {
 						'onReady': $scope.onPlayerReady,
-						'onStateChange': $scope.onPlayerStateChange
+						'onStateChange': $scope.onPlayerStateChange,
+						'onError': $scope.onError
 					}
 				});
 			};
@@ -47,11 +48,17 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 					console.log("Playa changed state");
 					// unstarted
 					if ($scope.player.getPlayerState() === -1){
-						player_service.broadcast_change_state({"state": -1});
+						player_service.broadcast_change_state({
+							"state": -1,
+							"current_time": $scope.player.getCurrentTime()
+						});
 					}
 					// ended
 					if ($scope.player.getPlayerState() === 0){
-						player_service.broadcast_change_state({"state": 0});
+						player_service.broadcast_change_state({
+							"state": 0,
+							"current_time": $scope.player.getCurrentTime()
+						});
 					}
 					// playing
 					if ($scope.player.getPlayerState() === 1){
@@ -69,7 +76,10 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 					}
 					// buffering
 					if ($scope.player.getPlayerState() === 3){
-						player_service.broadcast_change_state({"state": 3});
+						player_service.broadcast_change_state({
+							"state": 3,
+							"current_time": $scope.player.getCurrentTime()
+						});
 					}
 					// video cued
 					if ($scope.player.getPlayerState() === 5){

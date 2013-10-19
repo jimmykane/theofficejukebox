@@ -318,17 +318,15 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 		// First actions when it's not an admin/owner
 		if ($scope.is_owner($scope.user, $scope.jukeboxes[0]) === false){
-			if (prev_state === 1 && state.state === 2)// seeking or stop
-				$scope.stop_playing($scope.jukeboxes[0]);
-			if (prev_state === 2 && state.state === 1)// from paused or seek to apply play
-				$scope.start_playing_queued_track($scope.jukeboxes[0], track_playing, state.current_time);
+
 		}
 
 		// Then if he is admin/owner
 		if ($scope.is_owner($scope.user, $scope.jukeboxes[0]) === true){
-			//if (state.state === 2)
-				//$scope.stop_playing($scope.jukeboxes[0]);
-
+			if (prev_state === 1 && state.state === 2)// seeking or stop
+				$scope.stop_playing($scope.jukeboxes[0]);
+			if (prev_state === 2 && state.state === 1)// from paused or seek to apply play
+				$scope.start_playing_queued_track($scope.jukeboxes[0], track_playing, state.current_time);
 		}
 
 		//// Last common actions
@@ -371,7 +369,9 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 				if (status.code === 200) {
 					console.log('Stopping video');
 					jukebox.player.on = false;
-					player_service.broadcast_stop_playing(jukebox.id);
+					//player_service.broadcast_stop_playing(jukebox.id);
+				}else if (status.code === 401) {
+					ui.show_notification_warning('Unauthorized!!!');
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
 					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
