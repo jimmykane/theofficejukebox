@@ -25,6 +25,8 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 	/* Function to check if the logged in user is the same with the jukebox owner */
 	$scope.is_owner = function(user, jukebox){
+		if (!user.id)
+			return false
 		if (user.id === jukebox.owner_key_id)
 			return true;
 		return false;

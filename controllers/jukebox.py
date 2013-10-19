@@ -136,18 +136,25 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 			response = {'status':self.get_status(status_code=404, msg='Sorry but no jukebox')}
 			self.response.out.write(json.dumps(response))
 			return
-		if not jukebox.player.on:
-			response = {'status':self.get_status(status_code=403, msg='Jukebox is off')}
-			self.response.out.write(json.dumps(response))
-			return
+
+		#if not jukebox.player.on:
+			#response = {'status':self.get_status(status_code=403, msg='Jukebox is off')}
+			#self.response.out.write(json.dumps(response))
+			#return
 
 		player = jukebox.player
 		#logging.info(player)
 
-		track_playing = jukebox.track_playing
+		#return just the title and the stopped elapsed
+		track_playing = player.track_key.get()
 
 		if not track_playing:
-			response = {'status':self.get_status(status_code=403, msg='Sorry no track is playing atm..')}
+			response = {
+				'status':self.get_status(
+					status_code=403,
+					msg='Sorry no track is playing atm..'
+				)
+			}
 			self.response.out.write(json.dumps(response))
 			return
 
@@ -157,7 +164,12 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 		# elapsed greater than total seconds should reset
 		if start_seconds > track_playing.duration:
 			logging.info('Current song has ended')
-			response = {'status':self.get_status(status_code=403, msg='Last song ended? Or jukebox is jammed?')}
+			response = {
+				'status':self.get_status(
+					status_code=403,
+					msg='Last song ended? Or jukebox is jammed?'
+				)
+			}
 			self.response.out.write(json.dumps(response))
 			return
 
@@ -291,6 +303,7 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			response = {'status':self.get_status(status_code=404)}
 			self.response.out.write(json.dumps(response))
 			return
+
 		#transaction here please!!!!!!!!!
 		player = jukebox.player
 
