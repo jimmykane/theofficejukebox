@@ -14,9 +14,13 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 			// This is called when the player is loaded from YT
 			$window.onYouTubeIframeAPIReady = function() {
 				$scope.player = new YT.Player('player', {
-					height: '150',
-					width: '250',
-					playerVars: { 'autoplay': 1, 'controls': 0 },
+					height: '100',
+					width: '350',
+					playerVars: {
+						'autoplay': 0,
+						'controls': 1,
+						'autohide': 2
+					},
 					//videoId: $scope.live_track.video_id,
 					events: {
 						'onReady': $scope.onPlayerReady,
@@ -75,6 +79,15 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 						});
 					}
 
+				});
+			};
+
+
+			// When the player has been loaded and is ready to play etc
+			$scope.onError = function (event) {
+				$scope.$apply(function(){
+					logging.info("Playa Encountered and ERROR");
+					logging.info(event)
 				});
 			};
 
