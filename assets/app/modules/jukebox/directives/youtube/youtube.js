@@ -8,7 +8,7 @@
 angular.module('mainApp.jukebox').directive('youTube', function($window, logging, ui, jukebox_service, player_service) {
 	return {
 		restrict: 'A', // only activate on element attribute
-		scope: true, // New scope to use but rest inherit from parent
+		scope: true, // New scope to use but rest inherit proto from parent
 		controller: function($scope, $element, $attrs) {
 
 			// This is called when the player is loaded from YT
