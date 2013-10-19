@@ -119,12 +119,5 @@ mainApp.factory('users_service', function($http, $q, logging) {
 		return user;
 	};
 
-	/* Idk if it's needed*/
-	users_service.user_is_logged_in = function(){
-		if (!user.email)
-			return false;
-		return true;
-	};
-
 	return users_service;
 });

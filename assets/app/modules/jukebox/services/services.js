@@ -310,19 +310,8 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 			if (jukebox.queued_tracks[i].id === queued_track_id)
 				found_position = i;
 		}
-		//console.log(found_position)
 		return found_position;
 	};
-
-	//jukebox_service.start_playing = function() {
-		//console.log(jukeboxes)
-		//jukebox_service.broadcastNotification();
-	//};
-
-	//jukebox_service.broadcastNotification = function() {
-		//$rootScope.$broadcast('handleStartPlaying');
-	//};
-
 
 	return jukebox_service;
 

@@ -17,7 +17,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	//logging.info("Requested JukeBox ID", $scope.jukebox_id);
 	$scope.jukeboxes = jukebox_service.jukeboxes();
 	$scope.user = users_service.user();
-	$scope.user.logged_in = users_service.user_is_logged_in();
 	$scope.track_playing = jukebox_service.get_track_playing();
 	$scope.new_queued_track = {};
 	$scope.player_status = false;
