@@ -57,7 +57,7 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 	def random_archived_queued_track(self):
 		queued_track_keys = QueuedTrack.query(ancestor=self.key)\
 			.filter(QueuedTrack.archived==True)\
-			.order(QueuedTrack.edit_date).fetch(1000,keys_only=True)
+			.order(QueuedTrack.edit_date).fetch(30,keys_only=True)
 		if not queued_track_keys:
 			return False
 		random_key = random.choice(queued_track_keys)
