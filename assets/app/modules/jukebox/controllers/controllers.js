@@ -79,15 +79,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	};
 
 
-	/* Function to set countdowns on the current track */
-	// Not yet implemented
-	$scope.get_jukebox_live_track = function(jukebox){
-		// Here is stub again
-		jukebox = $scope.track_playing;
-		var a = $scope.get_playing_track(jukebox)
-		return a;
-	};
-
 	/* Find the jukebox total play time */
 	$scope.get_jukebox_total_play_duration = function(jukebox){
 		var total_play_time = 0;
