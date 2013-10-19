@@ -326,25 +326,28 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 		// Then if he is admin/owner
 		if ($scope.is_owner($scope.user, $scope.jukeboxes[0]) === true){
-			if (prev_state === 1 && state.state === 2)// seeking or stop
-				$scope.stop_playing($scope.jukeboxes[0]);
+			if (prev_state === 1 && state.state === 2){// seeking or stop or end
+				// if ended I have to detect it. it's going to be almost the same duration so -1s
+				if (state.current_time < ($scope.track_playing.duration - 1))
+					$scope.stop_playing($scope.jukeboxes[0]);
+			}
 			if (prev_state === 2 && state.state === 1)// from paused or seek to apply play
 				$scope.start_playing_queued_track($scope.jukeboxes[0], $scope.track_playing.id, state.current_time, false);
 		}
 
-		//// Last common actions
-		//if (state.state == 0){//ended and now?
-			//console.log('Going to next')
-			//$scope.get_queued_tracks($scope.jukeboxes[0], {
-				//'archived': false,
-			//});
-			//$scope.get_queued_tracks($scope.jukeboxes[0], {
-				//'archived': true,
-				//'order': 'edit_date',
-				//'short_desc': true
-			//});
-			//$scope.start_playing($scope.jukeboxes[0]);
-		//}
+		// Last common actions
+		if (prev_state === 2 && state.state === 0){//ended and now?
+			console.log('Going to next')
+			$scope.get_queued_tracks($scope.jukeboxes[0], {
+				'archived': false,
+			});
+			$scope.get_queued_tracks($scope.jukeboxes[0], {
+				'archived': true,
+				'order': 'edit_date',
+				'short_desc': true
+			});
+			$scope.start_playing($scope.jukeboxes[0]);
+		}
 
 		//if (state.state === 1)
 
