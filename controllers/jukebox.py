@@ -174,10 +174,13 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 			return
 
 		track_playing_id = track_playing.key.id()
+		nick_name = 'Unknown'
 		person = track_playing.queued_by_person_key.get()
+		if person:
+			nick_name = person.info.nick_name
 		track_playing = track_playing.to_dict(exclude=['queued_by_person_key','track_key','creation_date', 'edit_date'])
 		track_playing.update({'id': track_playing_id})
-		track_playing.update({'person_nick_name': person.info.nick_name})
+		track_playing.update({'person_nick_name': nick_name})
 		track_playing.update({'start_seconds': start_seconds})
 
 		response = {'data': track_playing}
