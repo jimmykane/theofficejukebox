@@ -80,12 +80,13 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 
 	/* Find the jukebox total play time */
-	$scope.get_jukebox_total_play_duration = function(jukebox){
+	$scope.get_jukebox_total_play_duration = function(jukebox, archived){
 		var total_play_time = 0;
-		if (!jukebox.queued_tracks)
+		if (!jukebox || !jukebox.queued_tracks)
 			return total_play_time;
 		for (var i=0; jukebox.queued_tracks.length > i; i++){
-			total_play_time = total_play_time + jukebox.queued_tracks[i].duration;
+			if (jukebox.queued_tracks[i].archived === archived)
+				total_play_time = total_play_time + jukebox.queued_tracks[i].duration;
 		}
 		return total_play_time;
 	};
