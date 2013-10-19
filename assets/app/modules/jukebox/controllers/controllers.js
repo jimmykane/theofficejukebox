@@ -298,21 +298,12 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	// Contains a lot of $scope.jukeboxes[0] stubs. take care
 	$scope.$on('handlePlayerChangedState', function(event, state) {
 
-		// Here we need to know also the prev state to understand what
-		// the user is trying to do. Stop, seek, wtf?
 		logging.info('Player changed state', state);
 		var prev_state = false;
 		if ($scope.player_status.state)
 			prev_state = $scope.player_status.state;
 
-		//-1 (unstarted)
-		//0 (ended)
-		//1 (playing)
-		//2 (paused)
-		//3 (buffering)
-		//5 (video cued)
-
-		// State changes eg when. Take care
+		//-1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5(video cued)
 		// seeking 1, 2, 1
 		// Start playing -1, 5, 1
 
@@ -348,8 +339,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			});
 			$scope.start_playing($scope.jukeboxes[0]);
 		}
-
-		//if (state.state === 1)
 
 		// Finally cahnge the state...
 		$scope.player_status = state;
@@ -412,16 +401,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	//});
 
 
-
-	/* The controller does not get reinitialized on seach params.
-	 * Initialization must be similar to any drop-off point */
-	//if ($scope.person_id){
 	$scope.get_jukeboxes();
-		//$scope.start_player();
-	//}else{
-		//$location.path('/register/'); // Here must be my id
-	//}
-
 
 	$scope.duration_to_HHMMSS = function (duration) {
 		if (!duration)
