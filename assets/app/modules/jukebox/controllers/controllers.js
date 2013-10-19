@@ -272,6 +272,8 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 						ui.show_notification_info('Queued Track Removed from queue');
 					else
 						ui.show_notification_info('Queued Track Deleted!!!');
+				}else if (status.code === 401) {
+					ui.show_notification_warning('Hey!!! You are not authorized to do this...');
 				}else if (status.code === 403) {
 					ui.show_notification_warning('hmmmm ' + status.message);
 				}else if (status.code === 404) {
