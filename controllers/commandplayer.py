@@ -56,7 +56,7 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 			return
 
 		# the next song is the first queued
-		next_track = QueuedTrack.query(ancestor=self.key)\
+		next_track = QueuedTrack.query(ancestor=jukebox.key)\
 			.filter(QueuedTrack.archived==False)\
 			.order(QueuedTrack.edit_date).get()
 
