@@ -290,12 +290,26 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
+	// Contains a lot of $scope.jukeboxes[0] stubs. take care
 	$scope.$on('handlePlayerChangedState', function(event, state) {
 		logging.info('Player changed state');
+		// Should be reseting the current time?
 		logging.info(state);
-		$scope.player_status = state;
-		// "Here should go some auto shit
-		if ($scope.player_status.state == 0){//ended and now?
+
+		// First actions when it's not an admin/owner
+
+		if ($scope.is_owner($scope.user, $scope.jukeboxes[0]) === false){
+
+		}
+
+		// Then if he is admin/owner
+		if ($scope.is_owner($scope.user, $scope.jukeboxes[0]) === true){
+			if (state.state === 2)
+			$scope.stop_playing($scope.jukeboxes[0]);
+		}
+
+		// Last common actions
+		if (state.state == 0){//ended and now?
 			console.log('Going to next')
 			$scope.get_queued_tracks($scope.jukeboxes[0], {
 				'archived': false,
@@ -307,6 +321,10 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			});
 			$scope.start_playing($scope.jukeboxes[0]);
 		}
+
+		// Finally cahnge the state...
+		$scope.player_status = state;
+
 	});
 
 	$scope.start_playing = function(jukebox){
