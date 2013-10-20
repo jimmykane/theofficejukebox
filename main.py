@@ -28,6 +28,9 @@ class SetupHandler(webapp2.RequestHandler):
 		jukebox.title = 'Movenext'
 		jukebox.owner_key = person.key
 		jukebox.put()
+		membership = JukeboxMembership.get_or_insert(person.key.id(),parent=jukebox.key)
+		membership.type = 'owner'
+		membership.put()
 		if jukebox.player:
 			self.response.out.write('done...')
 			return
