@@ -22,12 +22,17 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	$scope.player_status = false;
 	$scope.player_status.state = -1;
 
-	/* Function to check if the logged in user is the same with the jukebox owner */
-	$scope.is_owner = function(user, jukebox){
-		if (!user.id)
-			return false
-		if (user.id === jukebox.owner_key_id)
-			return true;
+
+	$scope.is_owner_or_admin = function(user, jukebox){
+		if (!user.id || !user.memberships)
+			return false;
+		for (var i=0; i < user.memberships.length; i++ ){
+			//console.log(user.memberships[i], jukebox.id, user.memberships[i].type)
+			if (user.memberships[i].id === jukebox.id && user.memberships[i].type === 'owner')
+				return true;
+			if (user.memberships[i].id === jukebox.id && user.memberships[i].type === 'admin')
+				return true;
+		}
 		return false;
 	};
 
@@ -293,12 +298,12 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		console.log('new state', state.state);
 
 		// First actions when it's not an admin/owner
-		if ($scope.is_owner($scope.user, $scope.jukeboxes[0]) === false){
+		if ($scope.is_owner_or_admin($scope.user, $scope.jukeboxes[0]) === false){
 
 		}
 
 		// Then if he is admin/owner
-		if ($scope.is_owner($scope.user, $scope.jukeboxes[0]) === true){
+		if ($scope.is_owner_or_admin($scope.user, $scope.jukeboxes[0]) === true){
 			if (prev_state === 1 && state.state === 2){// seeking or stop or end
 				// if ended I have to detect it. it's going to be almost the same duration so -1s
 				if (state.current_time < ($scope.track_playing.duration - 1))

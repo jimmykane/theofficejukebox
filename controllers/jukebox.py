@@ -213,21 +213,31 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			jukebox_id = data['jukebox_id']
 			queued_track_id = data['queued_track_id']
 			seek = data['seek']
+			jukebox = ndb.Key(Jukebox, jukebox_id).get()
 		except Exception as e:
 			logging.error('Unconvertable request' + repr(e))
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
 			self.response.out.write(json.dumps(response))
 			return
-		# is there a jukebox ?
-		jukebox = ndb.Key(Jukebox, jukebox_id).get()
+
+
 		if not jukebox:
 			response = {'status':self.get_status(status_code=404)}
 			self.response.out.write(json.dumps(response))
 			return
-		if jukebox.owner_key != person.key:
-			response = {'status':self.get_status(status_code=404)}
+
+		# Only owner and admins can do go on
+		membership = ndb.Key(Jukebox, jukebox.key.id(), JukeboxMembership, person.key.id()).get()
+		if not membership:
+			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
+
+		if (membership.type != 'owner') and (membership.type != 'admin'):
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
 		queued_track = ndb.Key(
 			Jukebox, jukebox_id,
 			QueuedTrack, queued_track_id

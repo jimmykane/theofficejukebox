@@ -77,7 +77,6 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 		)
 		jukebox_dict.update({
 			'id': jukebox_id,
-			'owner_key_id': jukebox.owner_key.id()
 		})
 		return jukebox_dict
 
