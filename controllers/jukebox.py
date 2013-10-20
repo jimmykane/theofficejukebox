@@ -89,10 +89,11 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 			if 'archived' in filters:
 				query = query.filter(QueuedTrack.archived==filters['archived'])
 			if 'order' in filters:
-				logging.info(111)
-				query = query.order(ndb.GenericProperty(filters['order']))
 				if 'short_desc' in filters:
 					query = query.order(-ndb.GenericProperty(filters['order']))
+				else:
+					query = query.order(ndb.GenericProperty(filters['order']))
+
 		logging.info(query)
 		# only queued tracks and wrap it in a try. Might explode...
 		try:
