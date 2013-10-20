@@ -69,7 +69,7 @@
 			<div class="queued_track_list" >
 				<br/>
 				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search | orderBy: '-edit_date' "  class="flip-in queued_track_list-item ">
-					<p style="text-align: left;">{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
+					<p style="text-align: left;">{[{ (jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search).length - $index }]}.{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
 					<button class="small_font" ng-click="add_new_queued_track(jukeboxes[0], queued_track.id)">Queue It!!!</button></p>
 				</div>
 			</div>
