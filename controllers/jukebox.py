@@ -150,6 +150,16 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 		#logging.info(player)
 
 		#return just the title and the stopped elapsed
+		if not player.track_key:
+			response = {
+				'status':self.get_status(
+					status_code=403,
+					msg='Sorry no track is playing atm..'
+				)
+			}
+			self.response.out.write(json.dumps(response))
+			return
+
 		track_playing = player.track_key.get()
 
 		if not track_playing:
