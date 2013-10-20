@@ -58,7 +58,7 @@ class GetJukeBoxesHandler(webapp2.RequestHandler, JSONHandler):
 			jukeboxes_dict_list.append(jukebox_dict)
 		response = {'data': jukeboxes_dict_list}
 		response.update({'status': self.get_status()})
-		logging.info(response)
+		#logging.info(response)
 		self.response.out.write(json.dumps(response))
 		return
 
@@ -82,7 +82,7 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 
 		# initialize a query instance
 		query = QueuedTrack.query(ancestor=jukebox_key)
-		logging.info(filters)
+		#logging.info(filters)
 		archived = False
 		order = 'edit_date'
 		amount = 30
@@ -97,7 +97,7 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 				else:
 					query = query.order(ndb.GenericProperty(filters['order']))
 
-		logging.info(query)
+		#logging.info(query)
 		# only queued tracks and wrap it in a try. Might explode...
 		try:
 			queued_tracks = query.fetch(amount)
@@ -113,7 +113,7 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 			queued_tracks_list.append(queued_track_dict)
 
 		response = {'data': queued_tracks_list}
-		logging.info(response)
+		#logging.info(response)
 		response.update({'status': self.get_status()})
 		self.response.out.write(json.dumps(response))
 		return

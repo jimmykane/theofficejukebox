@@ -97,9 +97,9 @@ class AddSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
 
 		# First check if track exists etc
 		# should have contect options
-		logging.info(video_id)
+		#logging.info(video_id)
 		track = YouTubeTrack.get_or_insert(video_id)
-		logging.info(track)
+		#logging.info(track)
 
 		# should be in trans
 		# or maybe not since I can just check if they are set
