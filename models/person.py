@@ -41,6 +41,19 @@ class Person(ndb.Expando):
 		return person
 
 	@classmethod
+	def _to_dict(cls, person):
+		person_id = person.key.id()
+		person_dict = person.to_dict(
+			exclude=[
+				'registration_date',
+			]
+		)
+		person_dict.update({
+			'id': person_id,
+		})
+		return person_dict
+
+	@classmethod
 	def _pre_delete_hook(cls, key):
 		# This needs urgent fixing. Should iterate in slides etc.
 		person_info = PersonInfo.query(ancestor=key).get()
@@ -56,3 +69,16 @@ class PersonInfo(ndb.Expando):
 	email = ndb.StringProperty()
 	nick_name = ndb.StringProperty()
 	edit_date = ndb.DateTimeProperty(auto_now=True)
+
+	@classmethod
+	def _to_dict(cls, person_info):
+		person_info_id = person_info.key.id()
+		person_info_dict = person_info.to_dict(
+			exclude=[
+				'edit_date',
+			]
+		)
+		person_info_dict.update({
+			'id': person_info_id,
+		})
+		return person_info_dict

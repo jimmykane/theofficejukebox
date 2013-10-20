@@ -90,6 +90,21 @@ class JukeboxMembership(ndb.Expando, DictModel, NDBCommonModel):
 	person_key = ndb.KeyProperty()
 	type = ndb.StringProperty()
 
+	@classmethod
+	def _to_dict(cls, jukebox_membership):
+		jukebox_membership_id = jukebox_membership.key.id()
+		jukebox_membership_dict = jukebox_membership.to_dict(
+			exclude=[
+				'creation_date',
+				'edit_date',
+				'person_key',
+			]
+		)
+		jukebox_membership_dict.update({
+			'id': jukebox_membership_id,
+		})
+		return jukebox_membership_dict
+
 
 class JukeboxPlayer(ndb.Expando, DictModel, NDBCommonModel):
 
