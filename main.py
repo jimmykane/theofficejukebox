@@ -30,6 +30,7 @@ class SetupHandler(webapp2.RequestHandler):
 		jukebox.put()
 		membership = JukeboxMembership.get_or_insert(person.key.id(),parent=jukebox.key)
 		membership.type = 'owner'
+		membership.person_key = person.key
 		membership.put()
 		if jukebox.player:
 			self.response.out.write('done...')
