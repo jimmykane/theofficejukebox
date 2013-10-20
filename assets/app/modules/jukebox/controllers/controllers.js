@@ -28,9 +28,9 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			return false;
 		for (var i=0; i < user.memberships.length; i++ ){
 			//console.log(user.memberships[i], jukebox.id, user.memberships[i].type)
-			if (user.memberships[i].id === jukebox.id && user.memberships[i].type === 'owner')
+			if (user.memberships[i].jukebox_id === jukebox.id && user.memberships[i].type === 'owner')
 				return true;
-			if (user.memberships[i].id === jukebox.id && user.memberships[i].type === 'admin')
+			if (user.memberships[i].jukebox_id === jukebox.id && user.memberships[i].type === 'admin')
 				return true;
 		}
 		return false;

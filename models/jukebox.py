@@ -101,6 +101,7 @@ class JukeboxMembership(ndb.Expando, DictModel, NDBCommonModel):
 		)
 		jukebox_membership_dict.update({
 			'id': jukebox_membership_id,
+			'jukebox_id': jukebox_membership.key.parent().id()
 		})
 		return jukebox_membership_dict
 
