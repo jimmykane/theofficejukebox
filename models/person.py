@@ -72,13 +72,13 @@ class PersonInfo(ndb.Expando):
 
 	@classmethod
 	def _to_dict(cls, person_info):
-		person_info_id = person_info.key.id()
+		#person_info_id = person_info.key.id()
 		person_info_dict = person_info.to_dict(
 			exclude=[
 				'edit_date',
 			]
 		)
-		person_info_dict.update({
-			'id': person_info_id,
-		})
+		#person_info_dict.update({
+			#'id': person_info_id,
+		#})
 		return person_info_dict

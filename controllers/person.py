@@ -66,15 +66,22 @@ class GetCurrentPersonHanlder(UserPageHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		person_id = person.key.id()
-
+		# First convert to dict
+		person_dict = Person._to_dict(person)
+		# Then get info convert to dict and update person dict
+		person_info = person.info
+		person_info_dict = PersonInfo._to_dict(person_info)
+		person_dict.update(person_info_dict)
+		# Last get the memberships
 		jukebox_memberships = person.jukebox_memberships
-		logging.info(jukebox_memberships)
+		member_ships = []
+		for jukebox_membership in jukebox_memberships:
+			jukebox_membership_dict = JukeboxMembership._to_dict(jukebox_membership)
+			member_ships.append(jukebox_membership_dict)
+		person_dict.update({'memberships': member_ships})
 
-		person = person.info.to_dict(exclude=['edit_date'])
-		person.update({'id': person_id})
-		person.update({'app_admin': users.is_current_user_admin()})
+		person_dict.update({'app_admin': users.is_current_user_admin()})
 
-		response = response = {'data': person}
+		response = response = {'data': person_dict}
 		response.update({'status': self.get_status()})
 		self.response.out.write(json.dumps(response))
