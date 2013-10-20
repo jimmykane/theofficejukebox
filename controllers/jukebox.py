@@ -316,8 +316,16 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			response = {'status':self.get_status(status_code=404)}
 			self.response.out.write(json.dumps(response))
 			return
-		if jukebox.owner_key != person.key:
-			response = {'status':self.get_status(status_code=404)}
+
+		# Only owner and admins can do go on
+		membership = ndb.Key(Jukebox, jukebox.key.id(), JukeboxMembership, person.key.id()).get()
+		if not membership:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		if (membership.type != 'owner') and (membership.type != 'admin'):
+			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
 
@@ -364,6 +372,18 @@ class SaveJukeBoxeHandler(webapp2.RequestHandler, JSONHandler):
 
 		if not jukebox:
 			response = {'status': self.get_status(status_code=404)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		# Only owner and admins can do go on
+		membership = ndb.Key(Jukebox, jukebox.key.id(), JukeboxMembership, person.key.id()).get()
+		if not membership:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		if (membership.type != 'owner') and (membership.type != 'admin'):
+			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
 

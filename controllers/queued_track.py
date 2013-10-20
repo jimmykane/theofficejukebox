@@ -57,8 +57,14 @@ class RemoveSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		if not users.is_current_user_admin():
-			logging.warning('Unauthorized')
+		# Only owner and admins can do go on
+		membership = ndb.Key(Jukebox, jukebox.key.id(), JukeboxMembership, person.key.id()).get()
+		if not membership:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		if (membership.type != 'owner') and (membership.type != 'admin'):
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
