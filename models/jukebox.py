@@ -82,6 +82,15 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 		return jukebox_dict
 
 
+# Has as id the person id. 1 person to many. Als as prop to query without parent?
+class JukeboxMembership(ndb.Expando, DictModel, NDBCommonModel):
+
+	creation_date = ndb.DateTimeProperty(auto_now_add=True)
+	edit_date = ndb.DateTimeProperty(auto_now=True)
+	person_key = ndb.KeyProperty()
+	type = ndb.StringProperty()
+
+
 class JukeboxPlayer(ndb.Expando, DictModel, NDBCommonModel):
 
 	creation_date = ndb.DateTimeProperty(auto_now_add=True)

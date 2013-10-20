@@ -66,6 +66,7 @@ class GetCurrentPersonHanlder(UserPageHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 		person_id = person.key.id()
+		jukebox_memberships = person.jukebox_memberships
 		person = person.info.to_dict(exclude=['edit_date'])
 		person.update({'id': person_id})
 		person.update({'app_admin': users.is_current_user_admin()})
