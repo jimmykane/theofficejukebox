@@ -85,7 +85,10 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 		logging.info(filters)
 		archived = False
 		order = 'edit_date'
+		amount = 30
 		if filters:
+			if 'amount' in filters:
+				amount = filters['amount']
 			if 'archived' in filters:
 				query = query.filter(QueuedTrack.archived==filters['archived'])
 			if 'order' in filters:
@@ -97,7 +100,7 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 		logging.info(query)
 		# only queued tracks and wrap it in a try. Might explode...
 		try:
-			queued_tracks = query.fetch(30)
+			queued_tracks = query.fetch(amount)
 		except Exception as e:
 			logging.error('Unconvertable Parameters' + repr(e))
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
