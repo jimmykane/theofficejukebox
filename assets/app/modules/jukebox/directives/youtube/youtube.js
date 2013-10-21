@@ -32,18 +32,14 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 
 			// When the player has been loaded and is ready to play etc
 			$scope.onPlayerReady = function (event) {
-				$scope.$apply(function(){
 					logging.info("Playa is ready");
 					logging.info($scope.player);
 					// Lets also broadcast a change state for the others to catch up
 					player_service.broadcast_change_state({"state": $scope.player.getPlayerState()});
-				});
 			};
 
 			// When the player changes a state
 			$scope.onPlayerStateChange = function(event) {
-				$scope.$apply(function(){
-
 					console.log("Playa changed state");
 					// unstarted
 					if ($scope.player.getPlayerState() === -1){
@@ -87,17 +83,13 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 							"current_time": $scope.player.getCurrentTime()
 						});
 					}
-
-				});
 			};
 
 
 			// When the player has been loaded and is ready to play etc
 			$scope.onError = function (event) {
-				$scope.$apply(function(){
 					logging.info("Playa Encountered and ERROR");
 					logging.info(event)
-				});
 			};
 
 
