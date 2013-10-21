@@ -198,9 +198,9 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 
 		# Recalculate please to now and minus a sec if > 0
 		elapsed = datetime.datetime.now() - player.track_queued_on
-		start_seconds = elapsed.total_seconds()
-		if start_seconds > 1:
-			start_seconds = start_seconds - 1
+		start_seconds = elapsed.total_seconds() - 5 # Need to hold them back for 5 secs
+		if start_seconds < 0:
+			start_seconds = 0 # here is only problem. If they press exactely on the change.
 		track_playing.update({'start_seconds': start_seconds})
 
 		response = {'data': track_playing}
