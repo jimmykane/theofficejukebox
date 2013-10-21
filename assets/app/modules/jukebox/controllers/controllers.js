@@ -389,11 +389,13 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 	// This should be moved to a service or something
 	$scope.track_playing_timer = function(msecs){
+		//console.log($scope.track_playing)
 		//if $scope.player_status.current_time
 		var timeoutId = $timeout(function() {
 			$scope.track_playing_timer(msecs); // schedule another update
 		}, msecs);
-		if ($scope.track_playing && $scope.track_playing.start_seconds)
+		if ($scope.track_playing
+			&& $scope.track_playing.start_seconds/1000 < $scope.track_playing.duration)
 			$scope.track_playing.start_seconds = $scope.track_playing.start_seconds + msecs/1000;
 	}
 
