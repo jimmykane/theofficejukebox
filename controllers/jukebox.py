@@ -195,6 +195,12 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 		track_playing = track_playing.to_dict(exclude=['queued_by_person_key','track_key','creation_date', 'edit_date'])
 		track_playing.update({'id': track_playing_id})
 		track_playing.update({'person_nick_name': nick_name})
+
+		# Recalculate please to now and minus a sec if > 0
+		elapsed = datetime.datetime.now() - player.track_queued_on
+		start_seconds = elapsed.total_seconds()
+		if start_seconds > 1:
+			start_seconds = start_seconds - 1
 		track_playing.update({'start_seconds': start_seconds})
 
 		response = {'data': track_playing}
