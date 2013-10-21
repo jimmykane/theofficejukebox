@@ -176,7 +176,8 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 		start_seconds = elapsed.total_seconds()
 
 		# elapsed greater than total seconds should reset
-		if start_seconds > track_playing.duration:
+		# Also if its nearby the end then pass here.
+		if start_seconds > track_playing.duration + 5: # will drop to 0 look lower
 			logging.info('Current song has ended')
 			response = {
 				'status':self.get_status(
