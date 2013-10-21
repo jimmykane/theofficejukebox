@@ -67,8 +67,6 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 				# All is empty...?
 				logging.info('No track found at all')
 				return
-			next_track.archived = False
-			next_track.put()
 			#logging.info('Title: ' + str(next_track_playing.title))
 			logging.info('Random Track queued...')
 
