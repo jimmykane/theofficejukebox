@@ -141,7 +141,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 			angular.extend(track_playing, response.data);
 			console.log("Track playing: ", response.data);
 			track_playing.start_seconds = track_playing.start_seconds - 5;
-			if (track_playing.start_seconds < 0)
+			if (track_playing.start_seconds < 0) // Maybe also increase
 				track_playing.start_seconds = 0;
 			deffered.resolve(response.status);
 		})

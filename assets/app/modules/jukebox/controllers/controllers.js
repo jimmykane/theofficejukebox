@@ -401,7 +401,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 
 	$scope.get_jukeboxes();
-	$scope.track_playing_timer(2000);
+	$scope.track_playing_timer(1000);
 
 	$scope.duration_to_HHMMSS = function (duration) {
 		if (!duration)
