@@ -20,19 +20,11 @@
 				<h3>
 					{[{ track_playing.title }]}
 				</h3>
-				<p  ng-if="track_playing.title" class="toggle" ><i>Live Sync {[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</i></p>
+				<p  ng-if="track_playing.title" class="toggle" ><i>Live Sync {[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</i>&nbsp;<button class="color" data-ng-click="start_playing(jukebox)"><i>Sync Now</i></button></p>
 				<p ng-if="track_playing.title">Thanks to <i>{[{ track_playing.person_nick_name.toUpperCase() }]}</i></p>
 				<br/>
-				<button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
-				<br/><br/>
-			</div>
-			<div >
-				<div data-ng-switch data-on="player_status.state">
-					<button data-ng-click="start_playing(jukebox)"  data-ng-switch-when="-1" data-ng-if="track_playing.title" >Stream Now!!!</button>
-					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="0">Start Playing (Ended)</button>
-					<button data-ng-click="start_playing(jukebox)" data-ng-switch-when="1" data-ng-if="is_owner_or_admin(user, jukebox) === false">Sync Play [Rsync]</button>
-					<p data-ng-switch-when="3">Buffering... please wait</p>
-				</div>
+				<br/><button style="float: right;" title="Reload me honey" class="smal_font effect_doaroll color" data-ng-click="get_jukeboxes([jukebox.id])"><i>RELOAD</i></button>
+
 			</div>
 		</div>
 		<div style="height:50%;max-height:50%;">

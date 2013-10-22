@@ -72,7 +72,7 @@ button, .button{ /* should be done only class please */
 	transition: color 0.9s ease-in-out;
 }
 
-button:hover, .button:hover{
+button:hover, .button:hover, button i:hover{ /* not good selector */
 	cursor: pointer;
 	color: rgb(74, 111, 228);
 	background-color: rgba(0, 0, 0, 0.80);
