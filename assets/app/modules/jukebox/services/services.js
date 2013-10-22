@@ -139,7 +139,10 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 			}
 			// Should do check eg first one is consumed
 			angular.extend(track_playing, response.data);
-			console.log(response.data);
+			console.log("Track playing: ", response.data);
+			track_playing.start_seconds = track_playing.start_seconds - 5;
+			if (track_playing.start_seconds < 0)
+				track_playing.start_seconds = 0;
 			deffered.resolve(response.status);
 		})
 		.error(function(response, status, headers, config) {
