@@ -248,7 +248,7 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			QueuedTrack, queued_track_id
 		)
 
-		started = self.start_playing(jukebox_key, queued_track_key, seek)
+		started = self._start_playing(jukebox_key, queued_track_key, seek)
 		if not started:
 			response = {'status':self.get_status(status_code=400)}
 			self.response.out.write(json.dumps(response))
@@ -262,7 +262,7 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 		return
 
 	@ndb.transactional()
-	def start_playing(self, jukebox_key, queued_track_key, seek):
+	def _start_playing(self, jukebox_key, queued_track_key, seek):
 
 		queued_track = queued_track_key.get()
 
@@ -302,10 +302,9 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 
 
 '''
-	This handler will fire next track tasks with an eta.
+	This handler will just turn the player to off
+	This will stop all landing tasks to fail if so.
 '''
-#shoulb be moved again to seperate controller i think.
-#no need to be here.
 class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
@@ -315,24 +314,18 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			response = {'status':self.get_status(status_code=404)}
 			self.response.out.write(json.dumps(response))
 			return
-		# First lets try to get the data and then logic
+
 		try:
 			data = json.loads(self.request.body)
 			jukebox_id = data['jukebox_id']
+			jukebox_key = ndb.Key(Jukebox, jukebox_id)
 		except Exception as e:
 			logging.error('Unconvertable request' + repr(e))
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
 			self.response.out.write(json.dumps(response))
 			return
-		# is there a jukebox ?
-		jukebox = ndb.Key(Jukebox, jukebox_id).get()
-		if not jukebox:
-			response = {'status':self.get_status(status_code=404)}
-			self.response.out.write(json.dumps(response))
-			return
 
-		# Only owner and admins can do go on
-		membership = ndb.Key(Jukebox, jukebox.key.id(), JukeboxMembership, person.key.id()).get()
+		membership = ndb.Key(Jukebox, jukebox_key.id(), JukeboxMembership, person.key.id()).get()
 		if not membership:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
@@ -343,18 +336,28 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		#transaction here please!!!!!!!!!
-		player = jukebox.player
+		stopped = self._stop_playing(jukebox_key)
 
-		player.on = False
+		if not stopped:
+			response = {'status':self.get_status(status_code=400)}
+			self.response.out.write(json.dumps(response))
+			return
 
-		player.put()
-		#logging.info(player.track_key)
-		#return
 		logging.info('Player stopped')
 		response = {'status': self.get_status()}
 		self.response.out.write(json.dumps(response))
+
 		return
+
+	@ndb.transactional()
+	def _stop_playing(self, jukebox_key):
+
+		player = JukeboxPlayer.query(ancestor=jukebox_key).get()
+		player.on = False
+		player.put()
+
+		return True
+
 
 
 
@@ -413,4 +416,5 @@ class SaveJukeBoxeHandler(webapp2.RequestHandler, JSONHandler):
 		response.update({'status': self.get_status()})
 		#logging.info(response)
 		self.response.out.write(json.dumps(response))
+
 		return
