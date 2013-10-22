@@ -175,14 +175,13 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 		elapsed = datetime.datetime.now() - player.track_queued_on
 		start_seconds = elapsed.total_seconds()
 
-		# elapsed greater than total seconds should reset
-		# Also if its nearby the end then pass here.
-		if start_seconds > track_playing.duration + 5: # will drop to 0 look lower
-			logging.info('Current song has ended')
+
+		if start_seconds > track_playing.duration + 5:
+			logging.info('Current song has ended for sure. now what?')
 			response = {
 				'status':self.get_status(
 					status_code=403,
-					msg='Last song ended? Or jukebox is jammed?'
+					msg='Last song ended? Jukebox is probable loading..'
 				)
 			}
 			self.response.out.write(json.dumps(response))
@@ -197,11 +196,9 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 		track_playing.update({'id': track_playing_id})
 		track_playing.update({'person_nick_name': nick_name})
 
-		# Recalculate please to now and minus a sec if > 0
+		# Recalculate please to be more current
 		elapsed = datetime.datetime.now() - player.track_queued_on
-		start_seconds = elapsed.total_seconds() - 5 # Need to hold them back for 5 secs
-		if start_seconds < 0:
-			start_seconds = 0 # here is only problem. If they press exactely on the change.
+		start_seconds = elapsed.total_seconds()
 		track_playing.update({'start_seconds': start_seconds})
 
 		response = {'data': track_playing}
