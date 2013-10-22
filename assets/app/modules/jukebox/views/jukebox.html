@@ -20,8 +20,8 @@
 				<h3>
 					{[{ track_playing.title }]}
 				</h3>
-				<p  ng-if="track_playing.title" class="toggle" >{[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</p>
-				<p ng-if="track_playing.title">Thanks to {[{ track_playing.person_nick_name.toUpperCase() }]}</p>
+				<p  ng-if="track_playing.title" class="toggle" ><i>Live Sync {[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</i></p>
+				<p ng-if="track_playing.title">Thanks to <i>{[{ track_playing.person_nick_name.toUpperCase() }]}</i></p>
 				<br/>
 				<button title="Reload me honey" class="smal_font effect_doaroll" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
 				<br/><br/>
