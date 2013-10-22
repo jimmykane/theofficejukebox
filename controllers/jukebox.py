@@ -173,7 +173,7 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 			}
 			self.response.out.write(json.dumps(response))
 			return
-
+		duration = track_playing.duration
 		elapsed = datetime.datetime.now() - player.track_queued_on
 		start_seconds = elapsed.total_seconds()
 
@@ -201,6 +201,8 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 		# Recalculate please to be more current
 		elapsed = datetime.datetime.now() - player.track_queued_on
 		start_seconds = elapsed.total_seconds()
+		if (start_seconds < duration + 5) and (start_seconds > duration):
+			start_seconds = start_seconds - 5
 		track_playing.update({'start_seconds': start_seconds})
 
 		response = {'data': track_playing}
