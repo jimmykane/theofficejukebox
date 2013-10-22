@@ -395,8 +395,10 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			$scope.track_playing_timer(msecs); // schedule another update
 		}, msecs);
 		if ($scope.track_playing
-			&& $scope.track_playing.start_seconds/1000 < $scope.track_playing.duration)
+			&& $scope.track_playing.start_seconds < $scope.track_playing.duration)
 			$scope.track_playing.start_seconds = $scope.track_playing.start_seconds + msecs/1000;
+		// Nice idea it to put SAFE triggers here to get next etc
+		// That would need futher implementation of this this as a service or so
 	}
 
 
