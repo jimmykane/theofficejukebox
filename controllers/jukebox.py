@@ -85,10 +85,12 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 		#logging.info(filters)
 		archived = False
 		order = 'edit_date'
-		amount = 30
+		amount = 15
+		# This needs major rethink. Leaving it aside for now
 		if filters:
 			if 'amount' in filters:
-				amount = filters['amount']
+				if not (filters['amount'] > 30):
+					amount = filters['amount']
 			if 'archived' in filters:
 				query = query.filter(QueuedTrack.archived==filters['archived'])
 			if 'order' in filters:
