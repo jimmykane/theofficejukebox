@@ -143,15 +143,8 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		#if not jukebox.player.on:
-			#response = {'status':self.get_status(status_code=403, msg='Jukebox is off')}
-			#self.response.out.write(json.dumps(response))
-			#return
-
 		player = jukebox.player
-		#logging.info(player)
 
-		#return just the title and the stopped elapsed
 		if not player.track_key:
 			response = {
 				'status':self.get_status(
@@ -173,10 +166,10 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 			}
 			self.response.out.write(json.dumps(response))
 			return
+
 		duration = track_playing.duration
 		elapsed = datetime.datetime.now() - player.track_queued_on
 		start_seconds = elapsed.total_seconds()
-
 
 		if start_seconds > track_playing.duration + 5:
 			logging.info('Current song has ended for sure. now what?')
@@ -212,20 +205,20 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 
 
 '''
-	This handler will fire next track tasks with an eta.
+	This handler will queue the requested song and
+	will fire a next track task with an eta.
 '''
-#shoulb be moved again to seperate controller i think.
-#no need to be here.
 class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
 
 		person = Person.get_current()
+
 		if not person: # its normal now
 			response = {'status':self.get_status(status_code=404)}
 			self.response.out.write(json.dumps(response))
 			return
-		# First lets try to get the data and then logic
+
 		try:
 			data = json.loads(self.request.body)
 			jukebox_id = data['jukebox_id']
