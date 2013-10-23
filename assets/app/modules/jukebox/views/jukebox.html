@@ -20,10 +20,13 @@
 				<h3>
 					{[{ track_playing.title }]}
 				</h3>
-				<p  ng-if="track_playing.title" class="toggle" ><i>Live Sync {[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</i>&nbsp;<button class="color" data-ng-click="start_playing(jukebox)"><i>Sync Now</i></button></p>
+				<p  ng-if="track_playing.title" class="toggle" >
+					Live Sync {[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</i>
+					&nbsp;<button class="color" data-ng-click="start_playing(jukebox)">Sync Now</button>
+				</p>
 				<p ng-if="track_playing.title">Thanks to <i>{[{ track_playing.person_nick_name.toUpperCase() }]}</i></p>
 				<br/>
-				<br/><button style="float: right;" title="Reload me honey" class="smal_font effect_doaroll color" data-ng-click="get_jukeboxes([jukebox.id])"><i>RELOAD</i></button>
+				<br/><button style="float: right;" title="Reload me honey" class="smal_font effect_doaroll color" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
 
 			</div>
 		</div>
@@ -39,8 +42,8 @@
 					<p>{[{ $index + 1 }]}.{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
 					<span> - by {[{ queued_track.queuedby_nick_name }]}</span>
 					<div data-ng-if="user.email">
-						<button class="small_font" data-ng-if="is_owner_or_admin(user, jukebox)" ng-click="start_playing_queued_track(jukebox, queued_track.id, 0, true)">Play Now!!!</button>
-						<button class="small_font" ng-click="remove_queued_track(jukebox, queued_track, true)">Archive</button>
+						<button class="small_font" data-ng-if="is_owner_or_admin(user, jukebox)" ng-click="start_playing_queued_track(jukebox, queued_track.id, 0, true)">Play</button>
+						<button class="small_font" ng-click="remove_queued_track(jukebox, queued_track, true)">Remove</button>
 						<button class="small_font" data-ng-if="is_owner_or_admin(user, jukebox)" ng-click="remove_queued_track(jukebox, queued_track, false)">Delete</button>
 					</div>
 					</p>
@@ -62,7 +65,7 @@
 				<br/>
 				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search | orderBy: '-edit_date' "  class="flip-in queued_track_list-item ">
 					<p style="text-align: left;">{[{ (jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search).length - $index }]}.{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
-					<button class="small_font" ng-click="add_new_queued_track(jukeboxes[0], queued_track.id)">Queue It!!!</button></p>
+					<button class="small_font" ng-click="add_new_queued_track(jukeboxes[0], queued_track.id)">Queue</button></p>
 				</div>
 			</div>
 		</div>
