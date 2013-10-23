@@ -24,22 +24,10 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==False).order(QueuedTrack.edit_date).fetch(30)
 		return queued_tracks
 
-
-	@property
-	def track_playing(self):
-		# if it's not on
-		if not self.player.on:
-			return False
-		# Well its a mess here should have opts to buffer player
-		queued_track = ndb.Key(Jukebox, self.key.id(), QueuedTrack, self.player.track_key.id()).get()
-		return queued_track
-
-
 	@property
 	def player(self):
 		player = JukeboxPlayer.query(ancestor=self.key).get()
 		return player
-
 
 	@property
 	def random_archived_queued_track(self):
