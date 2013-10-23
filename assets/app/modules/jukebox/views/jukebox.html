@@ -22,7 +22,7 @@
 				</h3>
 				<p  ng-if="track_playing.title" class="toggle" >
 					Live Sync {[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</i>
-					&nbsp;<button class="color" data-ng-click="start_playing(jukebox)">Sync Now</button>
+					&nbsp;<button class="color" data-ng-if="player_status.state > -2" data-ng-click="start_playing(jukebox)">Sync Now</button>
 				</p>
 				<p ng-if="track_playing.title">Thanks to <i>{[{ track_playing.person_nick_name.toUpperCase() }]}</i></p>
 				<br/>
