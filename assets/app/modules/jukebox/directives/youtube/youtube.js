@@ -14,8 +14,8 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 			// This is called when the player is loaded from YT
 			$window.onYouTubeIframeAPIReady = function() {
 				$scope.player = new YT.Player('player', {
-					height: '100',
-					width: '350',
+					height: '250',
+					width: '400',
 					playerVars: {
 						'autoplay': 0,
 						'controls': 1,
