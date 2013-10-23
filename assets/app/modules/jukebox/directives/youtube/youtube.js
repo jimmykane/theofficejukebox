@@ -36,6 +36,7 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 					logging.info($scope.player);
 					// Lets also broadcast a change state for the others to catch up
 					player_service.broadcast_change_state({"state": $scope.player.getPlayerState()});
+					// Should try to just load the track so that the users can press play on the playa
 			};
 
 			// When the player changes a state
