@@ -67,22 +67,18 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
 
-		# First lets try to get the data and then logic
 		try:
 			data = json.loads(self.request.body)
 			jukebox_id = data['jukebox_id']
 			filters = data['filters']
+			jukebox_key = ndb.Key(Jukebox, jukebox_id)
 		except Exception as e:
 			logging.error('Unconvertable request' + repr(e))
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
 			self.response.out.write(json.dumps(response))
 			return
 
-		jukebox_key = ndb.Key(Jukebox, jukebox_id)
-
-		# initialize a query instance
 		query = QueuedTrack.query(ancestor=jukebox_key)
-		#logging.info(filters)
 		archived = False
 		order = 'edit_date'
 		amount = 15
@@ -100,7 +96,7 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 					query = query.order(ndb.GenericProperty(filters['order']))
 
 		#logging.info(query)
-		# only queued tracks and wrap it in a try. Might explode...
+		# Only queued tracks and wrap it in a try. Might explode...
 		try:
 			queued_tracks = query.fetch(amount)
 		except Exception as e:
