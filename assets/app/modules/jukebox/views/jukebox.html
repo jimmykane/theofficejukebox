@@ -36,6 +36,7 @@
 				<input type="text" data-ng-model="new_queued_track.video_url" placeholder=" YouTube URL..."/>
 				<button type="submit">Queue Song</button>
 			</form>
+			<button data-ng-if="!user.email" style="float:right;" onClick="window.location.href='/login/'">Login</button>
 			<div class="queued_track_list">
 				<br/>
 				<div data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:false} | orderBy: 'edit_date' " class="flip-in queued_track_list-item" flip-in>
