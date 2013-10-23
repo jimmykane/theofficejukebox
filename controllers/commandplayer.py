@@ -48,7 +48,8 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 			logging.warning ('Change track request with changed state. Dropping')
 			return
 
-		track_playing = jukebox.track_playing
+		track_playing = player.track_key.get()
+
 		if not track_playing:
 			#wtf ?
 			logging.warning('This is something I should notice')
