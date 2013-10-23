@@ -18,18 +18,6 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 	owner_key = ndb.KeyProperty()
 
 
-	@property
-	def owner(self):
-		owner = owner_key.get()
-		return queued_tracks
-
-	#also depricated
-	@property
-	def archived_queued_tracks(self):
-		# Here always edit date on shorting
-		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==True).order(QueuedTrack.edit_date).fetch(30)
-		return queued_tracks
-
 	# deprecated due to lots of results
 	@property
 	def queued_tracks(self):
