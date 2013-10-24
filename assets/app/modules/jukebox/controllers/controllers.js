@@ -305,8 +305,8 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		// Then if he is admin/owner
 		if ($scope.is_owner_or_admin($scope.user, $scope.jukeboxes[0]) === true){
 			if (prev_state === 1 && state.state === 2){// seeking or stop or end
-				// if ended I have to detect it. it's going to be almost the same duration so -1s
-				if (state.current_time < ($scope.track_playing.duration - 1))
+				// if ended I have to detect it. it's going to be almost the same duration so -5s
+				if (state.current_time < ($scope.track_playing.duration - 5))
 					$scope.stop_playing($scope.jukeboxes[0]);
 			}
 			if (prev_state === 2 && state.state === 1)// from paused or seek to apply play
