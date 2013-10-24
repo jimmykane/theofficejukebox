@@ -251,8 +251,11 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			logging.warning('Start Playing with no queued track in bd')
 			return False
 
-		if not seek: #should also check if the seek is bigger than dur
+		if not seek:
 			seek = 0
+
+		if seek > queued_track.duration - 10:
+			seek = queued_track.duration - 10
 
 		player = JukeboxPlayer.query(ancestor=jukebox_key).get()
 		player.on = True

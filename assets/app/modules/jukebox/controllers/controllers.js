@@ -310,7 +310,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 					$scope.stop_playing($scope.jukeboxes[0]);
 			}
 			if (prev_state === 2 && state.state === 1)// from paused or seek to apply play
-				$scope.start_playing_queued_track($scope.jukeboxes[0], $scope.track_playing.id, state.current_time + 2, false);
+				$scope.start_playing_queued_track($scope.jukeboxes[0], $scope.track_playing.id, state.current_time, false);
 		}
 
 		// Last common actions
