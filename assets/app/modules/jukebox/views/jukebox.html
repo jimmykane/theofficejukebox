@@ -6,7 +6,9 @@
 <link rel="stylesheet" type="text/css" href="/assets/app/modules/jukebox/css/icons.css" />
 
 <div class="max_width_height view_port">
-	<div data-ng-repeat="jukebox in jukeboxes" style="margin-left: 5%;padding-left:2% ;width: 43%;height:100%;float: left;background-color: rgba(0, 0, 0, 0.80);">
+	<div
+		data-ng-repeat="jukebox in jukeboxes"
+		style="margin-left: 5%;padding-left:2% ;width: 43%;height:100%;float: left;background-color: rgba(0, 0, 0, 0.80);">
 		<div style="height:45%; padding-top: 5%;" >
 			<div style="float:left;">
 			<h1><b>{[{ jukebox.title }]}</b></h1>
@@ -21,31 +23,52 @@
 					{[{ track_playing.title }]}
 				</h3>
 				<p  ng-if="track_playing.title" class="toggle" >
-					Live Sync {[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</i>
+					<i>Live Sync {[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</i>
 				</p>
 				<p ng-if="track_playing.title">Thanks to <i>{[{ track_playing.person_nick_name.toUpperCase() }]}</i></p>
 			</div>
-			<button title="Reload me honey" class="smal_font effect_doaroll color" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
-			<button class="color" data-ng-if="player_status.state > -2" data-ng-click="start_playing(jukebox)">Sync Now</button>
+			<button
+				data-ng-click="get_jukeboxes([jukebox.id])"
+				title="Reload me honey"
+				class="smal_font effect_doaroll color">RELOAD</button>
+			<button
+				data-ng-if="player_status.state > -2"
+				data-ng-click="start_playing(jukebox)"
+				class="color">Sync Now</button>
 		</div>
 		<div style="height:50%;max-height:50%;">
-			<h3 style="float:left;">Upcoming 15 tracks {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukebox, false)) }]}</h3>
-			<form data-ng-if="user.email" style="float:right;" class="slide-top" ng-submit="add_new_queued_track(jukebox)">
-				<input type="text" data-ng-model="new_queued_track.video_url" placeholder=" YouTube URL..."/>
+			<h3 style="float:left;">
+				Upcoming 15 tracks {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukebox, false)) }]}
+			</h3>
+			<form
+				data-ng-if="user.email"
+				style="float:right;" class="slide-top"
+				data-ng-submit="add_new_queued_track(jukebox)">
+				<input
+					data-ng-model="new_queued_track.video_url"
+					type="text"
+					placeholder=" YouTube URL..."/>
 				<button type="submit">Queue Song</button>
 			</form>
-			<button data-ng-if="!user.email" style="float:right;" onClick="window.location.href='/login/'">Login</button>
+			<button
+				data-ng-if="!user.email"
+				style="float:right;"
+				onClick="window.location.href='/login/'">Login</button>
 			<div class="queued_track_list">
 				<br/>
-				<div data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:false} | orderBy: 'edit_date' " class="flip-in queued_track_list-item" flip-in>
-					<p>{[{ $index + 1 }]}.{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
+				<div
+					data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:false} | orderBy: 'edit_date' "
+					class="flip-in queued_track_list-item">
+					<p>
+						{[{ $index + 1 }]}.{[{ queued_track.title.slice(0,65) }]}
+						({[{ duration_to_HHMMSS(queued_track.duration) }]})
 					<span> - by {[{ queued_track.queuedby_nick_name }]}</span>
+					</p>
 					<div data-ng-if="user.email">
 						<button class="small_font" data-ng-if="is_owner_or_admin(user, jukebox)" ng-click="start_playing_queued_track(jukebox, queued_track.id, 0, true)">Play</button>
 						<button class="small_font" ng-click="remove_queued_track(jukebox, queued_track, true)">Remove</button>
 						<button class="small_font" data-ng-if="is_owner_or_admin(user, jukebox)" ng-click="remove_queued_track(jukebox, queued_track, false)">Delete</button>
 					</div>
-					</p>
 				</div>
 			</div>
 		</div>
@@ -55,16 +78,29 @@
 			<div id="player"></div>
 		</div>
 		<div style="text-align:center; width: 98%; height:50%; max-height:50%;padding-left: 2%;">
-			<h3 style="float:left">Last 15 tracks played {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukeboxes[0], true)) }]}</h3>
+			<h3 style="float:left">
+				Last 15 tracks played {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukeboxes[0], true)) }]}
+			</h3>
 			<div style="float:right;">
-				<input type="text" data-ng-model="queued_track_search" placeholder=" Search..."/>
+				<input
+					data-ng-model="queued_track_search"
+					type="text"
+					placeholder=" Search..."/>
 				<button>Search</button>
 			</div>
 			<div class="queued_track_list" >
 				<br/>
-				<div data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search | orderBy: '-edit_date' "  class="flip-in queued_track_list-item ">
-					<p style="text-align: left;">{[{ (jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search).length - $index }]}.{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
-					<button class="small_font" ng-click="add_new_queued_track(jukeboxes[0], queued_track.id)">Queue</button></p>
+				<div
+					data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search | orderBy: '-edit_date' "
+					class="flip-in queued_track_list-item ">
+					<p style="text-align: left;">
+						{[{ (jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search).length - $index }]}.{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]})
+						<button
+							data-ng-click="add_new_queued_track(jukeboxes[0], queued_track.id)"
+							class="small_font">
+								Queue
+						</button>
+					</p>
 				</div>
 			</div>
 		</div>
