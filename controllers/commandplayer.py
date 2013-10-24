@@ -23,9 +23,9 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 		logging.info('Jukebox Player Going to next track')
 		try:
 			jukebox_id = self.request.get('jukebox_id')
-			track_key_id = self.request.get('track_key_id')
+			track_key_id = str(self.request.get('track_key_id'))
 			track_queued_on = self.request.get('track_queued_on')
-			jukebox = ndb.Key(Jukebox, str(jukebox_id)).get()
+			jukebox = ndb.Key(Jukebox, jukebox_id).get()
 		except Exception as e:
 			logging.error('Unconvertable request' + repr(e))
 			return
