@@ -22,13 +22,11 @@
 				</h3>
 				<p  ng-if="track_playing.title" class="toggle" >
 					Live Sync {[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</i>
-					&nbsp;<button class="color" data-ng-if="player_status.state > -2" data-ng-click="start_playing(jukebox)">Sync Now</button>
 				</p>
 				<p ng-if="track_playing.title">Thanks to <i>{[{ track_playing.person_nick_name.toUpperCase() }]}</i></p>
-				<br/>
-				<br/><button style="float: right;" title="Reload me honey" class="smal_font effect_doaroll color" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
-
 			</div>
+			<button title="Reload me honey" class="smal_font effect_doaroll color" data-ng-click="get_jukeboxes([jukebox.id])">RELOAD</button>
+			<button class="color" data-ng-if="player_status.state > -2" data-ng-click="start_playing(jukebox)">Sync Now</button>
 		</div>
 		<div style="height:50%;max-height:50%;">
 			<h3 style="float:left;">Upcoming 15 tracks {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukebox, false)) }]}</h3>
