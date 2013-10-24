@@ -49,7 +49,7 @@ class RemoveSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
 			return
 
 		# Only owner and admins can do go on
-		membership = ndb.Key(Jukebox, jukebox.key.id(), JukeboxMembership, person.key.id()).get()
+		membership = ndb.Key(Jukebox, jukebox_id, JukeboxMembership, person.key.id()).get()
 		if not membership:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
