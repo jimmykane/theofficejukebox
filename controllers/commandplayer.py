@@ -48,7 +48,8 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 		track_playing = player.track_key.get()
 
 		if not track_playing:
-			#wtf ?
+			# This can happen if for example the track is playing
+			# and someone deletes it. Then the key reference returns None
 			logging.warning('This is something I should notice')
 			logging.warning(player)
 			return
