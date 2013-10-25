@@ -92,7 +92,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		jukebox_service.get_playing_track_async(jukebox.id).then(
 			function(status) {
 				if (status.code === 200) {
-					console.log('playing track found');
+					ui.show_notification_info('Now playing: ' + $scope.track_playing.title)
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
 					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
