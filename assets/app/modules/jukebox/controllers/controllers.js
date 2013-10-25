@@ -16,7 +16,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	$scope.player_status = false;
 	$scope.player_status.state = -1;
 
-
 	$scope.is_owner_or_admin = function(user, jukebox){
 		if (!user.id || !user.memberships)
 			return false;
