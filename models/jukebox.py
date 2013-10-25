@@ -18,44 +18,20 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 	owner_key = ndb.KeyProperty()
 
 
-	@property
-	def owner(self):
-		owner = owner_key.get()
-		return queued_tracks
-
-	#also depricated
-	@property
-	def archived_queued_tracks(self):
-		# Here always edit date on shorting
-		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==True).order(QueuedTrack.edit_date).fetch(30)
-		return queued_tracks
-
 	# deprecated due to lots of results
 	@property
 	def queued_tracks(self):
 		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==False).order(QueuedTrack.edit_date).fetch(30)
 		return queued_tracks
 
-
-	@property
-	def track_playing(self):
-		# if it's not on
-		if not self.player.on:
-			return False
-		# Well its a mess here should have opts to buffer player
-		queued_track = ndb.Key(Jukebox, self.key.id(), QueuedTrack, self.player.track_key.id()).get()
-		return queued_track
-
-
 	@property
 	def player(self):
 		player = JukeboxPlayer.query(ancestor=self.key).get()
 		return player
 
-
-	@property
-	def random_archived_queued_track(self):
-		queued_track_keys = QueuedTrack.query(ancestor=self.key)\
+	@classmethod
+	def random_archived_queued_track(cls, jukebox_key):
+		queued_track_keys = QueuedTrack.query(ancestor=jukebox_key)\
 			.filter(QueuedTrack.archived==True)\
 			.order(QueuedTrack.edit_date).fetch(2, keys_only=True)
 		if not queued_track_keys:

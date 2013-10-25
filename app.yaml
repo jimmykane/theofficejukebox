@@ -32,6 +32,11 @@ handlers:
 - url: /assets
   static_dir: assets
 
+- url: /robots.txt
+  static_files: assets/robots.txt
+  upload: assets/robots.txt
+
+
 - url: /favicon.ico
   static_files: assets/img/favicon.png
   upload: assets/img/favicon.png

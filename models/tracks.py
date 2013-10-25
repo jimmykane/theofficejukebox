@@ -80,6 +80,7 @@ class QueuedTrack(ndb.Expando, DictModel, NDBCommonModel):
 	archived = ndb.BooleanProperty(default=False)
 	duration = ndb.IntegerProperty(required=True)
 	title= ndb.StringProperty(required=True)
+	play_count = ndb.IntegerProperty(required=True, default=0)
 
 	@property
 	def track(self):

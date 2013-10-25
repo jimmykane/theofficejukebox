@@ -5,7 +5,7 @@
 	<div class="flexbox_item" data-ng-switch data-on="user">
 		<div data-ng-switch-when="false">
 			{% for provider in providers %}
-			<button
+			<button style="background-color: inherit;"
 			title="Login to create a slide..."
 			onClick="window.location.href='{{ provider.url }}'">
 				{{ provider.name }}
@@ -14,7 +14,7 @@
 		</div>
 		<div data-ng-switch-default class="">
 			<h3 style="display: inline;">Welcome	{[{ user.nick_name }]}</h3>
-			<button style="float: right;" class="" title="Logout..." onClick="window.location.href='/logout/?return_url='">
+			<button style="float: right; background-color: inherit;" class="" title="Logout..." onClick="window.location.href='/logout/?return_url='">
 				Logout
 			</button>
 		</div>

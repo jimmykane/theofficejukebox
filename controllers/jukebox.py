@@ -67,22 +67,18 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
 
-		# First lets try to get the data and then logic
 		try:
 			data = json.loads(self.request.body)
 			jukebox_id = data['jukebox_id']
 			filters = data['filters']
+			jukebox_key = ndb.Key(Jukebox, jukebox_id)
 		except Exception as e:
 			logging.error('Unconvertable request' + repr(e))
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
 			self.response.out.write(json.dumps(response))
 			return
 
-		jukebox_key = ndb.Key(Jukebox, jukebox_id)
-
-		# initialize a query instance
 		query = QueuedTrack.query(ancestor=jukebox_key)
-		#logging.info(filters)
 		archived = False
 		order = 'edit_date'
 		amount = 15
@@ -100,7 +96,7 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 					query = query.order(ndb.GenericProperty(filters['order']))
 
 		#logging.info(query)
-		# only queued tracks and wrap it in a try. Might explode...
+		# Only queued tracks and wrap it in a try. Might explode...
 		try:
 			queued_tracks = query.fetch(amount)
 		except Exception as e:
@@ -168,19 +164,6 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 			return
 
 		duration = track_playing.duration
-		elapsed = datetime.datetime.now() - player.track_queued_on
-		start_seconds = elapsed.total_seconds()
-
-		if start_seconds > track_playing.duration + 5:
-			logging.info('Current song has ended for sure. now what?')
-			response = {
-				'status':self.get_status(
-					status_code=403,
-					msg='Last song ended? Jukebox is probable loading..'
-				)
-			}
-			self.response.out.write(json.dumps(response))
-			return
 
 		track_playing_id = track_playing.key.id()
 		nick_name = 'Unknown'
@@ -194,8 +177,6 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 		# Recalculate please to be more current
 		elapsed = datetime.datetime.now() - player.track_queued_on
 		start_seconds = elapsed.total_seconds()
-		if (start_seconds < duration + 5) and (start_seconds > duration):
-			start_seconds = start_seconds - 5
 		track_playing.update({'start_seconds': start_seconds})
 
 		response = {'data': track_playing}
@@ -209,11 +190,8 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 	will fire a next track task with an eta.
 '''
 class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
-
 	def post(self):
-
 		person = Person.get_current()
-
 		if not person: # its normal now
 			response = {'status':self.get_status(status_code=404)}
 			self.response.out.write(json.dumps(response))
@@ -237,7 +215,6 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
-
 		if (membership.type != 'owner') and (membership.type != 'admin'):
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
@@ -263,23 +240,26 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 
 	@ndb.transactional()
 	def _start_playing(self, jukebox_key, queued_track_key, seek):
+		if not seek:
+			seek = 0
 
 		queued_track = queued_track_key.get()
-
 		if not queued_track:
 			logging.warning('Start Playing with no queued track in bd')
 			return False
-
-		if not seek: #should also check if the seek is bigger than dur
-			seek = 0
+		if seek > queued_track.duration - 5:
+			seek = queued_track.duration - 5
+		if seek == 0:
+			queued_track.play_count = queued_track.play_count +1;
+		queued_track.archived = True
 
 		player = JukeboxPlayer.query(ancestor=jukebox_key).get()
 		player.on = True
 		player.track_queued_on = datetime.datetime.now() - datetime.timedelta(0, seek)
 		player.track_duration = queued_track.duration
 		player.track_key = queued_track_key
-		player.put()
 
+		ndb.put_multi([queued_track, player])
 		taskqueue.add(
 			queue_name = "playercommands",
 			url="/playercommands/next/",
@@ -289,15 +269,11 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			params= {
 				'jukebox_id': jukebox_key.id(),
 				'track_key_id': player.track_key.id(),
-				'track_queued_on': player.track_queued_on.isoformat()
 				# date will be in iso format 2013-10-09 07:54:56.871812
+				'track_queued_on': player.track_queued_on.isoformat()
 			},
 			headers={"X-AppEngine-FailFast":"true"} # for now
 		)
-
-		queued_track.archived = True
-		queued_track.put()
-
 		return True
 
 

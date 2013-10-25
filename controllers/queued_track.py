@@ -29,23 +29,14 @@ class RemoveSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
 			jukebox_id = data['jukebox_id']
 			queued_track_id = data['queued_track_id']
 			archive = data['archive']
+			queued_track_key = ndb.Key(
+				Jukebox, jukebox_id, QueuedTrack, queued_track_id
+			)
 		except Exception as e:
 			logging.error('Unconvertable request' + repr(e))
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
 			self.response.out.write(json.dumps(response))
 			return
-
-		# is there a jukebox ?
-		jukebox = ndb.Key(Jukebox, jukebox_id).get()
-		if not jukebox:
-			response = {'status':self.get_status(status_code=404)}
-			self.response.out.write(json.dumps(response))
-			return
-
-		queued_track_key = ndb.Key(
-			Jukebox, jukebox_id,
-			QueuedTrack, queued_track_id
-		)
 
 		# should also be checking if it was ququed by that specific person
 		# And also do something with the currently playing shit
@@ -58,7 +49,7 @@ class RemoveSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
 			return
 
 		# Only owner and admins can do go on
-		membership = ndb.Key(Jukebox, jukebox.key.id(), JukeboxMembership, person.key.id()).get()
+		membership = ndb.Key(Jukebox, jukebox_id, JukeboxMembership, person.key.id()).get()
 		if not membership:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
@@ -88,24 +79,16 @@ class AddSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
 			return
 		try:
 			data = json.loads(self.request.body)
-			#logging.info(data['jukebox']['id'])
-			#logging.info(data['video_id'])
 			jukebox_id = data['jukebox_id']
 			video_id = data['video_id']
+			jukebox = ndb.Key(Jukebox, jukebox_id).get()
 		except Exception as e:
 			logging.error('Unconvertable request' + repr(e))
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
 			self.response.out.write(json.dumps(response))
 			return
 
-		# Get the jukebox
-		jukebox = ndb.Key(Jukebox, jukebox_id).get()
-
-		# First check if track exists etc
-		# should have contect options
-		#logging.info(video_id)
 		track = YouTubeTrack.get_or_insert(video_id)
-		#logging.info(track)
 
 		# should be in trans
 		# or maybe not since I can just check if they are set

@@ -5,23 +5,16 @@
 
 "use strict";
 
-/* ----------- */
-/* CONTROLLERS */
-/* ----------- */
-
 /* slides_controller */
 angular.module('mainApp.jukebox').controller('jukebox_controller', function($scope, $location, $routeParams, $timeout, users_service, jukebox_service, ui, logging, player_service) {
 
-	// All these need rearrangement
 	$scope.jukebox_id = $routeParams.jukebox_id;
-	//logging.info("Requested JukeBox ID", $scope.jukebox_id);
 	$scope.jukeboxes = jukebox_service.jukeboxes();
 	$scope.user = users_service.user();
 	$scope.track_playing = jukebox_service.get_track_playing();
 	$scope.new_queued_track = {};
 	$scope.player_status = false;
 	$scope.player_status.state = -1;
-
 
 	$scope.is_owner_or_admin = function(user, jukebox){
 		if (!user.id || !user.memberships)
@@ -45,7 +38,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			return false;
 		return current_jukebox_id;
 	};
-
 
 	/* jukebox_player: Send command to start playing specific track at specific time*/
 	$scope.start_playing_queued_track = function(jukebox, queued_track_id, seek, autostart) {
@@ -82,7 +74,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
-
 	/* Find the jukebox total play time */
 	$scope.get_jukebox_total_play_duration = function(jukebox, archived){
 		var total_play_time = 0;
@@ -95,13 +86,12 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		return total_play_time;
 	};
 
-
 	/* slide: Get Current Playing track */
 	$scope.get_playing_track = function(jukebox) {
 		jukebox_service.get_playing_track_async(jukebox.id).then(
 			function(status) {
 				if (status.code === 200) {
-					console.log('playing track found');
+					ui.show_notification_info('Now playing: ' + $scope.track_playing.title)
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
 					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
@@ -118,7 +108,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			}
 		);
 	};
-
 
 	/* slide: Get jukeboxes according */
 	$scope.get_jukeboxes = function(jukebox_ids, filters) {
@@ -153,7 +142,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
-
 	/* queued_track: Get queued_tracks according */
 	$scope.get_queued_tracks = function(jukebox, filters) {
 		jukebox_service.get_queued_tracks_async(jukebox, filters).then(
@@ -177,7 +165,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			}
 		);
 	};
-
 
 	/* queued_track: Add single queued_track */
 	$scope.add_new_queued_track = function(jukebox, video_id) {
@@ -225,7 +212,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);;
 	};
 
-
 	/* jukebox: save single jukebox */
 	$scope.save_jukebox = function(jukebox) {
 		//console.log('saving', jukebox);
@@ -252,7 +238,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			}
 		);
 	};
-
 
 	/* queued_track: Remove single track */
 	$scope.remove_queued_track = function(jukebox, queued_track, archive) {
@@ -304,17 +289,19 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 		// Then if he is admin/owner
 		if ($scope.is_owner_or_admin($scope.user, $scope.jukeboxes[0]) === true){
-			if (prev_state === 1 && state.state === 2){// seeking or stop or end
-				// if ended I have to detect it. it's going to be almost the same duration so -1s
-				if (state.current_time < ($scope.track_playing.duration - 1))
+			// Seeking or stop or end
+			if (prev_state === 1 && state.state === 2){
+				// If ended I have to detect it. it's going to be almost the same duration so -5s
+				if (state.current_time < ($scope.track_playing.duration - 5))
 					$scope.stop_playing($scope.jukeboxes[0]);
 			}
-			if (prev_state === 2 && state.state === 1)// from paused or seek to apply play
-				$scope.start_playing_queued_track($scope.jukeboxes[0], $scope.track_playing.id, state.current_time + 2, false);
+			// From paused or seek to apply play
+			if (prev_state === 2 && state.state === 1)
+				$scope.start_playing_queued_track($scope.jukeboxes[0], $scope.track_playing.id, state.current_time, false);
 		}
 
-		// Last common actions
-		if (prev_state === 2 && state.state === 0){//ended and now?
+		// If from buffering or paused to end then request next
+		if ((prev_state === 2 || prev_state === 3) && state.state === 0){
 			console.log('Going to next')
 			$scope.get_queued_tracks($scope.jukeboxes[0], {
 				'archived': false,
@@ -401,7 +388,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		// That would need futher implementation of this this as a service or so
 	}
 
-
 	$scope.get_jukeboxes();
 	$scope.track_playing_timer(1000);
 
@@ -421,6 +407,5 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			time = minutes + ':' + seconds;
 		return time;
 	}
-
 
 });

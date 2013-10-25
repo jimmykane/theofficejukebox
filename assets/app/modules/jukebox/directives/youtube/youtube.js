@@ -14,8 +14,8 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 			// This is called when the player is loaded from YT
 			$window.onYouTubeIframeAPIReady = function() {
 				$scope.player = new YT.Player('player', {
-					height: '100',
-					width: '350',
+					height: '250',
+					width: '400',
 					playerVars: {
 						'autoplay': 0,
 						'controls': 1,
@@ -36,6 +36,7 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 					logging.info($scope.player);
 					// Lets also broadcast a change state for the others to catch up
 					player_service.broadcast_change_state({"state": $scope.player.getPlayerState()});
+					// Should try to just load the track so that the users can press play on the playa
 			};
 
 			// When the player changes a state
