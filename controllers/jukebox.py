@@ -245,24 +245,25 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 	@ndb.transactional()
 	def _start_playing(self, jukebox_key, queued_track_key, seek):
 
-		queued_track = queued_track_key.get()
-
-		if not queued_track:
-			logging.warning('Start Playing with no queued track in bd')
-			return False
-
 		if not seek:
 			seek = 0
 
+		queued_track = queued_track_key.get()
+		if not queued_track:
+			logging.warning('Start Playing with no queued track in bd')
+			return False
 		if seek > queued_track.duration - 10:
 			seek = queued_track.duration - 10
+		queued_track.play_count = queued_track.play_count +1;
+		queued_track.archived = True
 
 		player = JukeboxPlayer.query(ancestor=jukebox_key).get()
 		player.on = True
 		player.track_queued_on = datetime.datetime.now() - datetime.timedelta(0, seek)
 		player.track_duration = queued_track.duration
 		player.track_key = queued_track_key
-		player.put()
+
+		ndb.put_multi([queued_track, player])
 
 		taskqueue.add(
 			queue_name = "playercommands",
@@ -273,14 +274,11 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			params= {
 				'jukebox_id': jukebox_key.id(),
 				'track_key_id': player.track_key.id(),
-				'track_queued_on': player.track_queued_on.isoformat()
 				# date will be in iso format 2013-10-09 07:54:56.871812
+				'track_queued_on': player.track_queued_on.isoformat()
 			},
 			headers={"X-AppEngine-FailFast":"true"} # for now
 		)
-
-		queued_track.archived = True
-		queued_track.put()
 
 		return True
 
