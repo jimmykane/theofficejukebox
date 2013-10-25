@@ -73,9 +73,10 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 		player.track_queued_on = datetime.datetime.now()
 		player.track_duration = next_track.duration
 		player.track_key = next_track.key #hehe gets confusing
-		player.put()
 
-		#logging.info(player)
+		next_track.archived = True
+
+		ndb.put_multi([next_track, player])
 
 		taskqueue.add(
 			queue_name = "playercommands",
@@ -92,13 +93,6 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 			headers={"X-AppEngine-FailFast":"true"} # for now
 		)
 
-		#now archive the song
-		next_track.archived = True
-		next_track.put()
-		#logging.info('Track autoloaded')
-		#logging.info('Going from:' + str(track_playing.title))
-		#logging.info('To')
-		#logging.info('Title: ' + str(next_track.title))
 		return
 
 
