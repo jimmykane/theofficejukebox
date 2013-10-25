@@ -35,11 +35,11 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 			logging.warning('No jukebox found. Aborting')
 			return
 
-		if not jukebox.player.on:
+		player = jukebox.player
+
+		if not player.on:
 			logging.info('Jukebox player is off. Aborting')
 			return
-
-		player = jukebox.player
 
 		if not (player.track_key.id() == track_key_id and player.track_queued_on.isoformat() == track_queued_on) :
 			logging.warning ('Change track request with changed state. Dropping')
