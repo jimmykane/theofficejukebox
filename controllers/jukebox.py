@@ -190,11 +190,8 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 	will fire a next track task with an eta.
 '''
 class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
-
 	def post(self):
-
 		person = Person.get_current()
-
 		if not person: # its normal now
 			response = {'status':self.get_status(status_code=404)}
 			self.response.out.write(json.dumps(response))
@@ -218,7 +215,6 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
-
 		if (membership.type != 'owner') and (membership.type != 'admin'):
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
@@ -244,7 +240,6 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 
 	@ndb.transactional()
 	def _start_playing(self, jukebox_key, queued_track_key, seek):
-
 		if not seek:
 			seek = 0
 
@@ -252,9 +247,10 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 		if not queued_track:
 			logging.warning('Start Playing with no queued track in bd')
 			return False
-		if seek > queued_track.duration - 10:
-			seek = queued_track.duration - 10
-		queued_track.play_count = queued_track.play_count +1;
+		if seek > queued_track.duration - 5:
+			seek = queued_track.duration - 5
+		if seek == 0:
+			queued_track.play_count = queued_track.play_count +1;
 		queued_track.archived = True
 
 		player = JukeboxPlayer.query(ancestor=jukebox_key).get()
@@ -264,7 +260,6 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 		player.track_key = queued_track_key
 
 		ndb.put_multi([queued_track, player])
-
 		taskqueue.add(
 			queue_name = "playercommands",
 			url="/playercommands/next/",
@@ -279,7 +274,6 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			},
 			headers={"X-AppEngine-FailFast":"true"} # for now
 		)
-
 		return True
 
 

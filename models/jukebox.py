@@ -29,9 +29,9 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 		player = JukeboxPlayer.query(ancestor=self.key).get()
 		return player
 
-	@property
-	def random_archived_queued_track(self):
-		queued_track_keys = QueuedTrack.query(ancestor=self.key)\
+	@classmethod
+	def random_archived_queued_track(cls, jukebox_key):
+		queued_track_keys = QueuedTrack.query(ancestor=jukebox_key)\
 			.filter(QueuedTrack.archived==True)\
 			.order(QueuedTrack.edit_date).fetch(2, keys_only=True)
 		if not queued_track_keys:
