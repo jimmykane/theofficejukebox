@@ -304,17 +304,19 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 		// Then if he is admin/owner
 		if ($scope.is_owner_or_admin($scope.user, $scope.jukeboxes[0]) === true){
-			if (prev_state === 1 && state.state === 2){// seeking or stop or end
-				// if ended I have to detect it. it's going to be almost the same duration so -5s
+			// Seeking or stop or end
+			if (prev_state === 1 && state.state === 2){
+				// If ended I have to detect it. it's going to be almost the same duration so -5s
 				if (state.current_time < ($scope.track_playing.duration - 5))
 					$scope.stop_playing($scope.jukeboxes[0]);
 			}
-			if (prev_state === 2 && state.state === 1)// from paused or seek to apply play
+			// From paused or seek to apply play
+			if (prev_state === 2 && state.state === 1)
 				$scope.start_playing_queued_track($scope.jukeboxes[0], $scope.track_playing.id, state.current_time, false);
 		}
 
-		// Last common actions
-		if (prev_state === 2 && state.state === 0){//ended and now?
+		// If from buffering or paused to end then request next
+		if ((prev_state === 2 || prev_state === 3) && state.state === 0){
 			console.log('Going to next')
 			$scope.get_queued_tracks($scope.jukeboxes[0], {
 				'archived': false,
