@@ -40,7 +40,7 @@ class GetJukeBoxesHandler(webapp2.RequestHandler, JSONHandler):
 			jukeboxes = ndb.get_multi([ndb.Key(Jukebox, id) for id in jukebox_ids])
 		else:
 			jukeboxes = Jukebox.query().order(Jukebox.creation_date).fetch(100)
-		if not jukeboxes:
+		if not jukeboxes or not jukeboxes[0]:
 			response = {'status':self.get_status(status_code=404)}
 			self.response.out.write(json.dumps(response))
 			return
