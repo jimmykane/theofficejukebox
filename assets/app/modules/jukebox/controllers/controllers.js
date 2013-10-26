@@ -5,7 +5,6 @@
 
 "use strict";
 
-/* slides_controller */
 angular.module('mainApp.jukebox').controller('jukebox_controller', function($scope, $location, $routeParams, $timeout, users_service, jukebox_service, ui, logging, player_service) {
 
 	$scope.jukebox_id = $routeParams.jukebox_id;
@@ -20,7 +19,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		if (!user.id || !user.memberships)
 			return false;
 		for (var i=0; i < user.memberships.length; i++ ){
-			//console.log(user.memberships[i], jukebox.id, user.memberships[i].type)
 			if (user.memberships[i].jukebox_id === jukebox.id && user.memberships[i].type === 'owner')
 				return true;
 			if (user.memberships[i].jukebox_id === jukebox.id && user.memberships[i].type === 'admin')
@@ -39,7 +37,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		return current_jukebox_id;
 	};
 
-	/* jukebox_player: Send command to start playing specific track at specific time*/
 	$scope.start_playing_queued_track = function(jukebox, queued_track_id, seek, autostart) {
 		jukebox_service.start_playing_async(jukebox.id, queued_track_id, seek).then(
 			function(status) {
@@ -74,7 +71,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
-	/* Find the jukebox total play time */
 	$scope.get_jukebox_total_play_duration = function(jukebox, archived){
 		var total_play_time = 0;
 		if (!jukebox || !jukebox.queued_tracks)
@@ -86,7 +82,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		return total_play_time;
 	};
 
-	/* slide: Get Current Playing track */
 	$scope.get_playing_track = function(jukebox) {
 		jukebox_service.get_playing_track_async(jukebox.id).then(
 			function(status) {
@@ -109,7 +104,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
-	/* slide: Get jukeboxes according */
 	$scope.get_jukeboxes = function(jukebox_ids, filters) {
 		jukebox_service.get_jukeboxes_async(jukebox_ids, filters).then(
 			function(status) {
@@ -142,7 +136,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
-	/* queued_track: Get queued_tracks according */
 	$scope.get_queued_tracks = function(jukebox, filters) {
 		jukebox_service.get_queued_tracks_async(jukebox, filters).then(
 			function(status) {
@@ -166,7 +159,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
-	/* queued_track: Add single queued_track */
 	$scope.add_new_queued_track = function(jukebox, video_id) {
 
 		var playerRegExp= /(http:\/\/|https:\/\/)www\.youtube\.com\/watch\?v=([A-Za-z0-9\-\_]+)/;
@@ -212,12 +204,9 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);;
 	};
 
-	/* jukebox: save single jukebox */
 	$scope.save_jukebox = function(jukebox) {
-		//console.log('saving', jukebox);
 		jukebox_service.save_jukebox_async(jukebox).then(
 			function(status) {
-				// GUI HERE
 				if (status.code === 200) {
 					$scope.get_jukeboxes([jukebox.id]);
 					ui.show_notification_info('Jukebox changed state');
@@ -239,11 +228,9 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
-	/* queued_track: Remove single track */
 	$scope.remove_queued_track = function(jukebox, queued_track, archive) {
 		jukebox_service.remove_queued_track_async(jukebox, queued_track, archive).then(
 			function(status) {
-				// GUI HERE
 				if (status.code === 200) {
 					if (archive)
 						ui.show_notification_info('Queued Track Removed from queue');
@@ -267,7 +254,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
-	// Contains a lot of $scope.jukeboxes[0] stubs. take care
 	$scope.$on('handlePlayerChangedState', function(event, state) {
 
 		logging.info('Player changed state', state);
@@ -282,12 +268,10 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		console.log('prev state', prev_state);
 		console.log('new state', state.state);
 
-		// First actions when it's not an admin/owner
 		if ($scope.is_owner_or_admin($scope.user, $scope.jukeboxes[0]) === false){
 
 		}
 
-		// Then if he is admin/owner
 		if ($scope.is_owner_or_admin($scope.user, $scope.jukeboxes[0]) === true){
 			// Seeking or stop or end
 			if (prev_state === 1 && state.state === 2 ){
@@ -315,7 +299,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			$scope.start_playing($scope.jukeboxes[0]);
 		}
 
-		// Finally cahnge the state...
 		$scope.player_status = state;
 
 	});
@@ -331,7 +314,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	$scope.resume_playing = function(jukebox){
 		player_service.broadcast_resume_playing(jukebox.id);
 	};
-
 
 	$scope.stop_playing = function(jukebox){
 		jukebox_service.stop_playing_async(jukebox.id).then(

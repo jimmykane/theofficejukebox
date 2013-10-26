@@ -5,15 +5,6 @@
 
 "use strict";
 
-/* ----------- */
-/* CONTROLLERS */
-/* ----------- */
-
-
-/* notifications_controller
- * Basically its a shared controller that gets commands from the notifications service
- * which is shared as well.
- * */
 mainApp.controller('notifications_controller', function($scope, $timeout, notifications_service) {
 
 	$scope.notifications = [];
@@ -43,13 +34,11 @@ mainApp.controller('notifications_controller', function($scope, $timeout, notifi
 });
 
 
-/* user_controller */
 mainApp.controller('user_controller', function($location, $scope, users_service, logging,ui) {
 
 	$scope.user = users_service.user();
 	$scope.url = $location.absUrl();
 
-	/* GET current user */
 	$scope.get_current_user = function() {
 		users_service.get_current_user_async().then(
 			function(status) {
@@ -60,13 +49,13 @@ mainApp.controller('user_controller', function($location, $scope, users_service,
 					//ui.show_notification_warning('[W] GET/User: Sorry the user was NOT found');
 					$scope.user = false;
 				}else{
-					ui.show_notification_warning('[W] GET/User: Error Undocumented status code');
+					ui.show_notification_warning('Error Undocumented status code');
 					$scope.user = false;
 				}
 				return;
 			},
 			function(status){
-				logging.error('[!!] GET/User: The server encountered an errror');
+				logging.error('The server encountered an errror');
 				return;
 			}
 		);
