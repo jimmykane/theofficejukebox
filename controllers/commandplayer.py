@@ -91,4 +91,4 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 
 app = webapp2.WSGIApplication([
 		("/playercommands/next/", NextTrackHandler),
-	],debug=True)
+	],debug=True, config=config.config)
