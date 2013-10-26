@@ -8,6 +8,7 @@
 angular.module('mainApp.jukebox').controller('jukebox_controller', function($scope, $location, $routeParams, $timeout, users_service, jukebox_service, ui, logging, player_service) {
 
 	$scope.jukebox_id = $routeParams.jukebox_id;
+	console.log($scope.jukebox_id)
 	$scope.jukeboxes = jukebox_service.jukeboxes();
 	$scope.user = users_service.user();
 	$scope.track_playing = jukebox_service.get_track_playing();
@@ -25,16 +26,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 				return true;
 		}
 		return false;
-	};
-
-	/* Funtion to convert query param slide_id to int */
-	$scope.current_jukebox_id = function(){
-		// stub for getting id
-		return jukeboxes[0]
-		var current_jukebox_id = $location.search().jukebox_id;
-		if (!current_jukebox_id)
-			return false;
-		return current_jukebox_id;
 	};
 
 	$scope.start_playing_queued_track = function(jukebox, queued_track_id, seek, autostart) {
