@@ -16,8 +16,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 	var jukeboxes = [];
 	var track_playing = {};
 
-
-	/* jukebox: Get jukebox by id or by filters */
 	jukebox_service.get_jukeboxes_async = function(jukebox_ids, filters) {
 		// Defaults
 		jukebox_ids = jukebox_ids || false;
@@ -45,8 +43,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
-
-	/* queued_tracks: Get queued_track by id or by filters */
 	jukebox_service.get_queued_tracks_async = function(jukebox, filters) {
 		// Defaults
 		var jukebox_id = jukebox.id || false;
@@ -74,8 +70,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
-
-	/* jukebox_player: Start playing a track */
 	jukebox_service.start_playing_async = function(jukebox_id, queued_track_id, seek) {
 		var deffered = $q.defer();
 		$http.post('/AJAX/jukebox/player/startplaying/',
@@ -99,7 +93,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
-	/* jukebox_player: Stop playing */
 	jukebox_service.stop_playing_async = function(jukebox_id) {
 		var deffered = $q.defer();
 		$http.post('/AJAX/jukebox/player/stopplaying/',
@@ -122,7 +115,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
-	/* jukebox: Get playing track */   // this  should be moved to the palyer service
 	jukebox_service.get_playing_track_async = function(jukebox_id) {
 		var deffered = $q.defer();
 		$http.post('/AJAX/jukebox/get/playing_track',
@@ -157,8 +149,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
-
-	/* jukebox: Save jukebox */
 	jukebox_service.save_jukebox_async = function(jukebox) {
 		var deffered = $q.defer();
 		$http.post('/AJAX/jukebox/save/',
@@ -166,12 +156,10 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		)
 		.success(function(response, status, headers, config) {
 			if (response.status.code !== 200){
-				// Should restore old - Done
 				jukebox_service.update_or_insert_jukebox(jukebox);
 				deffered.resolve(response.status);
 				return;
 			}
-			// Should do check eg first one is consumed
 			jukebox = response.data;
 			console.log(jukebox);
 			jukebox_service.update_or_insert_jukebox(jukebox);
@@ -184,8 +172,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
-
-	/* queued_track: Add new queued_track */
 	jukebox_service.add_queued_track_async = function(jukebox, new_queued_track_video_id) {
 		var deffered = $q.defer();
 		$http.post('/AJAX/queued_track/save/', {
@@ -209,8 +195,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
-
-	/* queued_track: remove_queued_track */
 	jukebox_service.remove_queued_track_async = function(jukebox, queued_track, archive) {
 		//console.log('here');
 		var deffered = $q.defer();
@@ -238,7 +222,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
-	/* jukebox: Modification functions for jukebox array */
 	jukebox_service.add_jukebox = function(jukebox) {
 		jukeboxes.push(jukebox);
 		return true;
@@ -284,10 +267,10 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		// Here I need to do the conversion to date obj from json string
 		queued_track.creation_date = new Date(queued_track.creation_date)
 		queued_track.edit_date = new Date(queued_track.edit_date)
-		console.log(queued_track.edit_date)
 		jukebox.queued_tracks.push(queued_track);
 		return true;
 	};
+
 	jukebox_service.remove_queued_track = function(jukebox, queued_track) {
 		var found_position = jukebox_service.check_if_queued_track_id_exists(jukebox, queued_track.id);
 		if (found_position === false){
@@ -296,6 +279,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		jukebox.queued_tracks.splice(found_position, 1);
 		return true;
 	};
+
 	jukebox_service.update_or_insert_queued_track = function(jukebox, new_queued_track) {
 		// First check if it exists as an array and if not create it.
 		jukebox.queued_tracks = jukebox.queued_tracks || [];
@@ -311,7 +295,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 	};
 
 	jukebox_service.check_if_queued_track_id_exists = function(jukebox, queued_track_id) {
-		console.log(queued_track_id)
 		var queued_track_id = queued_track_id;
 		var found_position = false;
 		for (var i = 0; i < jukebox.queued_tracks.length; i++) {
@@ -326,12 +309,9 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 });
 
 
-/* Hehe this should be assembled elsewhere */
 angular.module('mainApp.jukebox').factory('player_service', function($rootScope) {
 
 	var player_service = {};
-
-	// Just for the sake of it or future
 
 	player_service.broadcast_change_state = function(state){
 		console.log("Broadcasting Player State change")
@@ -354,6 +334,6 @@ angular.module('mainApp.jukebox').factory('player_service', function($rootScope)
 		$rootScope.$broadcast('handleStopPlaying');
 	};
 
-
 	return player_service;
+
 });

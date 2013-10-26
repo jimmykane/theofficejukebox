@@ -5,10 +5,6 @@
 
  "use strict";
 
- /* -------- *
- * SERVICES *
- * -------- */
-
 /* Logging service */
 mainApp.factory('logging', function($http, $q) {
 
@@ -61,7 +57,6 @@ mainApp.factory('notifications_service', function($rootScope) {
 });
 
 
-
 /* UI service (changes css etc) calls and shares the notifications
  * Only works as a wrapper now. Service of notifications can be used
  * directly instead.
@@ -85,15 +80,12 @@ mainApp.factory('ui', function(logging, notifications_service) {
 });
 
 
-
-
 /* users_service */
 mainApp.factory('users_service', function($http, $q, logging) {
 
 	var users_service = {};
 	var user = {};
 
-	/* user: Get current user*/
 	users_service.get_current_user_async = function() {
 		var deffered = $q.defer();
 		$http.post('/AJAX/person/get/current', {
