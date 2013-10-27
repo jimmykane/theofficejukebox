@@ -193,7 +193,7 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 	def post(self):
 		person = Person.get_current()
 		if not person: # its normal now
-			response = {'status':self.get_status(status_code=404)}
+			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
 
@@ -287,7 +287,7 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 
 		person = Person.get_current()
 		if not person: # its normal now
-			response = {'status':self.get_status(status_code=404)}
+			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
 
