@@ -248,6 +248,7 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			logging.warning('Start Playing with no queued track in bd')
 			return False
 		if seek > queued_track.duration - 5:
+			# should queue_next song or so
 			seek = queued_track.duration - 5
 		if seek == 0:
 			queued_track.play_count = queued_track.play_count +1;
