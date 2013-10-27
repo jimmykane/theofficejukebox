@@ -332,12 +332,12 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 					console.log('Stopping video');
 					jukebox.player.on = false;
 				}else if (status.code === 401) {
-					ui.show_notification_warning('Unauthorized!!!');
+					ui.show_notification_warning('Unauthorized!!! How the hell did you get access to this command. Mind it!!!');
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
 					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
 				}else if (status.code === 404) {
-					ui.show_notification_warning('The server did not respond with a playing track. Should I play something from the previous things? ')
+					ui.show_notification_warning('Sorry but the jukebox was not found...')
 				}else{
 					ui.show_notification_error('Uknown error');
 				}
@@ -384,6 +384,8 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	if ($scope.jukebox_id){
 		$scope.get_jukeboxes([$scope.jukebox_id]);
 		$scope.track_playing_timer(1000);
+	}else{
+		$location.path('115442273060497622362')
 	}
 
 	/* Help function. */
