@@ -35,7 +35,7 @@
 				data-ng-click="start_playing(jukebox)"
 				class="color">Sync Now</button>
 			<button
-				data-ng-if="player_status.state >= 1"
+				data-ng-if="(player_status.state >= 1) && is_owner_or_admin(user, jukebox)"
 				data-ng-click="stop_playing(jukebox)"
 				class="color">Stop It... (eg launch break or phonecall)</button>
 		</div>
