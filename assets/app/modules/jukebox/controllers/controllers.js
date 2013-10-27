@@ -291,7 +291,8 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			}
 			// From paused or seek to apply play
 			if (prev_state === 2 && state.state === 1){
-				$scope.start_playing_queued_track(current_jukebox , $scope.track_playing.id, state.current_time, false);
+				// This goes wrong as well.
+				//$scope.start_playing_queued_track(current_jukebox , $scope.track_playing.id, state.current_time, false);
 			}
 		}
 
