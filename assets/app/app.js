@@ -27,5 +27,5 @@ mainApp.config(function($locationProvider, $routeProvider) {
 	 * any browser especially < IE10
 	 */
 	$locationProvider.html5Mode(true);
-	$routeProvider.otherwise({redirectTo: '/jukebox/'});
+	$routeProvider.otherwise({redirectTo: '/jukebox/115442273060497622362'}); // stub for production
 });
