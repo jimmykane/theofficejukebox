@@ -23,7 +23,6 @@ class GetJukeBoxesHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
 
-		# First lets try to get the data and then logic
 		try:
 			data = json.loads(self.request.body)
 			jukebox_ids = data['jukebox_ids']
@@ -133,7 +132,6 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		#logging.info(jukebox)
 		if not jukebox:
 			response = {'status':self.get_status(status_code=404, msg='Sorry but no jukebox')}
 			self.response.out.write(json.dumps(response))
@@ -350,7 +348,6 @@ class SaveJukeBoxeHandler(webapp2.RequestHandler, JSONHandler):
 			return
 		try:
 			jukebox_to_save = json.loads(self.request.body)
-			#logging.info(jukebox_to_save)
 			if not jukebox_to_save:
 				response = {'status':self.get_status(status_code=404)}
 				self.response.out.write(json.dumps(response))
