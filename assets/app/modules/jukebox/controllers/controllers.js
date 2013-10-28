@@ -272,8 +272,8 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 
 		//-1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5(video cued)
-		// seeking 1, 2, 1
-		// Start playing -1, 5, 1
+		// seeking 1, 2, 1 and not sure
+		// Start playing -1, 5, 1 and not sure
 
 		console.log('prev state', prev_state);
 		console.log('new state', state.state);
