@@ -10,7 +10,6 @@ import StringIO
 import webapp2
 import jinja2
 from models.person import *
-from userpage import *
 from google.appengine.api import files,users
 from google.appengine.ext.db import ReferencePropertyResolveError
 

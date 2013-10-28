@@ -9,7 +9,6 @@ from controllers.jsonhandler import *
 from models.person import *
 from models.jukebox import *
 from models.tracks import *
-from userpage import *
 from google.appengine.api import users
 
 

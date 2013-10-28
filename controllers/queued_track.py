@@ -8,7 +8,6 @@ import logging
 import datetime
 import json
 from config import config
-from userpage import *
 from models.tracks import *
 from models.jukebox import *
 from controllers.jsonhandler import *
