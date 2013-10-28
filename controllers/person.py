@@ -5,15 +5,15 @@
 import logging
 import hashlib
 import json
-from google.appengine.api import users
 from controllers.jsonhandler import *
 from models.person import *
 from models.jukebox import *
 from models.tracks import *
 from userpage import *
+from google.appengine.api import users
 
 
-class LogoutPersonHandler(UserPageHandler):
+class LogoutPersonHandler(webapp2.RequestHandler):
 
 	def get(self):
 		try:
@@ -24,7 +24,7 @@ class LogoutPersonHandler(UserPageHandler):
 			return
 
 
-class RegisterPersonHandler(UserPageHandler):
+class RegisterPersonHandler(webapp2.RequestHandler):
 
 	def get(self):
 		user = users.get_current_user()
@@ -57,7 +57,7 @@ class RegisterPersonHandler(UserPageHandler):
 		return True
 
 
-class GetCurrentPersonHanlder(UserPageHandler, JSONHandler):
+class GetCurrentPersonHanlder(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
 		person = Person.get_current()
