@@ -6,8 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/app/modules/jukebox/css/icons.css" />
 
 <div class="max_width_height view_port">
-	<div
-		data-ng-repeat="jukebox in jukeboxes"
+	<div data-ng-if="jukebox"
 		style="margin-left: 5%;padding-left:2% ;width: 43%;height:100%;float: left;background-color: rgba(0, 0, 0, 0.80);">
 		<div style="height:45%; padding-top: 5%;" >
 			<div style="float:left;">
@@ -35,6 +34,10 @@
 				data-ng-if="player_status.state > -2"
 				data-ng-click="start_playing(jukebox)"
 				class="color">Sync Now</button>
+			<button
+				data-ng-if="(player_status.state >= 1) && is_owner_or_admin(user, jukebox)"
+				data-ng-click="stop_playing(jukebox)"
+				class="color">Stop It... (eg launch break or phonecall)</button>
 		</div>
 		<div style="height:50%;max-height:50%;">
 			<h3 style="float:left;">
@@ -77,9 +80,10 @@
 		<div you-tube style="text-align:center;height:50%;max-height:45%; margin-top:5%; width: 100%;">
 			<div id="player"></div>
 		</div>
-		<div style="text-align:center; width: 98%; height:50%; max-height:50%;padding-left: 2%;">
+		<div data-ng-if="jukebox"
+			style="text-align:center; width: 98%; height:50%; max-height:50%;padding-left: 2%;">
 			<h3 style="float:left">
-				Last 15 tracks played {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukeboxes[0], true)) }]}
+				Last 15 tracks played {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukeboxes, true)) }]}
 			</h3>
 			<div style="float:right;">
 				<input
@@ -91,12 +95,12 @@
 			<div class="queued_track_list" >
 				<br/>
 				<div
-					data-ng-repeat="queued_track in jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search | orderBy: '-edit_date' "
+					data-ng-repeat="queued_track in jukebox.queued_tracks | filter:{archived:true} | filter:queued_track_search | orderBy: '-edit_date' "
 					class="flip-in queued_track_list-item ">
 					<p style="text-align: left;">
-						{[{ (jukeboxes[0].queued_tracks | filter:{archived:true} | filter:queued_track_search).length - $index }]}.{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]}) <i>({[{ queued_track.play_count }]} plays)</i>
+						{[{ (jukebox.queued_tracks | filter:{archived:true} | filter:queued_track_search).length - $index }]}.{[{ queued_track.title.slice(0,65) }]} ({[{ duration_to_HHMMSS(queued_track.duration) }]}) <i>({[{ queued_track.play_count }]} plays)</i>
 						<button
-							data-ng-click="add_new_queued_track(jukeboxes[0], queued_track.id)"
+							data-ng-click="add_new_queued_track(jukebox, queued_track.id)"
 							class="small_font">
 								Queue
 						</button>

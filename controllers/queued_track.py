@@ -7,15 +7,16 @@ import re
 import logging
 import datetime
 import json
+import webapp2
 from config import config
-from userpage import *
 from models.tracks import *
 from models.jukebox import *
+from models.person import *
 from controllers.jsonhandler import *
 
 ''' All responses must be JSON encoded '''
 
-class RemoveSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
+class RemoveSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
 		person = Person.get_current()
@@ -67,7 +68,7 @@ class RemoveSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
 
 
 
-class AddSingleQueuedTrackHandler(UserPageHandler, JSONHandler):
+class AddSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
 		person = Person.get_current()

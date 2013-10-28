@@ -10,10 +10,8 @@ import StringIO
 import webapp2
 import jinja2
 from models.person import *
-from userpage import *
 from google.appengine.api import files,users
 from google.appengine.ext.db import ReferencePropertyResolveError
-
 
 
 class RootPage(webapp2.RequestHandler):
@@ -54,10 +52,6 @@ class RootPage(webapp2.RequestHandler):
 		return True
 
 
-	def is_dev_server(self):
-		return os.environ['SERVER_SOFTWARE'].startswith('Dev')
-
-
 	def _get_project_meta(self):
 		class Expando(object):
 			pass
@@ -83,19 +77,9 @@ class RootPage(webapp2.RequestHandler):
 		return providers_list
 
 
-
 	@property
 	def jinja_environment(self):
 		jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(
 					os.path.join(os.path.dirname(__file__),
 							'../views')))
 		return jinja_environment
-
-# 	def _save_to_blobstore_and_get_key(self,data):
-# 		file_name = files.blobstore.create(mime_type='text/txt')
-# 		with files.open(file_name, 'a') as f:
-# 			f.write(data)
-# 		files.finalize(file_name)
-# 		blob_key = files.blobstore.get_blob_key(file_name)
-# 		return blob_key
-

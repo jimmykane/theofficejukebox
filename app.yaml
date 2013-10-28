@@ -29,6 +29,10 @@ handlers:
   script: controllers.commandplayer.app
   login: admin
 
+- url: /setup/.*
+  script: admin.app
+  login: admin
+
 - url: /assets
   static_dir: assets
 

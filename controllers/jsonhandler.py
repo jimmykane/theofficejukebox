@@ -33,6 +33,7 @@ class JSONHandler():
 		status = [ status for status in statuses if status['code'] == status_code][0]
 		return status
 
+	# This should be moved elsewhere
 	def is_dev_server(self):
 		return os.environ['SERVER_SOFTWARE'].startswith('Dev')
 
