@@ -39,6 +39,17 @@ class RemoveSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
+		membership = ndb.Key(Jukebox, jukebox_id, JukeboxMembership, person.key.id()).get()
+		if not membership:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		if (membership.type != 'owner') and (membership.type != 'admin') and (membership.type != 'member'):#Mischa
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
 		# should also be checking if it was ququed by that specific person
 		# And also do something with the currently playing shit
 		if archive:
@@ -50,12 +61,6 @@ class RemoveSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
 			return
 
 		# Only owner and admins can do go on
-		membership = ndb.Key(Jukebox, jukebox_id, JukeboxMembership, person.key.id()).get()
-		if not membership:
-			response = {'status':self.get_status(status_code=401)}
-			self.response.out.write(json.dumps(response))
-			return
-
 		if (membership.type != 'owner') and (membership.type != 'admin'):
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
@@ -86,6 +91,18 @@ class AddSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
 		except Exception as e:
 			logging.error('Unconvertable request' + repr(e))
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
+			self.response.out.write(json.dumps(response))
+			return
+
+		# Only members admins and owners can do go on
+		membership = ndb.Key(Jukebox, jukebox_id, JukeboxMembership, person.key.id()).get()
+		if not membership:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		if (membership.type != 'owner') and (membership.type != 'admin') and (membership.type != 'member'):#Mischa
+			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
 

@@ -29,7 +29,10 @@ class RootPage(webapp2.RequestHandler):
 	def _display_root_page(self, **kwargs):
 		jinja_environment = self.jinja_environment
 		content_template = jinja_environment.get_template("/content/app.html")
-		kwargs.update({"providers": self._get_providers()})
+		kwargs.update({
+			"providers": self._get_providers(),
+			"google_analytics_key": self.app.config.get('api_keys').get('google_analytics')
+		})
 		rendered_content = content_template.render(kwargs)
 		kwargs.update({"app_content": rendered_content})
 		self._render_wholepage(**kwargs)
@@ -44,10 +47,10 @@ class RootPage(webapp2.RequestHandler):
 			kwargs.update({"meta": meta})
 		#Get general configuration
 		kwargs.update({
-						"domain": self.app.config.get("domain_name"),
-						"title" : self.app.config.get("project_name"),
-						"uri": self.request.uri
-					})
+			"domain": self.app.config.get("domain_name"),
+			"title" : self.app.config.get("project_name"),
+			"uri": self.request.uri
+		})
 		self.response.out.write(template.render(kwargs))
 		return True
 
@@ -79,7 +82,10 @@ class RootPage(webapp2.RequestHandler):
 
 	@property
 	def jinja_environment(self):
-		jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(
-					os.path.join(os.path.dirname(__file__),
-							'../views')))
+		jinja_environment = jinja2.Environment(
+			loader=jinja2.FileSystemLoader(
+				os.path.join(os.path.dirname(__file__),
+				'../views'
+			))
+		)
 		return jinja_environment
