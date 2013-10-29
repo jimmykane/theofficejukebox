@@ -47,10 +47,10 @@ class RootPage(webapp2.RequestHandler):
 			kwargs.update({"meta": meta})
 		#Get general configuration
 		kwargs.update({
-						"domain": self.app.config.get("domain_name"),
-						"title" : self.app.config.get("project_name"),
-						"uri": self.request.uri
-					})
+			"domain": self.app.config.get("domain_name"),
+			"title" : self.app.config.get("project_name"),
+			"uri": self.request.uri
+		})
 		self.response.out.write(template.render(kwargs))
 		return True
 
@@ -82,7 +82,10 @@ class RootPage(webapp2.RequestHandler):
 
 	@property
 	def jinja_environment(self):
-		jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(
-					os.path.join(os.path.dirname(__file__),
-							'../views')))
+		jinja_environment = jinja2.Environment(
+			loader=jinja2.FileSystemLoader(
+				os.path.join(os.path.dirname(__file__),
+				'../views'
+			))
+		)
 		return jinja_environment
