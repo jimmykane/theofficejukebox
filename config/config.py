@@ -13,7 +13,8 @@ providers = {
 
 api_keys = {
 	"google_plus": "AIzaSyAeG-SZxKFh53CAsQbWOZiyZXHem_YrDzU",
-	"youtube": "AIzaSyBmq054XFm7vslTbvnLMEM3wQG_i7yO0B0"
+	"youtube": "AIzaSyBmq054XFm7vslTbvnLMEM3wQG_i7yO0B0",
+	"google_analytics": "UA-44464387-1"
 }
 
 config = {

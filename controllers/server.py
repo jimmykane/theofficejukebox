@@ -29,7 +29,10 @@ class RootPage(webapp2.RequestHandler):
 	def _display_root_page(self, **kwargs):
 		jinja_environment = self.jinja_environment
 		content_template = jinja_environment.get_template("/content/app.html")
-		kwargs.update({"providers": self._get_providers()})
+		kwargs.update({
+			"providers": self._get_providers(),
+			"google_analytics_key": self.app.config.get('api_keys').get('google_analytics')
+		})
 		rendered_content = content_template.render(kwargs)
 		kwargs.update({"app_content": rendered_content})
 		self._render_wholepage(**kwargs)
