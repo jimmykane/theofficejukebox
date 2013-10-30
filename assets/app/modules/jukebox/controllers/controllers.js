@@ -395,7 +395,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 	if ($scope.jukebox_id){
 		$scope.get_jukeboxes([$scope.jukebox_id]);
-		$scope.track_playing_timer(1000);
+		//$scope.track_playing_timer(1000);
 	}else{
 		$location.path('115442273060497622362')
 	}
