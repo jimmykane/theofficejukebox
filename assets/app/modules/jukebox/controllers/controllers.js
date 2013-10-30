@@ -33,9 +33,20 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		if (!user.id || !user.memberships)
 			return false;
 		for (var i=0; i < user.memberships.length; i++ ){
-			if (user.memberships[i].jukebox_id === jukebox.id && user.memberships[i].type === 'owner')
+			if (user.memberships[i].jukebox_id === jukebox.id
+				&& (user.memberships[i].type === 'owner' || user.memberships[i].type === 'admin'))
 				return true;
-			if (user.memberships[i].jukebox_id === jukebox.id && user.memberships[i].type === 'admin')
+		}
+		return false;
+	};
+
+	$scope.is_member = function(user, jukebox){
+		console.log(1)
+		if (!user.id || !user.memberships)
+			return false;
+		for (var i=0; i < user.memberships.length; i++ ){
+			if (user.memberships[i].jukebox_id === jukebox.id
+				&& (user.memberships[i].type === 'owner' || user.memberships[i].type === 'admin' || user.memberships[i].type === 'member'))
 				return true;
 		}
 		return false;
