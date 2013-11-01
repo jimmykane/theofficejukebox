@@ -188,6 +188,7 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 	will fire a next track task with an eta.
 '''
 class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
+
 	def post(self):
 		person = Person.get_current()
 		if not person: # its normal now
@@ -206,14 +207,13 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
 			self.response.out.write(json.dumps(response))
 			return
-
 		# Only owner and admins can do go on
 		membership = ndb.Key(Jukebox, jukebox_key.id(), JukeboxMembership, person.key.id()).get()
 		if not membership:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
-		if (membership.type != 'owner') and (membership.type != 'admin'):
+		if membership.type not in Jukebox.membership_types()['admins']:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return

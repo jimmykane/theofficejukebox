@@ -69,11 +69,13 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 						'order': 'edit_date',
 						'short_desc': true
 					});
+				}else if (status.code === 401) {
+					ui.show_notification_warning('You cann\'t start this....');
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
 					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
 				}else if (status.code === 404) {
-					ui.show_notification_warning('He is talking again about 404\'s and shit...')
+					ui.show_notification_warning('He is talking again about 404\'s and shit...');
 				}else{
 					ui.show_notification_error('Uknown error');
 				}
