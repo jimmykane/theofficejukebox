@@ -137,6 +137,7 @@ class GetJukeBoxMembershipsHandler(webapp2.RequestHandler, JSONHandler):
 			membership_dict = JukeboxMembership._to_dict(membership)
 			person = membership.person_key.get()
 			person_dict = Person._to_dict(person)
+			person_dict.update({'nick_name': person.info.nick_name})
 			membership_dict.update({'person': person_dict})
 			memberships_list.append(membership_dict)
 
