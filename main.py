@@ -15,6 +15,7 @@ app = webapp2.WSGIApplication([
 		("/AJAX/jukeboxes/get/", jukebox.GetJukeBoxesHandler),
 		("/AJAX/jukebox/save/", jukebox.SaveJukeBoxeHandler),
 		("/AJAX/jukebox/get/playing_track", jukebox.GetPlayingTrackHandler),
+		("/AJAX/jukebox/get/memberships", jukebox.GetJukeBoxMembershipsHandler),
 		("/AJAX/jukebox/get/queued_tracks", jukebox.GetJukeBoxQueuedTracksHandler),
 		("/AJAX/jukebox/player/startplaying/", jukebox.StartPlayingHandler),
 		("/AJAX/jukebox/player/stopplaying/", jukebox.StopPlayingHandler),
