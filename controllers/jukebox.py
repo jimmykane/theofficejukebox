@@ -116,6 +116,34 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 		return
 
 
+class GetJukeBoxMembershipsHandler(webapp2.RequestHandler, JSONHandler):
+
+	def post(self):
+
+		try:
+			data = json.loads(self.request.body)
+			jukebox_id = data['jukebox_id']
+			jukebox_key = ndb.Key(Jukebox, jukebox_id)
+		except Exception as e:
+			logging.error('Unconvertable request' + repr(e))
+			response = {'status':self.get_status(status_code=400, msg=repr(e))}
+			self.response.out.write(json.dumps(response))
+			return
+
+		memberships = JukeboxMembership.query(ancestor=jukebox_key).fetch(30)
+
+		memberships_list = []
+		for membership in memberships:
+			memberships_dict = JukeboxMembership._to_dict(membership)
+			memberships_list.append(memberships_dict)
+
+		response = {'data': memberships_list}
+		#logging.info(response)
+		response.update({'status': self.get_status()})
+		self.response.out.write(json.dumps(response))
+		return
+
+
 class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
