@@ -29,7 +29,6 @@ class Person(ndb.Expando):
 		jukebox_membership_key.get()
 		return jukebox_membership_key
 
-
 	@classmethod
 	def get_current(cls):
 		user = users.get_current_user()
@@ -55,13 +54,10 @@ class Person(ndb.Expando):
 
 	@classmethod
 	def _pre_delete_hook(cls, key):
-		# This needs urgent fixing. Should iterate in slides etc.
+		# This needs fix. Should iterate in memberships as well
 		person_info = PersonInfo.query(ancestor=key).get()
 		if person_info:
 			person_info.key.delete()
-		#slides_keys = Slide.query(ancestor=key).fetch(1000, keys_only=True)
-		#if slides_keys:
-			#ndb.delete_multi(slides_keys)
 
 
 class PersonInfo(ndb.Expando):
