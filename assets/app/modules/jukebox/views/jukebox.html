@@ -112,9 +112,7 @@
 	</div>
 	<br style="clear: both;"/>
 	<div style="height: 10%;background-color: rgba(0, 0, 0, 0.80); width: 90%; margin-left: 5%;" class="flexbox">
-		<div  class="flexbox-item">
-			<button data-ng-click="get_memberships(jukebox)">Show Members</button>
-			<div data-ng-repeat="membership in jukebox.memberships">{[{ membership.person.nick_name }]}</div>
-		</div>
+		<button class="flexbox-item" data-ng-click="get_memberships(jukebox)">Show Members</button>
+		<div class="flexbox-item" data-ng-repeat="membership in jukebox.memberships">{[{ membership.person.nick_name }]} ({[{ membership.type }]})</div>
 	</div>
 </div>
