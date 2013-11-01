@@ -16,6 +16,10 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	$scope.player_status = false;
 	$scope.player_status.state = -1;
 	$scope.jukebox = false;
+	$scope.membership_types = {
+			'admins': ['admin','owner'],
+			'members': ['admin','owner', 'member']
+	};
 
 	$scope.get_current_jukebox = function(){
 		if (!$scope.jukebox_id)
