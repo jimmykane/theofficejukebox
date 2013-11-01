@@ -7,7 +7,7 @@
 
 <div class="max_width_height view_port">
 	<div data-ng-if="jukebox"
-		style="margin-left: 5%;padding-left:2% ;width: 43%;height:100%;float: left;background-color: rgba(0, 0, 0, 0.80);">
+		style="margin-left: 5%;padding-left:2% ;width: 43%;height:90%;float: left;background-color: rgba(0, 0, 0, 0.80);">
 		<div style="height:45%; padding-top: 5%;" >
 			<div style="float:left;">
 			<h1><b>{[{ jukebox.title }]}</b></h1>
@@ -76,7 +76,7 @@
 			</div>
 		</div>
 	</div>
-	<div style="background-color: rgba(0, 0, 0, 0.80); float: left; width: 43%; height: 100%; margin-right:5%;padding-right:2%;">
+	<div style="background-color: rgba(0, 0, 0, 0.80); float: left; width: 43%; height: 90%; margin-right:5%;padding-right:2%;">
 		<div you-tube style="text-align:center;height:50%;max-height:45%; margin-top:5%; width: 100%;">
 			<div id="player"></div>
 		</div>
@@ -109,5 +109,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<br style="clear: both;"/>
+	<div style="height: 10%;background-color: rgba(0, 0, 0, 0.80); width: 90%;">
+		<button data-ng-click="get_memberships(jukebox)">Get Members</button>
+		<div data-ng-repeat="membership in jukebox.memberships">a</div>
 	</div>
 </div>
