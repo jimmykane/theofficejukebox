@@ -70,6 +70,29 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
+	jukebox_service.get_memberships_async = function(jukebox) {
+		var jukebox_id = jukebox.id || false;
+		var deffered = $q.defer();
+		$http.post('/AJAX/jukebox/get/memberships', {
+			"jukebox_id" : jukebox_id
+		})
+		.success(function(response, status, headers, config) {
+			if (response.status.code !== 200){
+				deffered.resolve(response.status);
+				return;
+			}
+			var memberships = response.data;
+			logging.ok("Got new memberships", memberships);
+			jukebox.memberships = memberships;
+			deffered.resolve(response.status);
+		})
+		.error(function(response, status, headers, config) {
+			deffered.reject(response.status);
+			logging.error(response, status, headers, config);
+		});
+		return deffered.promise;
+	};
+
 	jukebox_service.start_playing_async = function(jukebox_id, queued_track_id, seek) {
 		var deffered = $q.defer();
 		$http.post('/AJAX/jukebox/player/startplaying/',
@@ -234,6 +257,8 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return true;
 	};
 
+
+	// Here opts are needed
 	jukebox_service.update_or_insert_jukebox = function(new_jukebox) {
 		var found_position = jukebox_service.check_if_jukebox_id_exists(new_jukebox.id);
 		if (found_position === false){
