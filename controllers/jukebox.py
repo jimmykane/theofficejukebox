@@ -306,7 +306,7 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		if (membership.type != 'owner') and (membership.type != 'admin'):
+		if membership.type not in Jukebox.membership_types()['admins']:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
@@ -373,7 +373,7 @@ class SaveJukeBoxeHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		if (membership.type != 'owner') and (membership.type != 'admin'):
+		if membership.type not in Jukebox.membership_types()['admins']:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
