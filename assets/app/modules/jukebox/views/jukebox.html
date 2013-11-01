@@ -26,6 +26,7 @@
 				</p>
 				<p ng-if="track_playing.title">Thanks to <i>{[{ track_playing.person_nick_name.toUpperCase() }]}</i></p>
 			</div>
+			<br/>
 			<button
 				data-ng-click="get_jukeboxes([jukebox.id])"
 				title="Reload me honey"
@@ -111,7 +112,7 @@
 		</div>
 	</div>
 	<br style="clear: both;"/>
-	<div style="height: 10%;background-color: rgba(0, 0, 0, 0.80); width: 90%; margin-left: 5%;" class="flexbox">
+	<div style="height: 10%; background-color: rgba(0, 0, 0, 0.80);width: 90%; margin-left: 5%;" class="flexbox">
 		<button class="flexbox-item" data-ng-click="get_memberships(jukebox)">Show Members</button>
 		<div class="flexbox-item" data-ng-repeat="membership in jukebox.memberships">{[{ membership.person.nick_name }]} ({[{ membership.type }]})</div>
 	</div>
