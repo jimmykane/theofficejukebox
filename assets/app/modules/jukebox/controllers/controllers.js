@@ -38,22 +38,30 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		console.log("Security Check");
 		if (!user.id || !user.memberships)
 			return false;
+		if (user.is_admin)
+			return true;
 		for (var i=0; i < user.memberships.length; i++ ){
 			if (user.memberships[i].jukebox_id === jukebox.id
-				&& $scope.membership_types.admins.indexOf(user.memberships[i].type) !== -1)
+			&& $scope.membership_types.admins.indexOf(user.memberships[i].type) !== -1){
+				user.is_admin = true;
 				return true;
+			}
 		}
 		return false;
 	};
 
 	$scope.is_member = function(user, jukebox){
-		console.log("Security check");
+		console.log("Security check", user);
 		if (!user.id || !user.memberships)
 			return false;
+		if (user.is_member)
+			return true;
 		for (var i=0; i < user.memberships.length; i++ ){
 			if (user.memberships[i].jukebox_id === jukebox.id
-				&& $scope.membership_types.members.indexOf(user.memberships[i].type) !== -1)
+			&& $scope.membership_types.members.indexOf(user.memberships[i].type) !== -1){
+				user.is_member = true;
 				return true;
+			}
 		}
 		return false;
 	};
