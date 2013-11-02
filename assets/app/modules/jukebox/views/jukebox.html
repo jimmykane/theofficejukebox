@@ -52,9 +52,13 @@
 				<button type="submit">Queue Song</button>
 			</form>
 			<button
-			data-ng-if="!is_member(user, jukebox)"
+			data-ng-if="!user.email"
 			style="float:right;"
 			onClick="window.location.href='/login/'">Login</button>
+			<button
+			data-ng-if="!is_member(user, jukebox) && user.email"
+			style="float:right;"
+			data-ng-click="">Request Join</button>
 			<div class="queued_track_list">
 				<br/>
 				<div
