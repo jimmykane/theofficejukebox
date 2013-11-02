@@ -148,7 +148,7 @@ class GetJukeBoxMembershipsHandler(webapp2.RequestHandler, JSONHandler):
 		return
 
 
-class SaveJukeBoxMembershipsHandler(webapp2.RequestHandler, JSONHandler):
+class SaveJukeBoxMembershipHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
 
