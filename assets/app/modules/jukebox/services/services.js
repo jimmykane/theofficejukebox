@@ -152,12 +152,9 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 				track_playing.duration = 0;
 				return;
 			}
-
 			angular.extend(track_playing, response.data);
 			console.log("Track playing: ", response.data);
-
 			track_playing.start_seconds = track_playing.start_seconds - 5;
-
 			if (track_playing.start_seconds > track_playing.duration)
 				return;
 			if (track_playing.start_seconds < 0) // Maybe also increase
@@ -219,7 +216,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 	};
 
 	jukebox_service.remove_queued_track_async = function(jukebox, queued_track, archive) {
-		//console.log('here');
 		var deffered = $q.defer();
 		$http.post('/AJAX/queued_track/remove/', {
 			"jukebox_id": jukebox.id,
