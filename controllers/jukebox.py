@@ -155,7 +155,6 @@ class RequestJukeBoxMembershipHandler(webapp2.RequestHandler, JSONHandler):
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
-
 		try:
 			data = json.loads(self.request.body)
 			jukebox_id = data['jukebox_id']
@@ -166,7 +165,8 @@ class RequestJukeBoxMembershipHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		membership = JukeboxMembership.get_or_insert(person.key.id(), parent=jukebox.key)
+		membership = JukeboxMembership.get_or_insert(person.key.id(), parent=jukebox_key)
+		membership.person_key = person.key
 		if not membership.type:
 			membership.type = 'join'
 			membership.put()
