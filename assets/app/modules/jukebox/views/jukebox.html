@@ -6,9 +6,8 @@
 <link rel="stylesheet" type="text/css" href="/assets/app/modules/jukebox/css/icons.css" />
 
 <div class="max_width_height view_port">
-	<div data-ng-if="jukebox"
-		style="margin-left: 5%;padding-left:2% ;width: 43%;height:90%;float: left;background-color: rgba(0, 0, 0, 0.80);">
-		<div style="height:45%; padding-top: 5%;" >
+	<div data-ng-if="jukebox" class="left-column">
+		<div class="jukebox-info" >
 			<div style="float:left;">
 			<h1><b>{[{ jukebox.title }]}</b></h1>
 			</div>
@@ -40,7 +39,7 @@
 				data-ng-click="stop_playing(jukebox)"
 				class="color">Stop It... (eg launch break or phonecall)</button>
 		</div>
-		<div style="height:50%;max-height:50%;">
+		<div class="jukebox-upcoming_tracks">
 			<h3 style="float:left;">
 				Upcoming 15 tracks {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukebox, false)) }]}
 			</h3>
@@ -77,8 +76,8 @@
 			</div>
 		</div>
 	</div>
-	<div style="background-color: rgba(0, 0, 0, 0.80); float: left; width: 43%; height: 90%; margin-right:5%;padding-right:2%;">
-		<div you-tube style="text-align:center;height:50%;max-height:45%; margin-top:5%; width: 100%;">
+	<div class="right-column">
+		<div you-tube class="youtube_player">
 			<div id="player"></div>
 		</div>
 		<div data-ng-if="jukebox"
