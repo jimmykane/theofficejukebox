@@ -416,7 +416,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 	/* Help function. */
 	$scope.duration_to_HHMMSS = function (duration) {
-		if (!duration)
+		if (duration === false)
 			return null;
 		var sec_num = parseInt(duration, 10); // don't forget the second parm
 		var hours   = Math.floor(sec_num / 3600);
