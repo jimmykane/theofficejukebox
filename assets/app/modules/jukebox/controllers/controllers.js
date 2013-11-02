@@ -38,7 +38,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			return false;
 		for (var i=0; i < user.memberships.length; i++ ){
 			if (user.memberships[i].jukebox_id === jukebox.id
-				&& (user.memberships[i].type === 'owner' || user.memberships[i].type === 'admin'))
+				&& $scope.membership_types.admins.indexOf(user.memberships[i].type) !== -1)
 				return true;
 		}
 		return false;
@@ -50,7 +50,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			return false;
 		for (var i=0; i < user.memberships.length; i++ ){
 			if (user.memberships[i].jukebox_id === jukebox.id
-				&& (user.memberships[i].type === 'owner' || user.memberships[i].type === 'admin' || user.memberships[i].type === 'member'))
+				&& $scope.membership_types.members.indexOf(user.memberships[i].type) !== -1)
 				return true;
 		}
 		return false;
