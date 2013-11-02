@@ -115,7 +115,6 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 		self.response.out.write(json.dumps(response))
 		return
 
-
 class GetJukeBoxMembershipsHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
@@ -143,6 +142,37 @@ class GetJukeBoxMembershipsHandler(webapp2.RequestHandler, JSONHandler):
 
 		response = {'data': memberships_list}
 		#logging.info(response)
+		response.update({'status': self.get_status()})
+		self.response.out.write(json.dumps(response))
+		return
+
+class RequestJukeBoxMembershipHandler(webapp2.RequestHandler, JSONHandler):
+
+	def post(self):
+
+		person = Person.get_current()
+		if not person:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		try:
+			data = json.loads(self.request.body)
+			jukebox_id = data['jukebox_id']
+			jukebox_key = ndb.Key(Jukebox, jukebox_id)
+		except Exception as e:
+			logging.error('Unconvertable request' + repr(e))
+			response = {'status':self.get_status(status_code=400, msg=repr(e))}
+			self.response.out.write(json.dumps(response))
+			return
+
+		membership = JukeboxMembership.get_or_insert(person.key.id(), parent=jukebox.key)
+		if not membership.type:
+			membership.type = 'join'
+			membership.put()
+
+		response = {}
+		logging.info(response)
 		response.update({'status': self.get_status()})
 		self.response.out.write(json.dumps(response))
 		return
