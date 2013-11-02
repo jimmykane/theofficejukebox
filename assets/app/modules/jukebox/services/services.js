@@ -115,7 +115,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 
 	jukebox_service.request_membership_async = function(jukebox_id) {
 		var deffered = $q.defer();
-		$http.post('/AJAX/jukebox/get/memberships', {
+		$http.post('/AJAX/jukebox/request/membership', {
 			"jukebox_id" : jukebox_id
 		})
 		.success(function(response, status, headers, config) {

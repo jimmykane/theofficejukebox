@@ -231,7 +231,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	};
 
 	$scope.request_membership = function(jukebox) {
-		jukebox_service.request_membership_async(jukebox).then(
+		jukebox_service.request_membership_async(jukebox.id).then(
 			function(status) {
 				if (status.code === 200) {
 
