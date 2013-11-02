@@ -34,6 +34,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	};
 
 	$scope.is_owner_or_admin = function(user, jukebox){
+		console.log("Security Check");
 		if (!user.id || !user.memberships)
 			return false;
 		for (var i=0; i < user.memberships.length; i++ ){
@@ -45,7 +46,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	};
 
 	$scope.is_member = function(user, jukebox){
-		console.log(1)
+		console.log("Security check");
 		if (!user.id || !user.memberships)
 			return false;
 		for (var i=0; i < user.memberships.length; i++ ){
