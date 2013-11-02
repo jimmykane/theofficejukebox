@@ -5,7 +5,7 @@
 
 "use strict";
 
-angular.module('mainApp.jukebox').directive('youTube', function($window, logging, ui, jukebox_service, player_service) {
+angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, logging, ui, jukebox_service, player_service) {
 	return {
 		restrict: 'A', // only activate on element attribute
 		scope: true, // New scope to use but rest inherit proto from parent
