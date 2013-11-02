@@ -146,6 +146,10 @@
 		data-ng-repeat="membership in jukebox.memberships | filter:{type:'join'}"
 		class="flexbox-item" >
 			{[{ membership.person.nick_name }]} ({[{ membership.type }]})
+			<button
+			data-ng-if="is_owner_or_admin(user, jukebox)"
+			data-ng-click="approve_membership(membership)"
+			class="small_font">Approve</button>
 		</div>
 	</div>
 </div>

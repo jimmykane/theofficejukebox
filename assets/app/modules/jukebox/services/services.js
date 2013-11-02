@@ -95,7 +95,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 
 	jukebox_service.save_membership_async = function(membership) {
 		var deffered = $q.defer();
-		$http.post('/AJAX/jukebox/get/memberships', {
+		$http.post('/AJAX/jukebox/save/membership', {
 			"membership" : membership
 		})
 		.success(function(response, status, headers, config) {
