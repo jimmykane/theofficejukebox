@@ -81,7 +81,7 @@
 			<div id="player"></div>
 		</div>
 		<div data-ng-if="jukebox"
-			style="text-align:center; width: 98%; height:50%; max-height:50%;padding-left: 2%;">
+			class="jukebox-last_tracks">
 			<h3 style="float:left">
 				Last 15 tracks played {[{ duration_to_HHMMSS(get_jukebox_total_play_duration(jukeboxes, true)) }]}
 			</h3>
@@ -111,7 +111,7 @@
 		</div>
 	</div>
 	<br style="clear: both;"/>
-	<div style="height: 10%; background-color: rgba(0, 0, 0, 0.80);width: 90%; margin-left: 5%;" class="flexbox">
+	<div class="flexbox footer-column">
 		<button class="flexbox-item" data-ng-click="get_memberships(jukebox)">Show Members</button>
 		<div class="flexbox-item" data-ng-repeat="membership in jukebox.memberships">{[{ membership.person.nick_name }]} ({[{ membership.type }]})</div>
 	</div>
