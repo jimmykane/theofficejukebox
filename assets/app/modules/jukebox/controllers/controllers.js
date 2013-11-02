@@ -211,19 +211,15 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		console.log(video_id)
 		if (!video_id)
 			var match_groups  = $scope.new_queued_track.video_url.match(playerRegExp);
-
 		if (match_groups && match_groups.length > 2 && video_id==false)
 			video_id = match_groups[2];
-
 		if (!video_id){
 			ui.show_notification_warning('Sorry could not add the track check the shit you pasted and try again. I did my best...');
 			$scope.new_queued_track.video_url = '';
 			return false;
 		}
-
 		jukebox_service.add_queued_track_async(jukebox, video_id).then(
 			function(status) {
-
 				if (status.code === 200) {
 					ui.show_notification_info('Track added to queue... Enjoy');
 					$scope.new_queued_track.video_url = '';
@@ -240,7 +236,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 					ui.show_notification_warning('I have no fucking idea what went wrong. It\'s logged though... hopefully... at the server backlogs...');
 				}
 				return;
-
 			},
 			function(status){
 				logging.error('[!!] ADD/QueuedTrack: The server encountered an errror');
@@ -308,20 +303,14 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			return;
 		if ($scope.player_status.state)
 			prev_state = $scope.player_status.state;
-
-
-
 		//-1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5(video cued)
 		// seeking 1, 2, 1 and not sure
 		// Start playing -1, 5, 1 and not sure
-
 		console.log('prev state', prev_state);
 		console.log('new state', state.state);
-
 		if ($scope.is_owner_or_admin($scope.user, current_jukebox) === false){
 
 		}
-
 		if ($scope.is_owner_or_admin($scope.user, current_jukebox) === true){
 			// Seeking or stop or end
 			if (prev_state === 1 && state.state === 2 ){
@@ -335,7 +324,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 				//$scope.start_playing_queued_track(current_jukebox , $scope.track_playing.id, state.current_time, false);
 			}
 		}
-
 		// If from buffering or paused to end then request next
 		if ((prev_state === 2 || prev_state === 3) && state.state === 0){
 			console.log('Going to next')
@@ -349,9 +337,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			});
 			$scope.start_playing(current_jukebox);
 		}
-
 		$scope.player_status = state;
-
 	});
 
 	$scope.start_playing = function(jukebox){
