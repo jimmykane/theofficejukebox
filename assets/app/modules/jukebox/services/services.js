@@ -93,6 +93,26 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
+	jukebox_service.save_membership_async = function(membership) {
+		var deffered = $q.defer();
+		$http.post('/AJAX/jukebox/get/memberships', {
+			"membership" : membership
+		})
+		.success(function(response, status, headers, config) {
+			if (response.status.code !== 200){
+				deffered.resolve(response.status);
+				return;
+			}
+			logging.ok("Membership saved");
+			deffered.resolve(response.status);
+		})
+		.error(function(response, status, headers, config) {
+			deffered.reject(response.status);
+			logging.error(response, status, headers, config);
+		});
+		return deffered.promise;
+	};
+
 	jukebox_service.start_playing_async = function(jukebox_id, queued_track_id, seek) {
 		var deffered = $q.defer();
 		$http.post('/AJAX/jukebox/player/startplaying/',
