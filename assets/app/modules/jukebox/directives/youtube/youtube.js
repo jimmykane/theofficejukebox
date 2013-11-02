@@ -86,13 +86,11 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, l
 					}
 			};
 
-
 			// When the player has been loaded and is ready to play etc
 			$scope.onError = function (event) {
 					logging.info("Playa Encountered and ERROR");
 					logging.info(event)
 			};
-
 
 			$scope.start_playing = function (jukebox_id){
 				logging.info('Yes I am starting...');
@@ -122,12 +120,10 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, l
 				);
 			};
 
-
 			$scope.player_status =  function (){
-
 				try {
 					var status = $scope.player.getPlayerState();
-					console.log(status);
+					//console.log(status);
 					return status;
 				}
 				catch (e) {
@@ -135,40 +131,36 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, l
 					// logging.info(e); // pass exception object to error handler
 					return false;
 				}
-
 			};
 
 			$scope.$on('handleStartPlaying', function(event, jukebox_id) {
-				logging.info('Got the message I ll play');
+				console.log('Got the message I ll play');
 				$scope.start_playing(jukebox_id);
 			});
 
 			$scope.$on('handlePausePlaying', function() {
-				logging.info('Got the message I ll pause');
+				console.log('Got the message I ll pause');
 				$scope.player.pauseVideo();
 			});
 
 			$scope.$on('handleResumePlaying', function() {
-				logging.info('Got the message I ll resume');
+				console.log('Got the message I ll resume');
 				$scope.player.playVideo();
 			});
 
-
 			$scope.$on('handleStopPlaying', function() {
-				logging.info('Got the message I ll stop');
+				console.log('Got the message I ll stop');
 				$scope.player.stopVideo();
 			});
 
-
 		},
 		link: function(scope, elm, attrs, ctrl) {
-
+			// Should be moved to compile phase
 			// Load the Yotube js api
 			var tag = document.createElement('script');
 			tag.src = "https://www.youtube.com/iframe_api";
 			var firstScriptTag = document.getElementsByTagName('script')[0];
 			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
 		}
 	}
 });

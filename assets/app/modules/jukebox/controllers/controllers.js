@@ -378,7 +378,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
-
 	///* Hack function to force a change if no change in search */
 	//$scope.go_to_slide_id = function(slide_id){
 		//if ($scope.current_slide_id() === slide_id) // If yes force!
@@ -387,13 +386,11 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			//$location.search({'slide_id': slide_id})
 	//};
 
-
 	///* Setup to detect when there is a change in the search */
 	//$scope.$on('$routeUpdate', function(next, current) {
 		//var slide_id = $location.search().slide_id;
 		//$scope.display_slide_id(slide_id);
 	//});
-
 
 	// This should be moved to a service or something
 	$scope.track_playing_timer = function(msecs){

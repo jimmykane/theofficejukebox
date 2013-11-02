@@ -257,7 +257,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return true;
 	};
 
-
 	// Here opts are needed
 	jukebox_service.update_or_insert_jukebox = function(new_jukebox) {
 		var found_position = jukebox_service.check_if_jukebox_id_exists(new_jukebox.id);
