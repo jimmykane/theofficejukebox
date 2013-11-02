@@ -22,6 +22,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	};
 
 	$scope.get_current_jukebox = function(){
+		console.log('Getting current jukebox');
 		if (!$scope.jukebox_id)
 			return false;
 		var found = jukebox_service.check_if_jukebox_id_exists($scope.jukebox_id);
