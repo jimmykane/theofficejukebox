@@ -148,6 +148,48 @@ class GetJukeBoxMembershipsHandler(webapp2.RequestHandler, JSONHandler):
 		return
 
 
+class SaveJukeBoxMembershipsHandler(webapp2.RequestHandler, JSONHandler):
+
+	def post(self):
+
+		person = Person.get_current()
+		if not person:
+			logging.warning('Unauthorized')
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		try:
+			data = json.loads(self.request.body)
+			membership_dict = data['membership']
+			jukebox_key = ndb.Key(Jukebox, membership_dict['jukebox_id'])
+		except Exception as e:
+			logging.error('Unconvertable request' + repr(e))
+			response = {'status':self.get_status(status_code=400, msg=repr(e))}
+			self.response.out.write(json.dumps(response))
+			return
+
+		# Only owner and admins can do go on
+		membership = ndb.Key(Jukebox, jukebox_key.id(), JukeboxMembership, person.key.id()).get()
+		if not membership:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+		if membership.type not in Jukebox.membership_types()['admins']:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		membership =  JukeboxMembership.entity_from_dict(jukebox_key, membership_dict)
+		membership.put()
+
+		response = {}
+		logging.info(response)
+		response.update({'status': self.get_status()})
+		self.response.out.write(json.dumps(response))
+		return
+
+
 class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
@@ -223,7 +265,8 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 
 	def post(self):
 		person = Person.get_current()
-		if not person: # its normal now
+		if not person:
+			logging.warning('Unauthorized')
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
@@ -317,7 +360,8 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 	def post(self):
 
 		person = Person.get_current()
-		if not person: # its normal now
+		if not person:
+			logging.warning('Unauthorized')
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
@@ -364,8 +408,6 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 		player.put()
 
 		return True
-
-
 
 
 class SaveJukeBoxeHandler(webapp2.RequestHandler, JSONHandler):
