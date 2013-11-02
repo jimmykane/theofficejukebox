@@ -193,6 +193,7 @@ class SaveJukeBoxMembershipHandler(webapp2.RequestHandler, JSONHandler):
 			data = json.loads(self.request.body)
 			membership_dict = data['membership']
 			jukebox_key = ndb.Key(Jukebox, membership_dict['jukebox_id'])
+			membership_person_key = ndb.Key(Person, membership_dict['person']['id'])
 		except Exception as e:
 			logging.error('Unconvertable request' + repr(e))
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
@@ -200,17 +201,18 @@ class SaveJukeBoxMembershipHandler(webapp2.RequestHandler, JSONHandler):
 			return
 
 		# Only owner and admins can do go on
-		membership = ndb.Key(Jukebox, jukebox_key.id(), JukeboxMembership, person.key.id()).get()
-		if not membership:
+		person_membership = ndb.Key(Jukebox, jukebox_key.id(), JukeboxMembership, person.key.id()).get()
+		if not person_membership:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
-		if membership.type not in Jukebox.membership_types()['admins']:
+		if person_membership.type not in Jukebox.membership_types()['admins']:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
 
 		membership =  JukeboxMembership.entity_from_dict(jukebox_key, membership_dict)
+		membership.person_key = membership_person_key
 		membership.put()
 
 		response = {}
