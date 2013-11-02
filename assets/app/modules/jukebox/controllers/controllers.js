@@ -254,6 +254,11 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
+	$scope.approve_membership = function(membership) {
+		membership.type = 'member';
+		$scope.save_membership(membership);
+	}
+
 	$scope.add_new_queued_track = function(jukebox, video_id) {
 
 		var playerRegExp= /(http:\/\/|https:\/\/)www\.youtube\.com\/watch\?v=([A-Za-z0-9\-\_]+)/;
