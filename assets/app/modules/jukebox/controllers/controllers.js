@@ -230,6 +230,30 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
+	$scope.request_membership = function(jukebox) {
+		jukebox_service.request_membership_async(jukebox).then(
+			function(status) {
+				if (status.code === 200) {
+
+				}else if (status.code === 401) {
+					ui.show_notification_warning('Probably not logged in');
+				}else if (status.code === 403) {
+					ui.show_notification_warning('Server says: "' + status.message
+					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
+				}else if (status.code === 404) {
+					ui.show_notification_warning('Sorry something was not found');
+				}else{
+					ui.show_notification_error('Error Undocumented status code');
+				}
+				return;
+			},
+			function(status){
+				logging.error('The server encountered an errror');
+				return;
+			}
+		);
+	};
+
 	$scope.add_new_queued_track = function(jukebox, video_id) {
 
 		var playerRegExp= /(http:\/\/|https:\/\/)www\.youtube\.com\/watch\?v=([A-Za-z0-9\-\_]+)/;
