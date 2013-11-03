@@ -9,6 +9,13 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, l
 	return {
 		restrict: 'A', // only activate on element attribute
 		scope: true, // New scope to use but rest inherit proto from parent
+		compile: function(tElement, tAttrs) {
+			// Load the Yotube js api
+			var tag = document.createElement('script');
+			tag.src = "https://www.youtube.com/iframe_api";
+			var firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		},
 		controller: function($scope, $element, $attrs) {
 
 			// This is called when the player is loaded from YT
@@ -155,12 +162,7 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, l
 
 		},
 		link: function(scope, elm, attrs, ctrl) {
-			// Should be moved to compile phase
-			// Load the Yotube js api
-			var tag = document.createElement('script');
-			tag.src = "https://www.youtube.com/iframe_api";
-			var firstScriptTag = document.getElementsByTagName('script')[0];
-			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
 		}
 	}
 });
