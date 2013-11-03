@@ -18,7 +18,7 @@
 			<br style="clear: both;"/>
 			<div>
 				<h3>{[{ track_playing.title }]}</h3>
-				<p data-ng-if="track_playing.title" class="toggle" >
+				<p data-ng-if="track_playing.title">
 					<i>Live Sync {[{ duration_to_HHMMSS(track_playing.start_seconds) }]}/{[{ duration_to_HHMMSS(track_playing.duration) }]}</i>
 				</p>
 				<p data-ng-if="track_playing.title">Thanks to <i>{[{ track_playing.person_nick_name.toUpperCase() }]}</i></p>
@@ -43,7 +43,7 @@
 			</h3>
 			<form
 			data-ng-if="is_member(user, jukebox)"
-			style="float:right;" class="slide-top"
+			style="float:right;"
 			data-ng-submit="add_new_queued_track(jukebox)">
 				<input
 				data-ng-model="new_queued_track.video_url"
@@ -125,26 +125,27 @@
 	<br style="clear: both;"/>
 	<div class="flexbox footer-column">
 		<button
+		data-ng-if="!jukebox.memberships"
 		data-ng-click="get_memberships(jukebox)"
 		class="flexbox-item" >Show Members</button>
 		<div
 		data-ng-repeat="membership in jukebox.memberships | filter:{type:'owner'}"
-		class="flexbox-item" >
+		class="flexbox-item bouncy-slide-left" >
 			{[{ membership.person.nick_name }]} ({[{ membership.type }]})
 		</div>
 		<div
 		data-ng-repeat="membership in jukebox.memberships | filter:{type:'admin'}"
-		class="flexbox-item" >
+		class="flexbox-item bouncy-slide-left" >
 			{[{ membership.person.nick_name }]} ({[{ membership.type }]})
 		</div>
 		<div
 		data-ng-repeat="membership in jukebox.memberships | filter:{type:'member'}"
-		class="flexbox-item" >
+		class="flexbox-item bouncy-slide-left" >
 			{[{ membership.person.nick_name }]} ({[{ membership.type }]})
 		</div>
 		<div
 		data-ng-repeat="membership in jukebox.memberships | filter:{type:'join'}"
-		class="flexbox-item" >
+		class="flexbox-item bouncy-slide-left" >
 			{[{ membership.person.nick_name }]} ({[{ membership.type }]})
 			<button
 			data-ng-if="is_owner_or_admin(user, jukebox)"
