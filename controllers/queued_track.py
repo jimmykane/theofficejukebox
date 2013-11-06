@@ -51,6 +51,7 @@ class RemoveSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
 			return
 
 		# I am not sure if this should be allowed
+		# also def arg should br archive not delete see js
 		if archive:
 			queued_track = queued_track_key.get()
 			queued_track.archived = True

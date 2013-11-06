@@ -75,7 +75,7 @@
 						data-ng-click="start_playing_queued_track(jukebox, queued_track.id, 0, true)"
 						class="small_font">Play</button>
 						<button data-ng-click="remove_queued_track(jukebox, queued_track, true)"
-						class="small_font" >Remove</button>
+						class="small_font" >Arhive</button>
 						<button
 						data-ng-if="is_owner_or_admin(user, jukebox)"
 						data-ng-click="remove_queued_track(jukebox, queued_track, false)"
@@ -117,6 +117,10 @@
 						class="small_font">
 								Queue
 						</button>
+						<button
+						data-ng-if="is_owner_or_admin(user, jukebox)"
+						data-ng-click="remove_queued_track(jukebox, queued_track, false)"
+						class="small_font">Delete</button>
 					</p>
 				</div>
 			</div>
