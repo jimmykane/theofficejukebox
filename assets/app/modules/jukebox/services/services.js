@@ -70,6 +70,69 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return deffered.promise;
 	};
 
+	jukebox_service.get_memberships_async = function(jukebox) {
+		var jukebox_id = jukebox.id || false;
+		var deffered = $q.defer();
+		$http.post('/AJAX/jukebox/get/memberships', {
+			"jukebox_id" : jukebox_id
+		})
+		.success(function(response, status, headers, config) {
+			if (response.status.code !== 200){
+				deffered.resolve(response.status);
+				return;
+			}
+			var memberships = response.data;
+			logging.ok("Got new memberships", memberships);
+			jukebox.memberships = memberships;
+			deffered.resolve(response.status);
+		})
+		.error(function(response, status, headers, config) {
+			deffered.reject(response.status);
+			logging.error(response, status, headers, config);
+		});
+		return deffered.promise;
+	};
+
+	jukebox_service.save_membership_async = function(membership) {
+		var deffered = $q.defer();
+		$http.post('/AJAX/jukebox/save/membership', {
+			"membership" : membership
+		})
+		.success(function(response, status, headers, config) {
+			if (response.status.code !== 200){
+				deffered.resolve(response.status);
+				return;
+			}
+			console.log("Membership saved");
+			deffered.resolve(response.status);
+		})
+		.error(function(response, status, headers, config) {
+			deffered.reject(response.status);
+			logging.error(response, status, headers, config);
+		});
+		return deffered.promise;
+	};
+
+	jukebox_service.request_membership_async = function(jukebox_id) {
+		var deffered = $q.defer();
+		$http.post('/AJAX/jukebox/request/membership', {
+			"jukebox_id" : jukebox_id
+		})
+		.success(function(response, status, headers, config) {
+			if (response.status.code !== 200){
+				deffered.resolve(response.status);
+				return;
+			}
+			console.log("Request for memebership sent");
+			deffered.resolve(response.status);
+		})
+		.error(function(response, status, headers, config) {
+			deffered.reject(response.status);
+			logging.error(response, status, headers, config);
+		});
+		return deffered.promise;
+	};
+
 	jukebox_service.start_playing_async = function(jukebox_id, queued_track_id, seek) {
 		var deffered = $q.defer();
 		$http.post('/AJAX/jukebox/player/startplaying/',
@@ -129,15 +192,10 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 				track_playing.duration = 0;
 				return;
 			}
-
 			angular.extend(track_playing, response.data);
 			console.log("Track playing: ", response.data);
-
-			track_playing.start_seconds = track_playing.start_seconds - 5;
-
-			if (track_playing.start_seconds > track_playing.duration)
-				return;
-			if (track_playing.start_seconds < 0) // Maybe also increase
+			//  Reset to 0 for the first 5s
+			if (track_playing.start_seconds - 5 < 0)
 				track_playing.start_seconds = 0;
 
 			deffered.resolve(response.status);
@@ -196,7 +254,6 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 	};
 
 	jukebox_service.remove_queued_track_async = function(jukebox, queued_track, archive) {
-		//console.log('here');
 		var deffered = $q.defer();
 		$http.post('/AJAX/queued_track/remove/', {
 			"jukebox_id": jukebox.id,
@@ -234,6 +291,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
 		return true;
 	};
 
+	// Here opts are needed
 	jukebox_service.update_or_insert_jukebox = function(new_jukebox) {
 		var found_position = jukebox_service.check_if_jukebox_id_exists(new_jukebox.id);
 		if (found_position === false){

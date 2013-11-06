@@ -45,13 +45,13 @@ class RemoveSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		if (membership.type != 'owner') and (membership.type != 'admin') and (membership.type != 'member'):#Mischa
+		if membership.type not in Jukebox.membership_types()['members']:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
 
-		# should also be checking if it was ququed by that specific person
-		# And also do something with the currently playing shit
+		# I am not sure if this should be allowed
+		# also def arg should br archive not delete see js
 		if archive:
 			queued_track = queued_track_key.get()
 			queued_track.archived = True
@@ -61,7 +61,7 @@ class RemoveSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
 			return
 
 		# Only owner and admins can do go on
-		if (membership.type != 'owner') and (membership.type != 'admin'):
+		if membership.type not in Jukebox.membership_types()['admins']:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
@@ -101,7 +101,7 @@ class AddSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		if (membership.type != 'owner') and (membership.type != 'admin') and (membership.type != 'member'):#Mischa
+		if membership.type not in Jukebox.membership_types()['members']:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return

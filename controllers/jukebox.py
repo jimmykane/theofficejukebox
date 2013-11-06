@@ -115,6 +115,112 @@ class GetJukeBoxQueuedTracksHandler(webapp2.RequestHandler, JSONHandler):
 		self.response.out.write(json.dumps(response))
 		return
 
+class GetJukeBoxMembershipsHandler(webapp2.RequestHandler, JSONHandler):
+
+	def post(self):
+
+		try:
+			data = json.loads(self.request.body)
+			jukebox_id = data['jukebox_id']
+			jukebox_key = ndb.Key(Jukebox, jukebox_id)
+		except Exception as e:
+			logging.error('Unconvertable request' + repr(e))
+			response = {'status':self.get_status(status_code=400, msg=repr(e))}
+			self.response.out.write(json.dumps(response))
+			return
+
+		memberships = JukeboxMembership.query(ancestor=jukebox_key).fetch(30)
+
+		memberships_list = []
+		for membership in memberships:
+			membership_dict = JukeboxMembership._to_dict(membership)
+			person = membership.person_key.get()
+			person_dict = Person._to_dict(person)
+			person_dict.update({'nick_name': person.info.nick_name})
+			membership_dict.update({'person': person_dict})
+			memberships_list.append(membership_dict)
+
+		response = {'data': memberships_list}
+		#logging.info(response)
+		response.update({'status': self.get_status()})
+		self.response.out.write(json.dumps(response))
+		return
+
+class RequestJukeBoxMembershipHandler(webapp2.RequestHandler, JSONHandler):
+
+	def post(self):
+
+		person = Person.get_current()
+		if not person:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+		try:
+			data = json.loads(self.request.body)
+			jukebox_id = data['jukebox_id']
+			jukebox_key = ndb.Key(Jukebox, jukebox_id)
+		except Exception as e:
+			logging.error('Unconvertable request' + repr(e))
+			response = {'status':self.get_status(status_code=400, msg=repr(e))}
+			self.response.out.write(json.dumps(response))
+			return
+
+		membership = JukeboxMembership.get_or_insert(person.key.id(), parent=jukebox_key)
+		membership.person_key = person.key
+		if not membership.type:
+			membership.type = 'join'
+			membership.put()
+
+		response = {}
+		logging.info(response)
+		response.update({'status': self.get_status()})
+		self.response.out.write(json.dumps(response))
+		return
+
+
+class SaveJukeBoxMembershipHandler(webapp2.RequestHandler, JSONHandler):
+
+	def post(self):
+
+		person = Person.get_current()
+		if not person:
+			logging.warning('Unauthorized')
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		try:
+			data = json.loads(self.request.body)
+			membership_dict = data['membership']
+			jukebox_key = ndb.Key(Jukebox, membership_dict['jukebox_id'])
+			membership_person_key = ndb.Key(Person, membership_dict['person']['id'])
+		except Exception as e:
+			logging.error('Unconvertable request' + repr(e))
+			response = {'status':self.get_status(status_code=400, msg=repr(e))}
+			self.response.out.write(json.dumps(response))
+			return
+
+		# Only owner and admins can do go on
+		person_membership = ndb.Key(Jukebox, jukebox_key.id(), JukeboxMembership, person.key.id()).get()
+		if not person_membership:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+		if person_membership.type not in Jukebox.membership_types()['admins']:
+			response = {'status':self.get_status(status_code=401)}
+			self.response.out.write(json.dumps(response))
+			return
+
+		membership =  JukeboxMembership.entity_from_dict(jukebox_key, membership_dict)
+		membership.person_key = membership_person_key
+		membership.put()
+
+		response = {}
+		logging.info(response)
+		response.update({'status': self.get_status()})
+		self.response.out.write(json.dumps(response))
+		return
+
 
 class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 
@@ -188,9 +294,11 @@ class GetPlayingTrackHandler(webapp2.RequestHandler, JSONHandler):
 	will fire a next track task with an eta.
 '''
 class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
+
 	def post(self):
 		person = Person.get_current()
-		if not person: # its normal now
+		if not person:
+			logging.warning('Unauthorized')
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
@@ -206,14 +314,13 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			response = {'status':self.get_status(status_code=400, msg=repr(e))}
 			self.response.out.write(json.dumps(response))
 			return
-
 		# Only owner and admins can do go on
 		membership = ndb.Key(Jukebox, jukebox_key.id(), JukeboxMembership, person.key.id()).get()
 		if not membership:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
-		if (membership.type != 'owner') and (membership.type != 'admin'):
+		if membership.type not in Jukebox.membership_types()['admins']:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
@@ -285,7 +392,8 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 	def post(self):
 
 		person = Person.get_current()
-		if not person: # its normal now
+		if not person:
+			logging.warning('Unauthorized')
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
@@ -306,7 +414,7 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		if (membership.type != 'owner') and (membership.type != 'admin'):
+		if membership.type not in Jukebox.membership_types()['admins']:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return
@@ -332,8 +440,6 @@ class StopPlayingHandler(webapp2.RequestHandler, JSONHandler):
 		player.put()
 
 		return True
-
-
 
 
 class SaveJukeBoxeHandler(webapp2.RequestHandler, JSONHandler):
@@ -373,7 +479,7 @@ class SaveJukeBoxeHandler(webapp2.RequestHandler, JSONHandler):
 			self.response.out.write(json.dumps(response))
 			return
 
-		if (membership.type != 'owner') and (membership.type != 'admin'):
+		if membership.type not in Jukebox.membership_types()['admins']:
 			response = {'status':self.get_status(status_code=401)}
 			self.response.out.write(json.dumps(response))
 			return

@@ -79,8 +79,6 @@ class GetCurrentPersonHanlder(webapp2.RequestHandler, JSONHandler):
 			member_ships.append(jukebox_membership_dict)
 		person_dict.update({'memberships': member_ships})
 
-		person_dict.update({'app_admin': users.is_current_user_admin()})
-
 		response = response = {'data': person_dict}
 		response.update({'status': self.get_status()})
 		self.response.out.write(json.dumps(response))

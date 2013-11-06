@@ -8,7 +8,6 @@
 mainApp.controller('notifications_controller', function($scope, $timeout, notifications_service) {
 
 	$scope.notifications = [];
-
 	$scope.timeouts = {
 		'info': 5000 + 400, //5000 in css
 		'warning': 6200 + 400, //6200 in css
@@ -32,7 +31,6 @@ mainApp.controller('notifications_controller', function($scope, $timeout, notifi
 	});
 
 });
-
 
 mainApp.controller('user_controller', function($location, $scope, users_service, logging,ui) {
 

@@ -17,11 +17,10 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 	edit_date = ndb.DateTimeProperty(auto_now=True)
 	owner_key = ndb.KeyProperty()
 
-
 	# deprecated due to lots of results
 	@property
 	def queued_tracks(self):
-		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==False).order(QueuedTrack.edit_date).fetch(30)
+		queued_tracks = QueuedTrack.query(ancestor=self.key).filter(QueuedTrack.archived==False).order(QueuedTrack.edit_date).fetch(100)
 		return queued_tracks
 
 	@property
@@ -38,6 +37,16 @@ class Jukebox(ndb.Expando, DictModel, NDBCommonModel):
 			return False
 		random_key = random.choice(queued_track_keys)
 		return random_key.get()
+
+	@classmethod
+	def	membership_types(cls):
+
+		membership_types = {
+			'admins': ['admin','owner'],
+			'members': ['admin','owner', 'member']
+		}
+		return membership_types
+
 
 
 	@classmethod

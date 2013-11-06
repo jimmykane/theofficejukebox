@@ -39,9 +39,9 @@ mainApp.factory('logging', function($http, $q) {
  *  */
 mainApp.factory('notifications_service', function($rootScope) {
 
-	var notifications_service = {}
+	var notifications_service = {};
 	notifications_service.message = '';
-	notifications_service.type = ''
+	notifications_service.type = '';
 
 	notifications_service.show_notification = function(message, type) {
 		notifications_service.message = message;
@@ -55,7 +55,6 @@ mainApp.factory('notifications_service', function($rootScope) {
 
 	return notifications_service;
 });
-
 
 /* UI service (changes css etc) calls and shares the notifications
  * Only works as a wrapper now. Service of notifications can be used
@@ -78,7 +77,6 @@ mainApp.factory('ui', function(logging, notifications_service) {
 
 	return ui;
 });
-
 
 /* users_service */
 mainApp.factory('users_service', function($http, $q, logging) {

@@ -5,10 +5,17 @@
 
 "use strict";
 
-angular.module('mainApp.jukebox').directive('youTube', function($window, logging, ui, jukebox_service, player_service) {
+angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, logging, ui, jukebox_service, player_service) {
 	return {
 		restrict: 'A', // only activate on element attribute
 		scope: true, // New scope to use but rest inherit proto from parent
+		compile: function(tElement, tAttrs) {
+			// Load the Yotube js api
+			var tag = document.createElement('script');
+			tag.src = "https://www.youtube.com/iframe_api";
+			var firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		},
 		controller: function($scope, $element, $attrs) {
 
 			// This is called when the player is loaded from YT
@@ -32,15 +39,18 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 
 			// When the player has been loaded and is ready to play etc
 			$scope.onPlayerReady = function (event) {
+				$scope.$apply(function(){
 					logging.info("Playa is ready");
 					logging.info($scope.player);
 					// Lets also broadcast a change state for the others to catch up
 					player_service.broadcast_change_state({"state": $scope.player.getPlayerState()});
 					// Should try to just load the track so that the users can press play on the playa
+				});
 			};
 
 			// When the player changes a state
 			$scope.onPlayerStateChange = function(event) {
+				$scope.$apply(function(){
 					console.log("Playa changed state");
 					// unstarted
 					if ($scope.player.getPlayerState() === -1){
@@ -84,15 +94,16 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 							"current_time": $scope.player.getCurrentTime()
 						});
 					}
+				});
 			};
-
 
 			// When the player has been loaded and is ready to play etc
 			$scope.onError = function (event) {
+				$scope.$apply(function(){
 					logging.info("Playa Encountered and ERROR");
 					logging.info(event)
+				});
 			};
-
 
 			$scope.start_playing = function (jukebox_id){
 				logging.info('Yes I am starting...');
@@ -122,12 +133,10 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 				);
 			};
 
-
 			$scope.player_status =  function (){
-
 				try {
 					var status = $scope.player.getPlayerState();
-					console.log(status);
+					//console.log(status);
 					return status;
 				}
 				catch (e) {
@@ -135,39 +144,30 @@ angular.module('mainApp.jukebox').directive('youTube', function($window, logging
 					// logging.info(e); // pass exception object to error handler
 					return false;
 				}
-
 			};
 
 			$scope.$on('handleStartPlaying', function(event, jukebox_id) {
-				logging.info('Got the message I ll play');
+				console.log('Got the message I ll play');
 				$scope.start_playing(jukebox_id);
 			});
 
 			$scope.$on('handlePausePlaying', function() {
-				logging.info('Got the message I ll pause');
+				console.log('Got the message I ll pause');
 				$scope.player.pauseVideo();
 			});
 
 			$scope.$on('handleResumePlaying', function() {
-				logging.info('Got the message I ll resume');
+				console.log('Got the message I ll resume');
 				$scope.player.playVideo();
 			});
 
-
 			$scope.$on('handleStopPlaying', function() {
-				logging.info('Got the message I ll stop');
+				console.log('Got the message I ll stop');
 				$scope.player.stopVideo();
 			});
 
-
 		},
 		link: function(scope, elm, attrs, ctrl) {
-
-			// Load the Yotube js api
-			var tag = document.createElement('script');
-			tag.src = "https://www.youtube.com/iframe_api";
-			var firstScriptTag = document.getElementsByTagName('script')[0];
-			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 		}
 	}

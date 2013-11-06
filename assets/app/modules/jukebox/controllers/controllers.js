@@ -16,8 +16,13 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	$scope.player_status = false;
 	$scope.player_status.state = -1;
 	$scope.jukebox = false;
+	$scope.membership_types = {
+			'admins': ['admin','owner'],
+			'members': ['admin','owner', 'member']
+	};
 
 	$scope.get_current_jukebox = function(){
+		console.log('Getting current jukebox');
 		if (!$scope.jukebox_id)
 			return false;
 		var found = jukebox_service.check_if_jukebox_id_exists($scope.jukebox_id);
@@ -30,13 +35,33 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 	};
 
 	$scope.is_owner_or_admin = function(user, jukebox){
+		console.log("Security Check");
 		if (!user.id || !user.memberships)
 			return false;
+		if (user.is_admin) // bad
+			return true;
 		for (var i=0; i < user.memberships.length; i++ ){
-			if (user.memberships[i].jukebox_id === jukebox.id && user.memberships[i].type === 'owner')
+			if (user.memberships[i].jukebox_id === jukebox.id
+			&& $scope.membership_types.admins.indexOf(user.memberships[i].type) !== -1){
+				user.is_admin = true;
 				return true;
-			if (user.memberships[i].jukebox_id === jukebox.id && user.memberships[i].type === 'admin')
+			}
+		}
+		return false;
+	};
+
+	$scope.is_member = function(user, jukebox){
+		console.log("Security check", user);
+		if (!user.id || !user.memberships)
+			return false;
+		if (user.is_member)  // bad
+			return true;
+		for (var i=0; i < user.memberships.length; i++ ){
+			if (user.memberships[i].jukebox_id === jukebox.id
+			&& $scope.membership_types.members.indexOf(user.memberships[i].type) !== -1){
+				user.is_member = true;
 				return true;
+			}
 		}
 		return false;
 	};
@@ -58,11 +83,13 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 						'order': 'edit_date',
 						'short_desc': true
 					});
+				}else if (status.code === 401) {
+					ui.show_notification_warning('You cann\'t start this....');
 				}else if (status.code === 403) {
 					ui.show_notification_warning('Server says: "' + status.message
 					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
 				}else if (status.code === 404) {
-					ui.show_notification_warning('He is talking again about 404\'s and shit...')
+					ui.show_notification_warning('He is talking again about 404\'s and shit...');
 				}else{
 					ui.show_notification_error('Uknown error');
 				}
@@ -164,6 +191,82 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
+	$scope.get_memberships = function(jukebox) {
+		jukebox_service.get_memberships_async(jukebox).then(
+			function(status) {
+				if (status.code === 200) {
+
+				}else if (status.code === 403) {
+					ui.show_notification_warning('Server says: "' + status.message
+					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
+				}else if (status.code === 404) {
+					ui.show_notification_warning('Sorry memberships NOT found');
+
+				}else{
+					ui.show_notification_error('Error Undocumented status code');
+				}
+				return;
+			},
+			function(status){
+				logging.error('The server encountered an errror');
+				return;
+			}
+		);
+	};
+
+	$scope.save_membership = function(membership) {
+		jukebox_service.save_membership_async(membership).then(
+			function(status) {
+				if (status.code === 200) {
+
+				}else if (status.code === 401) {
+					ui.show_notification_warning('Nope not allowed bitchy...');
+				}else if (status.code === 403) {
+					ui.show_notification_warning('Server says: "' + status.message
+					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
+				}else if (status.code === 404) {
+					ui.show_notification_warning('Sorry memberships NOT found');
+				}else{
+					ui.show_notification_error('Error Undocumented status code');
+				}
+				return;
+			},
+			function(status){
+				logging.error('The server encountered an errror');
+				return;
+			}
+		);
+	};
+
+	$scope.request_membership = function(jukebox) {
+		jukebox_service.request_membership_async(jukebox.id).then(
+			function(status) {
+				if (status.code === 200) {
+
+				}else if (status.code === 401) {
+					ui.show_notification_warning('Probably not logged in');
+				}else if (status.code === 403) {
+					ui.show_notification_warning('Server says: "' + status.message
+					+ '" I asked the backend about the reason and replied: "' + status.info +'"');
+				}else if (status.code === 404) {
+					ui.show_notification_warning('Sorry something was not found');
+				}else{
+					ui.show_notification_error('Error Undocumented status code');
+				}
+				return;
+			},
+			function(status){
+				logging.error('The server encountered an errror');
+				return;
+			}
+		);
+	};
+
+	$scope.approve_membership = function(membership) {
+		membership.type = 'member';
+		$scope.save_membership(membership);
+	}
+
 	$scope.add_new_queued_track = function(jukebox, video_id) {
 
 		var playerRegExp= /(http:\/\/|https:\/\/)www\.youtube\.com\/watch\?v=([A-Za-z0-9\-\_]+)/;
@@ -171,19 +274,15 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		console.log(video_id)
 		if (!video_id)
 			var match_groups  = $scope.new_queued_track.video_url.match(playerRegExp);
-
 		if (match_groups && match_groups.length > 2 && video_id==false)
 			video_id = match_groups[2];
-
 		if (!video_id){
 			ui.show_notification_warning('Sorry could not add the track check the shit you pasted and try again. I did my best...');
 			$scope.new_queued_track.video_url = '';
 			return false;
 		}
-
 		jukebox_service.add_queued_track_async(jukebox, video_id).then(
 			function(status) {
-
 				if (status.code === 200) {
 					ui.show_notification_info('Track added to queue... Enjoy');
 					$scope.new_queued_track.video_url = '';
@@ -200,7 +299,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 					ui.show_notification_warning('I have no fucking idea what went wrong. It\'s logged though... hopefully... at the server backlogs...');
 				}
 				return;
-
 			},
 			function(status){
 				logging.error('[!!] ADD/QueuedTrack: The server encountered an errror');
@@ -268,20 +366,14 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			return;
 		if ($scope.player_status.state)
 			prev_state = $scope.player_status.state;
-
-
-
 		//-1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5(video cued)
 		// seeking 1, 2, 1 and not sure
 		// Start playing -1, 5, 1 and not sure
-
 		console.log('prev state', prev_state);
 		console.log('new state', state.state);
-
 		if ($scope.is_owner_or_admin($scope.user, current_jukebox) === false){
 
 		}
-
 		if ($scope.is_owner_or_admin($scope.user, current_jukebox) === true){
 			// Seeking or stop or end
 			if (prev_state === 1 && state.state === 2 ){
@@ -295,7 +387,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 				//$scope.start_playing_queued_track(current_jukebox , $scope.track_playing.id, state.current_time, false);
 			}
 		}
-
 		// If from buffering or paused to end then request next
 		if ((prev_state === 2 || prev_state === 3) && state.state === 0){
 			console.log('Going to next')
@@ -309,9 +400,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			});
 			$scope.start_playing(current_jukebox);
 		}
-
 		$scope.player_status = state;
-
 	});
 
 	$scope.start_playing = function(jukebox){
@@ -351,7 +440,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 		);
 	};
 
-
 	///* Hack function to force a change if no change in search */
 	//$scope.go_to_slide_id = function(slide_id){
 		//if ($scope.current_slide_id() === slide_id) // If yes force!
@@ -360,13 +448,11 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 			//$location.search({'slide_id': slide_id})
 	//};
 
-
 	///* Setup to detect when there is a change in the search */
 	//$scope.$on('$routeUpdate', function(next, current) {
 		//var slide_id = $location.search().slide_id;
 		//$scope.display_slide_id(slide_id);
 	//});
-
 
 	// This should be moved to a service or something
 	$scope.track_playing_timer = function(msecs){
@@ -384,14 +470,14 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 	if ($scope.jukebox_id){
 		$scope.get_jukeboxes([$scope.jukebox_id]);
-		$scope.track_playing_timer(1000);
+		//$scope.track_playing_timer(1000);
 	}else{
 		$location.path('115442273060497622362')
 	}
 
 	/* Help function. */
 	$scope.duration_to_HHMMSS = function (duration) {
-		if (!duration)
+		if (duration === false)
 			return null;
 		var sec_num = parseInt(duration, 10); // don't forget the second parm
 		var hours   = Math.floor(sec_num / 3600);
