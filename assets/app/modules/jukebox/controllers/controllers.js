@@ -271,8 +271,8 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
 		var playerRegExp= /(http:\/\/|https:\/\/)www\.youtube\.com\/watch\?v=([A-Za-z0-9\-\_]+)/;
 		var video_id = video_id || false;
-		console.log(video_id)
-		if (!video_id)
+		//console.log(video_id)
+		if (!video_id && $scope.new_queued_track.video_url) // fix it
 			var match_groups  = $scope.new_queued_track.video_url.match(playerRegExp);
 		if (match_groups && match_groups.length > 2 && video_id==false)
 			video_id = match_groups[2];
