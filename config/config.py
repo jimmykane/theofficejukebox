@@ -4,10 +4,10 @@ domain_name = "http://theofficejukebox.com/"
 #openID Providers and names
 providers = {
 	'Google': 'https://www.google.com/accounts/o8/id',
-	'Yahoo': 'yahoo.com',
-	'MySpace': 'myspace.com',
-	'AOL': 'aol.com',
-	'MyOpenID': 'myopenid.com'
+	#'Yahoo': 'yahoo.com',
+	#'MySpace': 'myspace.com',
+	#'AOL': 'aol.com',
+	#'MyOpenID': 'myopenid.com'
 	# add more here
 }
 
