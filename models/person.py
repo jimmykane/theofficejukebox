@@ -62,9 +62,10 @@ class Person(ndb.Expando):
 
 class PersonInfo(ndb.Expando):
 
+    creation_date = ndb.DateTimeProperty(auto_now_add=True)
+    edit_date = ndb.DateTimeProperty(auto_now=True)
     email = ndb.StringProperty()
     nick_name = ndb.StringProperty()
-    edit_date = ndb.DateTimeProperty(auto_now=True)
 
     @classmethod
     def _to_dict(cls, person_info):
