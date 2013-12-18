@@ -3,23 +3,23 @@ domain_name = "http://theofficejukebox.com/"
 
 #openID Providers and names
 providers = {
-	'Google': 'https://www.google.com/accounts/o8/id',
-	#'Yahoo': 'yahoo.com',
-	#'MySpace': 'myspace.com',
-	#'AOL': 'aol.com',
-	#'MyOpenID': 'myopenid.com'
-	# add more here
+    'Google': 'https://www.google.com/accounts/o8/id',
+    #'Yahoo': 'yahoo.com',
+    #'MySpace': 'myspace.com',
+    #'AOL': 'aol.com',
+    #'MyOpenID': 'myopenid.com'
+    # add more here
 }
 
 api_keys = {
-	"google_plus": "AIzaSyAeG-",
-	"youtube": "",
-	"google_analytics": "UA-1"
+    "google_plus": "AIzaSyAeG-",
+    "youtube": "",
+    "google_analytics": "UA-1"
 }
 
 config = {
-	"project_name": project_name,
-	"domain_name": domain_name,
-	"providers": providers,
-	"api_keys": api_keys
+    "project_name": project_name,
+    "domain_name": domain_name,
+    "providers": providers,
+    "api_keys": api_keys
 }

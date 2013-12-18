@@ -2,23 +2,23 @@
 
 <!-- toolbar -->
 <div class="max_width_height flexbox  top_menu_bar" data-ng-controller="user_controller">
-	<div class="flexbox_item" data-ng-switch data-on="user">
-		<div data-ng-switch-when="false">
-			{% for provider in providers %}
-			<button style="background-color: inherit;"
-			title="Login with google"
-			onClick="window.location.href='{{ provider.url }}'">
-				{{ provider.name }}
-			</button>
-			{% endfor %}
-		</div>
-		<div data-ng-switch-default class="">
-			<h3 style="display: inline;">Welcome	{[{ user.nick_name }]}</h3>
-			<button style="float: right; background-color: inherit;" class="" title="Logout..." onClick="window.location.href='/logout/?return_url='">
-				Logout
-			</button>
-		</div>
-	</div>
+    <div class="flexbox_item" data-ng-switch data-on="user">
+        <div data-ng-switch-when="false">
+            {% for provider in providers %}
+            <button style="background-color: inherit;"
+            title="Login with google"
+            onClick="window.location.href='{{ provider.url }}'">
+                {{ provider.name }}
+            </button>
+            {% endfor %}
+        </div>
+        <div data-ng-switch-default class="">
+            <h3 style="display: inline;">Welcome	{[{ user.nick_name }]}</h3>
+            <button style="float: right; background-color: inherit;" class="" title="Logout..." onClick="window.location.href='/logout/?return_url='">
+                Logout
+            </button>
+        </div>
+    </div>
 
 </div>
 
@@ -30,23 +30,23 @@ The notification service handlers the underlying thingy
  -->
 <link rel="stylesheet" type="text/css" href="/assets/app/css/notifications.css" />
 <div class="notifications_bar" data-ng-controller="notifications_controller">
-	<div class="notification" data-ng-repeat="notification in notifications">
-		<section data-ng-switch data-on="notification.type">
-			<div class="tn-box tn-box-color-1 {[{ notification.type }]}"
-			data-ng-switch-when="info">
-				<p>{[{ notification.message }]}</p>
-				<div class="tn-progress"></div>
-			</div>
-			<div class="tn-box tn-box-color-2 {[{ notification.type }]}"
-			data-ng-switch-when="warning">
-				<p>{[{ notification.message }]}</p>
-				<div class="tn-progress"></div>
-			</div>
-			<div class="tn-box tn-box-color-3 {[{ notification.type }]}"
-			data-ng-switch-when="error">
-				<p>{[{ notification.message }]}<p>
-				<div class="tn-progress"></div>
-			</div>
-		</section>
-	</div>
+    <div class="notification" data-ng-repeat="notification in notifications">
+        <section data-ng-switch data-on="notification.type">
+            <div class="tn-box tn-box-color-1 {[{ notification.type }]}"
+            data-ng-switch-when="info">
+                <p>{[{ notification.message }]}</p>
+                <div class="tn-progress"></div>
+            </div>
+            <div class="tn-box tn-box-color-2 {[{ notification.type }]}"
+            data-ng-switch-when="warning">
+                <p>{[{ notification.message }]}</p>
+                <div class="tn-progress"></div>
+            </div>
+            <div class="tn-box tn-box-color-3 {[{ notification.type }]}"
+            data-ng-switch-when="error">
+                <p>{[{ notification.message }]}<p>
+                <div class="tn-progress"></div>
+            </div>
+        </section>
+    </div>
 </div>
