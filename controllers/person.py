@@ -5,6 +5,9 @@
 import logging
 import hashlib
 import json
+
+import webapp2
+
 from controllers.jsonhandler import *
 from models.person import *
 from models.jukebox import *
