@@ -5,9 +5,7 @@
 import logging
 import hashlib
 import json
-
 import webapp2
-
 from controllers.jsonhandler import *
 from models.person import *
 from models.jukebox import *
@@ -33,11 +31,18 @@ class RegisterPersonHandler(webapp2.RequestHandler):
         if not user:
             self.redirect(users.create_login_url(self.request.uri), abort=True)
             return
+
+        # All get or inserts please
         person = Person.get_or_insert(user.user_id())
-        if not self._register(person, user):
+        person_info = PersonInfo.get_or_insert(user.user_id(), parent=person.key)
+        jukebox = Jukebox.get_or_insert(person.key.id())
+        membership = JukeboxMembership.get_or_insert(person.key.id(), parent=jukebox.key)
+
+        if not self._register(person, person_info , user, jukebox, membership):
             # more logging is needed
             logging.warning('Warning registration failed')
             return
+
         # get the slide and then redirect him there
         self.redirect("/jukebox/")
 
@@ -45,17 +50,26 @@ class RegisterPersonHandler(webapp2.RequestHandler):
         self.view("No reason to be here Mr Jiggles ;-)")
         return
 
-    @ndb.transactional()
-    def _register(self, person, user):
+    @ndb.transactional(xg=True)
+    def _register(self, person, person_info ,user, jukebox, membership):
         ''' Registration process happens here
         '''
-        # check if the person has info and if not create it
-        info = PersonInfo.query(ancestor=person.key).get()
-        if not info:
-            info = PersonInfo(id=user.user_id(), parent=person.key)
-            info.nick_name = user.nickname()
-            info.email = user.email()
-            info.put()
+        if not person_info.creation_date:
+            person_info = PersonInfo(id=user.user_id(), parent=person.key)
+            person_info.nick_name = user.nickname()
+            person_info.email = user.email()
+            person_info.put()
+        #@todo
+        # I assume here that the owner key or user_id from the openid will always be unique
+        if not jukebox.owner_key:
+            jukebox.title = 'Jukebox Beta'
+            jukebox.owner_key = person.key
+            jukebox.put()
+        if not membership.type:
+            membership.type = 'owner'
+            membership.person_key = person.key
+            membership.put()
+        #@todo Move player registration here.
         return True
 
 
