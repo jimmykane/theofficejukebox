@@ -9,23 +9,23 @@
 */
 
 var mainApp = angular.module('mainApp', [
-		'ngRoute',
-		'ngAnimate',
-		'mainApp.jukebox'
-	],
-	function($interpolateProvider) {
-		/* INTERPOLATION
-		* Normal Angular {{}} now becomes {[{}]} so take care. */
-		$interpolateProvider.startSymbol('{[{');
-		$interpolateProvider.endSymbol('}]}');
+        'ngRoute',
+        'ngAnimate',
+        'mainApp.jukebox'
+    ],
+    function($interpolateProvider) {
+        /* INTERPOLATION
+        * Normal Angular {{}} now becomes {[{}]} so take care. */
+        $interpolateProvider.startSymbol('{[{');
+        $interpolateProvider.endSymbol('}]}');
 });
 
 /* Config */
 mainApp.config(function($locationProvider, $routeProvider) {
-	/*
-	 * Enabled HTML5 mode. Probably will not support
-	 * any browser especially < IE10
-	 */
-	$locationProvider.html5Mode(true);
-	$routeProvider.otherwise({redirectTo: '/jukebox/115442273060497622362'}); // stub for production
+    /*
+     * Enabled HTML5 mode. Probably will not support
+     * any browser especially < IE10
+     */
+    $locationProvider.html5Mode(true);
+    $routeProvider.otherwise({redirectTo: '/jukebox/115442273060497622362'}); // stub for production
 });

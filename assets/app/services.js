@@ -8,30 +8,30 @@
 /* Logging service */
 mainApp.factory('logging', function($http, $q) {
 
-	var logging = {}
-	logging.loglevel = 1;
+    var logging = {}
+    logging.loglevel = 1;
 
-	logging.info = function(msg){
-		var args = Array.prototype.slice.call(arguments);
-		console.log('[INFO]', args);
-	};
+    logging.info = function(msg){
+        var args = Array.prototype.slice.call(arguments);
+        console.log('[INFO]', args);
+    };
 
-	logging.ok = function(msg){
-		var args = Array.prototype.slice.call(arguments);
-		console.log('[OK]', args);
-	};
+    logging.ok = function(msg){
+        var args = Array.prototype.slice.call(arguments);
+        console.log('[OK]', args);
+    };
 
-	logging.warning = function(msg){
-		var args = Array.prototype.slice.call(arguments);
-		console.log('[!!]', args);
-	};
+    logging.warning = function(msg){
+        var args = Array.prototype.slice.call(arguments);
+        console.log('[!!]', args);
+    };
 
-	logging.error = function(msg){
-		var args = Array.prototype.slice.call(arguments);
-		console.log('[ERROR]', args);
-	};
+    logging.error = function(msg){
+        var args = Array.prototype.slice.call(arguments);
+        console.log('[ERROR]', args);
+    };
 
-	return logging;
+    return logging;
 });
 
 /* Notification service
@@ -39,21 +39,21 @@ mainApp.factory('logging', function($http, $q) {
  *  */
 mainApp.factory('notifications_service', function($rootScope) {
 
-	var notifications_service = {};
-	notifications_service.message = '';
-	notifications_service.type = '';
+    var notifications_service = {};
+    notifications_service.message = '';
+    notifications_service.type = '';
 
-	notifications_service.show_notification = function(message, type) {
-		notifications_service.message = message;
-		notifications_service.type = type;
-		notifications_service.broadcastNotification();
-	};
+    notifications_service.show_notification = function(message, type) {
+        notifications_service.message = message;
+        notifications_service.type = type;
+        notifications_service.broadcastNotification();
+    };
 
-	notifications_service.broadcastNotification = function() {
-		$rootScope.$broadcast('handleNotification');
-	};
+    notifications_service.broadcastNotification = function() {
+        $rootScope.$broadcast('handleNotification');
+    };
 
-	return notifications_service;
+    return notifications_service;
 });
 
 /* UI service (changes css etc) calls and shares the notifications
@@ -62,52 +62,52 @@ mainApp.factory('notifications_service', function($rootScope) {
  *  */
 mainApp.factory('ui', function(logging, notifications_service) {
 
-	var ui = {};
+    var ui = {};
 
-	/* Notifications now kinda wrapper*/
-	ui.show_notification_info = function(msg){
-		notifications_service.show_notification(msg, 'info');
-	};
-	ui.show_notification_warning = function(msg){
-		notifications_service.show_notification(msg, 'warning');
-	};
-	ui.show_notification_error = function(msg){
-		notifications_service.show_notification(msg, 'error');
-	};
+    /* Notifications now kinda wrapper*/
+    ui.show_notification_info = function(msg){
+        notifications_service.show_notification(msg, 'info');
+    };
+    ui.show_notification_warning = function(msg){
+        notifications_service.show_notification(msg, 'warning');
+    };
+    ui.show_notification_error = function(msg){
+        notifications_service.show_notification(msg, 'error');
+    };
 
-	return ui;
+    return ui;
 });
 
 /* users_service */
 mainApp.factory('users_service', function($http, $q, logging) {
 
-	var users_service = {};
-	var user = {};
+    var users_service = {};
+    var user = {};
 
-	users_service.get_current_user_async = function() {
-		var deffered = $q.defer();
-		$http.post('/AJAX/person/get/current', {
+    users_service.get_current_user_async = function() {
+        var deffered = $q.defer();
+        $http.post('/AJAX/person/get/current', {
 
-		})
-		.success(function(response, status, headers, config) {
-			if (response.status.code !== 200){
-				deffered.resolve(response.status);
-				return;
-			}
-			angular.extend(user, response.data);
-			console.log(user)
-			deffered.resolve(response.status);
-		})
-		.error(function(response, status, headers, config) {
-			deffered.reject(response.status);
-			logging.error(response, status, headers, config);
-		});
-		return deffered.promise;
-	};
+        })
+        .success(function(response, status, headers, config) {
+            if (response.status.code !== 200){
+                deffered.resolve(response.status);
+                return;
+            }
+            angular.extend(user, response.data);
+            console.log(user)
+            deffered.resolve(response.status);
+        })
+        .error(function(response, status, headers, config) {
+            deffered.reject(response.status);
+            logging.error(response, status, headers, config);
+        });
+        return deffered.promise;
+    };
 
-	users_service.user = function() {
-		return user;
-	};
+    users_service.user = function() {
+        return user;
+    };
 
-	return users_service;
+    return users_service;
 });
