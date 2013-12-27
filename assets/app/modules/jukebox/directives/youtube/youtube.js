@@ -10,14 +10,24 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
         restrict: 'A', // only activate on element attribute
         scope: true, // New scope to use but rest inherit proto from parent
         compile: function(tElement, tAttrs) {
-            // Load the Yotube js api
-            var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            var youtube_api_src = 'https://www.youtube.com/iframe_api';
+            // Helper
+            var myScriptIsLoaded = function (url) {
+                var scripts = document.getElementsByTagName('script');
+                for (var i = scripts.length; i--;) {
+                    if (scripts[i].src == url) return true;
+                }
+                return false;
+            }
+            // Load the Youtube js api if not found
+            if (myScriptIsLoaded(youtube_api_src) === false){
+                var jsCode = document.createElement('script');
+                jsCode.setAttribute('src', youtube_api_src);
+                document.body.appendChild(jsCode);
+                return;
+            }
         },
         controller: function($scope, $element, $attrs) {
-
             // This is called when the player is loaded from YT
             $window.onYouTubeIframeAPIReady = function() {
                 $scope.player = new YT.Player('player', {
@@ -106,6 +116,7 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
             };
 
             $scope.start_playing = function (jukebox_id){
+                console.log($scope.player);
                 console.log('Yes I am starting...');
                 jukebox_service.get_playing_track_async(jukebox_id).then(
                     function(status) {
