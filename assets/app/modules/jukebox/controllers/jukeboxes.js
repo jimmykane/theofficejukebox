@@ -32,5 +32,9 @@ angular.module('mainApp.jukebox').controller('jukeboxes_controller', function($s
         );
     };
 
+    $scope.go_to_jukebox = function(jukebox_id){
+        $location.path('/jukebox/' + String(jukebox_id));
+    };
+
     $scope.get_jukeboxes();
 });

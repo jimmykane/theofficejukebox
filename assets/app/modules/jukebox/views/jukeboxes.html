@@ -10,7 +10,7 @@
         <ul>
             <li
             data-ng-repeat="jukebox in jukeboxes">
-                {[{ jukebox.title  }]}
+                <a data-ng-click='go_to_jukebox(jukebox.id)'>{[{ jukebox.title  }]}</a>
             </li>
         </ul>
     </div>
