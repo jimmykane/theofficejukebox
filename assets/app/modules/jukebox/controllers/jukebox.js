@@ -5,7 +5,7 @@
 
 "use strict";
 
-angular.module('mainApp.jukebox').controller('jukebox_controller', function($scope, $location, $routeParams, $timeout, users_service, jukebox_service, ui, logging, player_service) {
+angular.module('mainApp.jukebox').controller('jukebox_controller', function($scope, $location, $routeParams, $timeout, users_service, jukebox_service, ui, player_service) {
 
     $scope.jukebox_id = $routeParams.jukebox_id;
     console.log($scope.jukebox_id)
@@ -96,7 +96,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                logging.error('The server encountered an errror');
+                console.log('The server encountered an errror');
                 return;
             }
         );
@@ -129,7 +129,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                logging.error('The server encountered an errror');
+                console.log('The server encountered an errror');
                 return;
             }
         );
@@ -162,7 +162,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                logging.error('The server encountered an errror');
+                console.log('The server encountered an errror');
                 return;
             }
         );
@@ -185,7 +185,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                logging.error('The server encountered an errror');
+                console.log('The server encountered an errror');
                 return;
             }
         );
@@ -208,7 +208,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                logging.error('The server encountered an errror');
+                console.log('The server encountered an errror');
                 return;
             }
         );
@@ -232,7 +232,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                logging.error('The server encountered an errror');
+                console.log('The server encountered an errror');
                 return;
             }
         );
@@ -256,7 +256,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                logging.error('The server encountered an errror');
+                console.log('The server encountered an errror');
                 return;
             }
         );
@@ -301,7 +301,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                logging.error('[!!] ADD/QueuedTrack: The server encountered an errror');
+                console.log('[!!] ADD/QueuedTrack: The server encountered an errror');
                 return;
             }
         );;
@@ -359,7 +359,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
     $scope.$on('handlePlayerChangedState', function(event, state) {
 
-        logging.info('Player changed state', state);
+        console.log('Player changed state', state);
         var prev_state = false;
         var current_jukebox = $scope.get_current_jukebox();
         if (!current_jukebox)
@@ -434,7 +434,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                logging.error('The server encountered an errror');
+                console.log('The server encountered an errror');
                 return;
             }
         );

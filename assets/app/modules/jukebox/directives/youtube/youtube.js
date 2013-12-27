@@ -5,7 +5,7 @@
 
 "use strict";
 
-angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, logging, ui, jukebox_service, player_service) {
+angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, ui, jukebox_service, player_service) {
 	return {
 		restrict: 'A', // only activate on element attribute
 		scope: true, // New scope to use but rest inherit proto from parent
@@ -40,8 +40,8 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, l
 			// When the player has been loaded and is ready to play etc
 			$scope.onPlayerReady = function (event) {
 				$scope.$apply(function(){
-					logging.info("Playa is ready");
-					logging.info($scope.player);
+					console.log("Playa is ready");
+					console.log($scope.player);
 					// Lets also broadcast a change state for the others to catch up
 					player_service.broadcast_change_state({"state": $scope.player.getPlayerState()});
 					// Should try to just load the track so that the users can press play on the playa
@@ -100,13 +100,13 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, l
 			// When the player has been loaded and is ready to play etc
 			$scope.onError = function (event) {
 				$scope.$apply(function(){
-					logging.info("Playa Encountered and ERROR");
-					logging.info(event)
+					console.log("Playa Encountered and ERROR");
+					console.log(event)
 				});
 			};
 
 			$scope.start_playing = function (jukebox_id){
-				logging.info('Yes I am starting...');
+				console.log('Yes I am starting...');
 				jukebox_service.get_playing_track_async(jukebox_id).then(
 					function(status) {
 						if (status.code === 200) {
@@ -127,7 +127,7 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, l
 						return;
 					},
 					function(status){
-						logging.error('The server encountered an errror');
+						console.log('The server encountered an errror');
 						return;
 					}
 				);
@@ -141,7 +141,7 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, l
 				}
 				catch (e) {
 					// probably this happens a lot due to several apply digest cirlces
-					// logging.info(e); // pass exception object to error handler
+					// console.log(e); // pass exception object to error handler
 					return false;
 				}
 			};

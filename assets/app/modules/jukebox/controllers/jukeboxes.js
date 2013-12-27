@@ -5,7 +5,7 @@
 
 "use strict";
 
-angular.module('mainApp.jukebox').controller('jukeboxes_controller', function($scope, $location, $routeParams, users_service, jukebox_service, ui, logging, player_service) {
+angular.module('mainApp.jukebox').controller('jukeboxes_controller', function($scope, $location, $routeParams, users_service, jukebox_service, ui) {
 
     $scope.jukeboxes = jukebox_service.jukeboxes();
 
@@ -26,7 +26,7 @@ angular.module('mainApp.jukebox').controller('jukeboxes_controller', function($s
                 return;
             },
             function(status){
-                logging.error('The server encountered an errror');
+                console.log('The server encountered an errror');
                 return;
             }
         );

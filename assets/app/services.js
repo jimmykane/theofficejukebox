@@ -5,34 +5,6 @@
 
  "use strict";
 
-/* Logging service */
-mainApp.factory('logging', function($http, $q) {
-
-    var logging = {}
-    logging.loglevel = 1;
-
-    logging.info = function(msg){
-        var args = Array.prototype.slice.call(arguments);
-        console.log('[INFO]', args);
-    };
-
-    logging.ok = function(msg){
-        var args = Array.prototype.slice.call(arguments);
-        console.log('[OK]', args);
-    };
-
-    logging.warning = function(msg){
-        var args = Array.prototype.slice.call(arguments);
-        console.log('[!!]', args);
-    };
-
-    logging.error = function(msg){
-        var args = Array.prototype.slice.call(arguments);
-        console.log('[ERROR]', args);
-    };
-
-    return logging;
-});
 
 /* Notification service
  * It's a shared service and some calls must be handled
@@ -60,7 +32,7 @@ mainApp.factory('notifications_service', function($rootScope) {
  * Only works as a wrapper now. Service of notifications can be used
  * directly instead.
  *  */
-mainApp.factory('ui', function(logging, notifications_service) {
+mainApp.factory('ui', function(notifications_service) {
 
     var ui = {};
 
@@ -79,7 +51,7 @@ mainApp.factory('ui', function(logging, notifications_service) {
 });
 
 /* users_service */
-mainApp.factory('users_service', function($http, $q, logging) {
+mainApp.factory('users_service', function($http, $q) {
 
     var users_service = {};
     var user = {};

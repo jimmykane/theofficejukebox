@@ -10,7 +10,7 @@
  * -------- */
 
 /* jukebox_service */
-angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope, $http, $q, logging) {
+angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope, $http, $q) {
 
     var jukebox_service = {};
     var jukeboxes = [];
@@ -31,14 +31,14 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 return;
             }
             var new_jukeboxes = response.data;
-            logging.ok("Got new jukeboxes", new_jukeboxes);
+            console.log("Got new jukeboxes", new_jukeboxes);
             for (var i = 0; i < new_jukeboxes.length; i++)
                 jukebox_service.update_or_insert_jukebox(new_jukeboxes[i]);
             deffered.resolve(response.status);
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
@@ -58,14 +58,14 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 return;
             }
             var queued_tracks = response.data;
-            logging.ok("Got new queued tracks", queued_tracks);
+            console.log("Got new queued tracks", queued_tracks);
             for (var i = 0; i < queued_tracks.length; i++)
                 jukebox_service.update_or_insert_queued_track(jukebox, queued_tracks[i]);
             deffered.resolve(response.status);
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
@@ -82,13 +82,13 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 return;
             }
             var memberships = response.data;
-            logging.ok("Got new memberships", memberships);
+            console.log("Got new memberships", memberships);
             jukebox.memberships = memberships;
             deffered.resolve(response.status);
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
@@ -108,7 +108,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
@@ -128,7 +128,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
@@ -151,7 +151,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
@@ -173,7 +173,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
@@ -202,7 +202,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
@@ -225,7 +225,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
@@ -242,13 +242,13 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 return;
             }
             var queued_track = response.data;
-            logging.ok("Track queued...", queued_track);
+            console.log("Track queued...", queued_track);
             jukebox_service.update_or_insert_queued_track(jukebox, queued_track);
             deffered.resolve(response.status);
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
@@ -274,7 +274,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
         })
         .error(function(response, status, headers, config) {
             deffered.reject(response.status);
-            logging.error(response, status, headers, config);
+            console.log(response, status, headers, config);
         });
         return deffered.promise;
     };
