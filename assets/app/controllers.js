@@ -6,7 +6,7 @@
 "use strict";
 
 mainApp.controller('index_controller', function($scope) {
-
+    // Nothing for now. Maybe some static stuff
 });
 
 mainApp.controller('notifications_controller', function($scope, $timeout, notifications_service) {

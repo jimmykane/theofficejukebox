@@ -24,6 +24,7 @@ app = webapp2.WSGIApplication([
 		("/AJAX/queued_track/save/", queued_track.AddSingleQueuedTrackHandler),
 		("/AJAX/queued_track/remove/", queued_track.RemoveSingleQueuedTrackHandler),
 		('/jukebox/.*', server.RootPage),
+        ('/jukeboxes/.*', server.RootPage),
 		# Essential handlers
 		("/AJAX/person/get/current", person.GetCurrentPersonHanlder),
 		("/login/", person.RegisterPersonHandler),
