@@ -72,6 +72,7 @@ class PersonInfo(ndb.Expando):
         #person_info_id = person_info.key.id()
         person_info_dict = person_info.to_dict(
             exclude=[
+                'creation_date',
                 'edit_date',
             ]
         )
