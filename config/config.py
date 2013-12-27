@@ -1,5 +1,5 @@
-project_name = "The Office JukeBox"
-domain_name = "http://theofficejukebox.com/"
+project_name = 'The Office JukeBox'
+domain_name = 'http://theofficejukebox.com/'
 
 #openID Providers and names
 providers = {
@@ -12,14 +12,14 @@ providers = {
 }
 
 api_keys = {
-    "google_plus": "AIzaSyAeG-",
-    "youtube": "",
-    "google_analytics": "UA-1"
+    'google_plus': '',
+    'youtube': '',
+    'google_analytics': ''
 }
 
 config = {
-    "project_name": project_name,
-    "domain_name": domain_name,
-    "providers": providers,
-    "api_keys": api_keys
+    'project_name': project_name,
+    'domain_name': domain_name,
+    'providers': providers,
+    'api_keys': api_keys
 }
