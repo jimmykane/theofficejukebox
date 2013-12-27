@@ -5,6 +5,10 @@
 
 "use strict";
 
+mainApp.controller('index_controller', function($scope) {
+
+});
+
 mainApp.controller('notifications_controller', function($scope, $timeout, notifications_service) {
 
     $scope.notifications = [];
