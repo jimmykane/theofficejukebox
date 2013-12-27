@@ -28,7 +28,7 @@ class RootPage(webapp2.RequestHandler):
 
 	def _display_root_page(self, **kwargs):
 		jinja_environment = self.jinja_environment
-		content_template = jinja_environment.get_template("/content/app.html")
+		content_template = jinja_environment.get_template("/app.html")
 		kwargs.update({
 			"providers": self._get_providers(),
 			"google_analytics_key": self.app.config.get('api_keys').get('google_analytics')
@@ -41,7 +41,7 @@ class RootPage(webapp2.RequestHandler):
 
 	def _render_wholepage(self, **kwargs):
 		jinja_environment = self.jinja_environment
-		template = jinja_environment.get_template("/wholepage/wholepage.html")
+		template = jinja_environment.get_template("/index.html")
 		meta = self._get_project_meta()
 		if not "meta" in kwargs:
 			kwargs.update({"meta": meta})
