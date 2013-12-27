@@ -31,5 +31,5 @@ mainApp.config(function($locationProvider, $routeProvider) {
         templateUrl: '/assets/app/views/index.html',
         controller: 'index_controller'
     });
-    $routeProvider.otherwise({redirectTo: '/'}); // stub for production
+    $routeProvider.otherwise({redirectTo: '/404.html'}); // stub for production
 });
