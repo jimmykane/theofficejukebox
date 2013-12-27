@@ -36,7 +36,7 @@ mainApp.controller('notifications_controller', function($scope, $timeout, notifi
 
 });
 
-mainApp.controller('user_controller', function($location, $scope, users_service, logging,ui) {
+mainApp.controller('user_controller', function($location, $scope, users_service,ui) {
 
     $scope.user = users_service.user();
     $scope.url = $location.absUrl();
@@ -57,7 +57,7 @@ mainApp.controller('user_controller', function($location, $scope, users_service,
                 return;
             },
             function(status){
-                logging.error('The server encountered an errror');
+                console.log('The server encountered an errror');
                 return;
             }
         );
