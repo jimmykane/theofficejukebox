@@ -26,7 +26,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
         if (!$scope.jukebox_id)
             return false;
         var found = jukebox_service.check_if_jukebox_id_exists($scope.jukebox_id);
-        //console.log(found)
+        console.log(found)
         if (found === false)
             return false;
         console.log( $scope.jukeboxes[found]);
@@ -35,7 +35,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
     };
 
     $scope.is_owner_or_admin = function(user, jukebox){
-        console.log("Security Check");
+        //console.log("Security Check");
         if (!user.id || !user.memberships)
             return false;
         if (user.is_admin) // bad
@@ -51,7 +51,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
     };
 
     $scope.is_member = function(user, jukebox){
-        console.log("Security check", user);
+        //console.log("Security check", user);
         if (!user.id || !user.memberships)
             return false;
         if (user.is_member)  // bad
