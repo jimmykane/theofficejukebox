@@ -10,6 +10,7 @@ from controllers.jsonhandler import *
 from models.person import *
 from models.jukebox import *
 from models.tracks import *
+from google.appengine.ext import ndb
 from google.appengine.api import users
 
 
@@ -32,13 +33,8 @@ class RegisterPersonHandler(webapp2.RequestHandler):
             self.redirect(users.create_login_url(self.request.uri), abort=True)
             return
 
-        # All get or inserts please
         person = Person.get_or_insert(user.user_id())
-        person_info = PersonInfo.get_or_insert(user.user_id(), parent=person.key)
-        jukebox = Jukebox.get_or_insert(person.key.id())
-        membership = JukeboxMembership.get_or_insert(person.key.id(), parent=jukebox.key)
-
-        if not self._register(person, person_info , user, jukebox, membership):
+        if not self._register(person, user):
             # more logging is needed
             logging.warning('Warning registration failed')
             return
@@ -51,25 +47,40 @@ class RegisterPersonHandler(webapp2.RequestHandler):
         return
 
     @ndb.transactional(xg=True)
-    def _register(self, person, person_info ,user, jukebox, membership):
-        ''' Registration process happens here
-        '''
-        if not person_info.creation_date:
-            person_info = PersonInfo(id=user.user_id(), parent=person.key)
-            person_info.nick_name = user.nickname()
-            person_info.email = user.email()
-            person_info.put()
-        #@todo
-        # I assume here that the owner key or user_id from the openid will always be unique
-        if not jukebox.owner_key:
-            jukebox.title = 'Jukebox Beta'
-            jukebox.owner_key = person.key
-            jukebox.put()
-        if not membership.type:
-            membership.type = 'owner'
-            membership.person_key = person.key
-            membership.put()
-        #@todo Move player registration here.
+    def _register(self, person, user):
+
+        # Register the info
+        person_info = PersonInfo.query(ancestor=person.key).get()
+        if not person_info:
+            info = PersonInfo(id=user.user_id(), parent=person.key)
+            info.nick_name = user.nickname()
+            info.email = user.email()
+            info.put()
+
+        # Register a jukebox
+        person_jukebox = ndb.Key(Jukebox, person.key.id()).get()
+        if not person_jukebox:
+            person_jukebox = Jukebox(id=person.key.id())
+            person_jukebox.title = 'Jukebox Beta'
+            person_jukebox.owner_key = person.key
+            person_jukebox.put()
+
+        # Add it's player
+        person_jukebox_player = ndb.Key(Jukebox, person_jukebox.key.id(), JukeboxPlayer, person_jukebox.key.id()).get()
+        if not person_jukebox_player:
+            person_jukebox_player = JukeboxPlayer(id=person_jukebox.key.id(), parent=person_jukebox.key)
+            person_jukebox_player.last_track_queued_on = datetime.datetime.now()
+            person_jukebox_player.last_track_duration = 0
+            person_jukebox_player.put()
+
+        # Register a membership
+        person_jukebox_membership = ndb.Key(Jukebox, person_jukebox.key.id(), JukeboxMembership, person.key.id()).get()
+        if not person_jukebox_membership:
+            person_jukebox_membership = JukeboxMembership(id=person.key.id(), parent=person_jukebox.key)
+            person_jukebox_membership.type = 'owner'
+            person_jukebox_membership.person_key = person.key
+            person_jukebox_membership.put()
+
         return True
 
 
@@ -95,7 +106,6 @@ class GetCurrentPersonHanlder(webapp2.RequestHandler, JSONHandler):
             jukebox_membership_dict = JukeboxMembership._to_dict(jukebox_membership)
             member_ships.append(jukebox_membership_dict)
         person_dict.update({'memberships': member_ships})
-
         response = response = {'data': person_dict}
         response.update({'status': self.get_status()})
         self.response.out.write(json.dumps(response))
