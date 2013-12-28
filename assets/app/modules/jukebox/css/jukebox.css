@@ -1,78 +1,88 @@
 /*===============================
-*	The  Jukebox:
+*
 ================================*/
 
 
 .view_port{
-	background: url('/assets/app/modules/jukebox/css/img/background_1920x1440.jpg');
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center center;
+    background: url('/assets/app/modules/jukebox/css/img/background_1920x1440.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.main-column{
+    margin-left: 5%;
+    padding-left: 2%;
+    margin-right: 5%;
+    padding-right: 2%;
+    width: 86%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.80);
 }
 
 .left-column{
-	margin-left: 5%;
-	padding-left:2% ;
-	width: 43%;
-	height:90%;
-	float: left;
-	background-color: rgba(0, 0, 0, 0.80);
+    margin-left: 5%;
+    padding-left:2% ;
+    width: 43%;
+    height:90%;
+    float: left;
+    background-color: rgba(0, 0, 0, 0.80);
 }
 
 .right-column{
-	background-color: rgba(0, 0, 0, 0.80);
-	float: left;
-	width: 43%;
-	height: 90%;
-	margin-right:5%;
-	padding-right:2%;
+    background-color: rgba(0, 0, 0, 0.80);
+    float: left;
+    width: 43%;
+    height: 90%;
+    margin-right:5%;
+    padding-right:2%;
 }
 
 .footer-column{
-	height: 10%;
-	background-color: rgba(0, 0, 0, 0.80);
-	width: 90%;
-	margin-left: 5%;
+    height: 10%;
+    background-color: rgba(0, 0, 0, 0.80);
+    width: 90%;
+    margin-left: 5%;
 }
 
 .youtube_player{
-	text-align:center;
-	height:50%;
-	max-height:45%;
-	margin-top:5%;
-	width: 100%;
+    text-align:center;
+    height:50%;
+    max-height:45%;
+    margin-top:5%;
+    width: 100%;
 }
 
 .jukebox-info{
-	height:45%; padding-top: 5%;
+    height:45%; padding-top: 5%;
 }
 
 .jukebox-upcoming_tracks{
-	height:50%;
-	max-height:50%;
+    height:50%;
+    max-height:50%;
 }
 
 .jukebox-last_tracks{
-	text-align:center;
-	width: 98%;
-	height:50%;
-	max-height:50%;
-	padding-left: 2%;
+    text-align:center;
+    width: 98%;
+    height:50%;
+    max-height:50%;
+    padding-left: 2%;
 }
 
 .queued_track_list{
 
-	background: url('/assets/app/modules/jukebox/css/img/bg.png');
-	opacity: 0.93;
-	overflow-y: auto;
-	display: inline-block;
-	width: 100%;
-	max-height: 90%;
-	height: 90%;
-	border-top: 1px solid rgba(255, 0, 0, 0.5);
+    background: url('/assets/app/modules/jukebox/css/img/bg.png');
+    opacity: 0.93;
+    overflow-y: auto;
+    display: inline-block;
+    width: 100%;
+    max-height: 90%;
+    height: 90%;
+    border-top: 1px solid rgba(255, 0, 0, 0.5);
 
 }
 
 .queued_track_list-item{
-	padding-left: 5%;
+    padding-left: 5%;
 }
