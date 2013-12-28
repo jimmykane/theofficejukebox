@@ -365,33 +365,3 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
     return jukebox_service;
 
 });
-
-
-angular.module('mainApp.jukebox').factory('player_service', function($rootScope) {
-
-    var player_service = {};
-
-    player_service.broadcast_change_state = function(state){
-        console.log("Broadcasting Player State change")
-        $rootScope.$broadcast('handlePlayerChangedState', state);
-    };
-
-    player_service.broadcast_start_playing = function(jukebox_id) {
-        $rootScope.$broadcast('handleStartPlaying', jukebox_id);
-    };
-
-    player_service.broadcast_pause_playing = function(jukebox_id) {
-        $rootScope.$broadcast('handlePausePlaying');
-    };
-
-    player_service.broadcast_resume_playing = function(jukebox_id) {
-        $rootScope.$broadcast('handleResumePlaying');
-    };
-
-    player_service.broadcast_stop_playing = function(jukebox_id) {
-        $rootScope.$broadcast('handleStopPlaying');
-    };
-
-    return player_service;
-
-});
