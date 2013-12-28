@@ -9,15 +9,16 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
     return {
         restrict: 'A', // only activate on element attribute
         scope: true, // New scope to use but rest inherit proto from parent
-        compile: function(tElement, tAttrs) {
+        compile: function(element, attrs) {
             // Ignite payer_service and let it lazy load
             player_service.bootstrap();
         },
         controller: function($scope, $element, $attrs) {
+            // bind to the service, once it bootstraps should be ok will trigger the ready broadcast
+            $scope.player = player_service.getPlayer();
 
             $scope.start_playing = function (jukebox_id){
                 console.log('Yes I am starting...');
-                $scope.player = player_service.getPlayer();
                 jukebox_service.get_playing_track_async(jukebox_id).then(
                     function(status) {
                         if (status.code === 200) {
@@ -44,6 +45,9 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
             };
 
             $scope.player_status =  function (){
+                if ($scope.player === false)
+                    return false;
+                // Watch out this triggers controls to be ready before sometimes player state
                 try {
                     var status = $scope.player.getPlayerState();
                     //console.log(status);
@@ -54,6 +58,12 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
                     return false;
                 }
             };
+
+            $scope.$on('handlePlayerReady', function(event, state) {
+                console.log('Player is ready');
+                // Rebind here
+                $scope.player = player_service.getPlayer();
+            });
 
             $scope.$on('handleStartPlaying', function(event, jukebox_id) {
                 console.log('Got the message I ll play');
@@ -85,7 +95,7 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
 angular.module('mainApp.jukebox').service('player_service', function($rootScope, $window) {
 
     var player_service = {};
-    player_service.player = {};
+    player_service.player = false;
 
     // Helper for not downloading the api more than once
     player_service.bootstrap = function(){
@@ -129,6 +139,7 @@ angular.module('mainApp.jukebox').service('player_service', function($rootScope,
     player_service.onPlayerReady = function (event) {
         $rootScope.$apply(function(){
             // Lets also broadcast a change state for the others to catch up
+            player_service.broadcast_player_ready({"state": player_service.player.getPlayerState()});
             player_service.broadcast_change_state({"state": player_service.player.getPlayerState()});
         });
     };
@@ -194,6 +205,11 @@ angular.module('mainApp.jukebox').service('player_service', function($rootScope,
     player_service.broadcast_change_state = function(state){
         console.log("Broadcasting Player State change")
         $rootScope.$broadcast('handlePlayerChangedState', state);
+    };
+
+    player_service.broadcast_player_ready = function(state){
+        console.log("Broadcasting Player Ready")
+        $rootScope.$broadcast('handlePlayerReady', state);
     };
 
     player_service.broadcast_start_playing = function(jukebox_id) {
