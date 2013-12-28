@@ -52,16 +52,16 @@ class RegisterPersonHandler(webapp2.RequestHandler):
         # Register the info
         person_info = PersonInfo.query(ancestor=person.key).get()
         if not person_info:
-            info = PersonInfo(id=user.user_id(), parent=person.key)
-            info.nick_name = user.nickname()
-            info.email = user.email()
-            info.put()
+            person_info = PersonInfo(id=user.user_id(), parent=person.key)
+            person_info.nick_name = user.nickname()
+            person_info.email = user.email()
+            person_info.put()
 
         # Register a jukebox
         person_jukebox = ndb.Key(Jukebox, person.key.id()).get()
         if not person_jukebox:
             person_jukebox = Jukebox(id=person.key.id())
-            person_jukebox.title = 'Jukebox Beta'
+            person_jukebox.title = str(person_info.nick_name) + '\'s Jukebox'
             person_jukebox.owner_key = person.key
             person_jukebox.put()
 
