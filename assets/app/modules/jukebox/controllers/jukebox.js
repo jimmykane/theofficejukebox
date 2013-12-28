@@ -89,7 +89,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 }else if (status.code === 404) {
                     ui.show_notification_warning('He is talking again about 404\'s and shit...');
                 }else{
-                    ui.show_notification_error('Uknown error');
+                    ui.show_notification_error('Unknown error');
                 }
                 return;
             },
@@ -122,7 +122,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 }else if (status.code === 404) {
                     ui.show_notification_warning('The server did not respond with a playing track. Should I play something from the previous things? ')
                 }else{
-                    ui.show_notification_error('Uknown error');
+                    ui.show_notification_error('Unknown error');
                 }
                 return;
             },
@@ -427,7 +427,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 }else if (status.code === 404) {
                     ui.show_notification_warning('Sorry but the jukebox was not found...')
                 }else{
-                    ui.show_notification_error('Uknown error');
+                    ui.show_notification_error('Unknown error');
                 }
                 return;
             },

@@ -33,7 +33,7 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
                         }else if (status.code === 404) {
                             ui.show_notification_warning('The server did not respond with a playing track. Should I play something from the previous things? ')
                         }else{
-                            ui.show_notification_error('Uknown error');
+                            ui.show_notification_error('Unknown error');
                         }
                         return;
                     },
