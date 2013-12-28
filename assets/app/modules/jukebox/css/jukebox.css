@@ -11,6 +11,7 @@
 }
 
 .main-column{
+    text-align: center;
     margin-left: 5%;
     padding-left: 2%;
     margin-right: 5%;
@@ -69,9 +70,19 @@
     max-height:50%;
     padding-left: 2%;
 }
+.jukebox-list{
+    background: url('/assets/app/modules/jukebox/css/img/bg.png');
+    opacity: 0.93;
+    padding: 10%;
+    overflow-y: auto;
+    display: inline-block;
+    border-top: 1px solid rgba(255, 0, 0, 0.5);
+}
+
+.jukebox-list-item{
+}
 
 .queued_track_list{
-
     background: url('/assets/app/modules/jukebox/css/img/bg.png');
     opacity: 0.93;
     overflow-y: auto;
@@ -80,7 +91,6 @@
     max-height: 90%;
     height: 90%;
     border-top: 1px solid rgba(255, 0, 0, 0.5);
-
 }
 
 .queued_track_list-item{

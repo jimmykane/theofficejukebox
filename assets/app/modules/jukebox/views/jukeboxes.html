@@ -7,11 +7,15 @@
 
 <div class="max_width_height view_port">
     <div class="main-column">
-        <ul>
-            <li
-            data-ng-repeat="jukebox in jukeboxes">
-                <a data-ng-click='go_to_jukebox(jukebox.id)'>{[{ jukebox.title  }]}</a>
-            </li>
-        </ul>
+        <h1>
+            Available Jukeboxes
+        </h1>
+        <div class=" jukebox-list">
+            <div
+            data-ng-repeat="jukebox in jukeboxes"
+            class="jukebox-list-item">
+                <a data-ng-click='go_to_jukebox(jukebox.id)' class="button">{[{ jukebox.title  }]}</a>
+            </div>
+        </div>
     </div>
 </div>
