@@ -14,7 +14,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
     $scope.track_playing = jukebox_service.get_track_playing();
     $scope.new_queued_track = {};
     $scope.player_status = false;
-    $scope.player_status.state = -1;
     $scope.jukebox = false;
     $scope.membership_types = {
             'admins': ['admin','owner'],
