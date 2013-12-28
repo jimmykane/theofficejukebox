@@ -14,6 +14,7 @@ angular.module('mainApp.jukebox').controller('jukeboxes_controller', function($s
             function(status) {
                 if (status.code === 200) {
                     // All ok
+                    console.log($scope.jukeboxes );
                 }else if (status.code === 403) {
                     ui.show_notification_warning('Server says: "' + status.message
                     + '" I asked the backend about the reason and replied: "' + status.info +'"');
