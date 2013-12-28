@@ -2,6 +2,9 @@
 
 <!-- toolbar -->
 <div class="max_width_height flexbox  top_menu_bar" data-ng-controller="user_controller">
+    <div class="flexbox_item">
+        <button title="Go to homepage" onclick="window.location.href='/'">Home</button>
+    </div>
     <div class="flexbox_item" data-ng-switch data-on="user">
         <div data-ng-switch-when="false">
             {% for provider in providers %}
