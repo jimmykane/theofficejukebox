@@ -31,7 +31,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 return;
             }
             var new_jukeboxes = response.data;
-            console.log("Got new jukeboxes", new_jukeboxes);
+            //console.log("Got new jukeboxes", new_jukeboxes);
             for (var i = 0; i < new_jukeboxes.length; i++)
                 jukebox_service.update_or_insert_jukebox(new_jukeboxes[i]);
             deffered.resolve(response.status);
@@ -58,7 +58,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 return;
             }
             var queued_tracks = response.data;
-            console.log("Got new queued tracks", queued_tracks);
+            //console.log("Got new queued tracks", queued_tracks);
             for (var i = 0; i < queued_tracks.length; i++)
                 jukebox_service.update_or_insert_queued_track(jukebox, queued_tracks[i]);
             deffered.resolve(response.status);
@@ -82,7 +82,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 return;
             }
             var memberships = response.data;
-            console.log("Got new memberships", memberships);
+            //console.log("Got new memberships", memberships);
             jukebox.memberships = memberships;
             deffered.resolve(response.status);
         })
@@ -103,7 +103,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 deffered.resolve(response.status);
                 return;
             }
-            console.log("Membership saved");
+            //console.log("Membership saved");
             deffered.resolve(response.status);
         })
         .error(function(response, status, headers, config) {
@@ -123,7 +123,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 deffered.resolve(response.status);
                 return;
             }
-            console.log("Request for memebership sent");
+            //console.log("Request for memebership sent");
             deffered.resolve(response.status);
         })
         .error(function(response, status, headers, config) {
@@ -193,7 +193,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 return;
             }
             angular.extend(track_playing, response.data);
-            console.log("Track playing: ", response.data);
+            //console.log("Track playing: ", response.data);
             //  Reset to 0 for the first 5s
             if (track_playing.start_seconds - 5 < 0)
                 track_playing.start_seconds = 0;
@@ -219,7 +219,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 return;
             }
             jukebox = response.data;
-            console.log(jukebox);
+            //console.log(jukebox);
             jukebox_service.update_or_insert_jukebox(jukebox);
             deffered.resolve(response.status);
         })
@@ -242,7 +242,7 @@ angular.module('mainApp.jukebox').factory('jukebox_service', function($rootScope
                 return;
             }
             var queued_track = response.data;
-            console.log("Track queued...", queued_track);
+            //console.log("Track queued...", queued_track);
             jukebox_service.update_or_insert_queued_track(jukebox, queued_track);
             deffered.resolve(response.status);
         })

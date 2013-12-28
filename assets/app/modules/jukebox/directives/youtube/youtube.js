@@ -26,8 +26,10 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
                 document.body.appendChild(jsCode);
                 return;
             }
+            $window.onYouTubeIframeAPIReady(); // Let's signal the new player
         },
         controller: function($scope, $element, $attrs) {
+
             // This is called when the player is loaded from YT
             $window.onYouTubeIframeAPIReady = function() {
                 $scope.player = new YT.Player('player', {
@@ -38,13 +40,13 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
                         'controls': 1,
                         'autohide': 2
                     },
-                    //videoId: $scope.live_track.video_id,
                     events: {
                         'onReady': $scope.onPlayerReady,
                         'onStateChange': $scope.onPlayerStateChange,
                         'onError': $scope.onError
                     }
                 });
+                console.log($scope.player);
             };
 
             // When the player has been loaded and is ready to play etc
@@ -116,8 +118,8 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
             };
 
             $scope.start_playing = function (jukebox_id){
-                console.log($scope.player);
                 console.log('Yes I am starting...');
+                console.log($scope);
                 jukebox_service.get_playing_track_async(jukebox_id).then(
                     function(status) {
                         if (status.code === 200) {
@@ -151,7 +153,6 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
                     return status;
                 }
                 catch (e) {
-                    // probably this happens a lot due to several apply digest cirlces
                     // console.log(e); // pass exception object to error handler
                     return false;
                 }

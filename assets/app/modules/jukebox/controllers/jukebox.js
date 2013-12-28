@@ -26,10 +26,8 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
         if (!$scope.jukebox_id)
             return false;
         var found = jukebox_service.check_if_jukebox_id_exists($scope.jukebox_id);
-        console.log(found)
         if (found === false)
             return false;
-        console.log( $scope.jukeboxes[found]);
         $scope.jukebox = $scope.jukeboxes[found];
         return $scope.jukeboxes[found];
     };
@@ -71,7 +69,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
             function(status) {
                 if (status.code === 200) {
                     // If all went well the player dictates start
-                    console.log('Found track to play');
+                    //console.log('Found track to play');
                     $scope.get_playing_track(jukebox);
                     jukebox.player.on=true;
 
@@ -359,7 +357,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
 
     $scope.$on('handlePlayerChangedState', function(event, state) {
 
-        console.log('Player changed state', state);
+        //console.log('Player changed state', state);
         var prev_state = false;
         var current_jukebox = $scope.get_current_jukebox();
         if (!current_jukebox)
@@ -369,8 +367,8 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
         //-1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5(video cued)
         // seeking 1, 2, 1 and not sure
         // Start playing -1, 5, 1 and not sure
-        console.log('prev state', prev_state);
-        console.log('new state', state.state);
+        //console.log('prev state', prev_state);
+        //console.log('new state', state.state);
         if ($scope.is_owner_or_admin($scope.user, current_jukebox) === false){
 
         }
@@ -389,9 +387,9 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
         }
         // If from buffering or paused to end then request next
         if ((prev_state === 2 || prev_state === 3) && state.state === 0){
-            console.log('Going to next')
+            //console.log('Going to next')
             $scope.get_queued_tracks(current_jukebox, {
-                'archived': false,
+                'archived': false
             });
             $scope.get_queued_tracks(current_jukebox, {
                 'archived': true,
@@ -419,7 +417,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
         jukebox_service.stop_playing_async(jukebox.id).then(
             function(status) {
                 if (status.code === 200) {
-                    console.log('Stopping video');
+                    //console.log('Stopping video');
                     jukebox.player.on = false;
                 }else if (status.code === 401) {
                     ui.show_notification_warning('Unauthorized!!! How the hell did you get access to this command. Mind it!!!');
