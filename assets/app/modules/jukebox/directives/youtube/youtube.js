@@ -10,33 +10,14 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
         restrict: 'A', // only activate on element attribute
         scope: true, // New scope to use but rest inherit proto from parent
         compile: function(tElement, tAttrs) {
-            var youtube_api_src = 'https://www.youtube.com/iframe_api';
-            // Helper
-            var myScriptIsLoaded = function (url) {
-                var scripts = document.getElementsByTagName('script');
-                for (var i = scripts.length; i--;) {
-                    if (scripts[i].src == url) return true;
-                }
-                return false;
-            }
-            // Load the Youtube js api if not found
-            if (myScriptIsLoaded(youtube_api_src) === false){
-                var jsCode = document.createElement('script');
-                jsCode.setAttribute('src', youtube_api_src);
-                document.body.appendChild(jsCode);
-                return;
-            }
-            $window.onYouTubeIframeAPIReady(); // Let's signal the new player
+            // Ignite payer_service and let it lazy load
+            player_service.bootstrap();
         },
         controller: function($scope, $element, $attrs) {
-
-            // Bind once
-            $scope.player = player_service.getPlayer();
 
             $scope.start_playing = function (jukebox_id){
                 console.log('Yes I am starting...');
                 $scope.player = player_service.getPlayer();
-                console.log($scope.player);
                 jukebox_service.get_playing_track_async(jukebox_id).then(
                     function(status) {
                         if (status.code === 200) {
@@ -45,7 +26,6 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
                                 'suggestedQuality': 'default'
                             });
                             $scope.player.seekTo(jukebox_service.get_track_playing().start_seconds);
-                            //console.log($scope.player)
                         }else if (status.code === 403) {
                             ui.show_notification_warning('Server says: "' + status.message
                             + '" I asked the backend about the reason and replied: "' + status.info +'"');
@@ -102,11 +82,31 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
     }
 });
 
-angular.module('mainApp.jukebox').factory('player_service', function($rootScope, $window) {
+angular.module('mainApp.jukebox').service('player_service', function($rootScope, $window) {
 
     var player_service = {};
+    player_service.player = {};
 
-     // This is called when the player is loaded from YT
+    // Helper for not downloading the api more than once
+    player_service.bootstrap = function(){
+        var youtube_api_src = 'https://www.youtube.com/iframe_api';
+        var scripts = document.getElementsByTagName('script');
+        for (var i = scripts.length; i--;) {
+            if (scripts[i].src == youtube_api_src){
+                // Fire the event
+                $window.onYouTubeIframeAPIReady();
+                return;
+            }
+        }
+        // Get the youtube stuff
+        var tag = document.createElement('script');
+        tag.src = youtube_api_src;
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        // This will autofire $window.onYouTubeIframeAPIReady()
+    };
+
+    // This is called when the player is loaded from YT
     $window.onYouTubeIframeAPIReady = function() {
         player_service.player = new YT.Player('player', {
             height: '250',
@@ -130,7 +130,6 @@ angular.module('mainApp.jukebox').factory('player_service', function($rootScope,
         $rootScope.$apply(function(){
             // Lets also broadcast a change state for the others to catch up
             player_service.broadcast_change_state({"state": player_service.player.getPlayerState()});
-            // Should try to just load the track so that the users can press play on the playa
         });
     };
 
