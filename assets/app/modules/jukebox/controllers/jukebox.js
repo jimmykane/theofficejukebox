@@ -93,7 +93,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                console.log('The server encountered an errror');
+                console.log('The server encountered an error');
                 return;
             }
         );
@@ -126,7 +126,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                console.log('The server encountered an errror');
+                console.log('The server encountered an error');
                 return;
             }
         );
@@ -159,7 +159,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                console.log('The server encountered an errror');
+                console.log('The server encountered an error');
                 return;
             }
         );
@@ -182,7 +182,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                console.log('The server encountered an errror');
+                console.log('The server encountered an error');
                 return;
             }
         );
@@ -205,7 +205,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                console.log('The server encountered an errror');
+                console.log('The server encountered an error');
                 return;
             }
         );
@@ -229,7 +229,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                console.log('The server encountered an errror');
+                console.log('The server encountered an error');
                 return;
             }
         );
@@ -253,7 +253,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                console.log('The server encountered an errror');
+                console.log('The server encountered an error');
                 return;
             }
         );
@@ -298,7 +298,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                console.log('[!!] ADD/QueuedTrack: The server encountered an errror');
+                console.log('[!!] ADD/QueuedTrack: The server encountered an error');
                 return;
             }
         );;
@@ -431,7 +431,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                 return;
             },
             function(status){
-                console.log('The server encountered an errror');
+                console.log('The server encountered an error');
                 return;
             }
         );
