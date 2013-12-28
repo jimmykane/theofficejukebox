@@ -5,8 +5,11 @@
 
 "use strict";
 
-mainApp.controller('index_controller', function($scope) {
+mainApp.controller('index_controller', function($scope, $location) {
     // Nothing for now. Maybe some static stuff
+    $scope.go_to_list = function(){
+        $location.path('/jukeboxes/');
+    }
 });
 
 mainApp.controller('notifications_controller', function($scope, $timeout, notifications_service) {
