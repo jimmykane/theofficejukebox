@@ -36,11 +36,11 @@ class RegisterPersonHandler(webapp2.RequestHandler):
         person = Person.get_or_insert(user.user_id())
         if not self._register(person, user):
             # more logging is needed
-            logging.warning('Warning registration failed')
+            logging.error('Warning registration failed')
+            self.redirect("/")
             return
 
-        # get the slide and then redirect him there
-        self.redirect("/jukebox/")
+        self.redirect("/jukeboxes/")
 
     def post(self):
         self.view("No reason to be here Mr Jiggles ;-)")
