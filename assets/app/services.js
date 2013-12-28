@@ -67,7 +67,7 @@ mainApp.factory('users_service', function($http, $q) {
                 return;
             }
             angular.extend(user, response.data);
-            console.log(user)
+            //console.log(user)
             deffered.resolve(response.status);
         })
         .error(function(response, status, headers, config) {

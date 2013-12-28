@@ -132,7 +132,7 @@ angular.module('mainApp.jukebox').service('player_service', function($rootScope,
                 'onError': player_service.onError
             }
         });
-        console.log(player_service.player);
+        //console.log(player_service.player);
     };
 
     // When the player has been loaded and is ready to play etc
