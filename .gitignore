@@ -1,3 +1,7 @@
+# Local temp configs
+config/config_production.py
+config/config_development.py
+
 *.py[co]
 
 # Packages
