@@ -9,9 +9,9 @@
         <div data-ng-switch-when="false">
             {% for provider in providers %}
             <button style="background-color: inherit;"
-            title="Login with google"
+            title="Login with {{ provider.name }}"
             onClick="window.location.href='{{ provider.url }}'">
-                {{ provider.name }}
+                Login/Register with {{ provider.name }}
             </button>
             {% endfor %}
         </div>
