@@ -30,96 +30,13 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
         },
         controller: function($scope, $element, $attrs) {
 
-            // This is called when the player is loaded from YT
-            $window.onYouTubeIframeAPIReady = function() {
-                $scope.player = new YT.Player('player', {
-                    height: '250',
-                    width: '400',
-                    playerVars: {
-                        'autoplay': 0,
-                        'controls': 1,
-                        'autohide': 2
-                    },
-                    events: {
-                        'onReady': $scope.onPlayerReady,
-                        'onStateChange': $scope.onPlayerStateChange,
-                        'onError': $scope.onError
-                    }
-                });
-                console.log($scope.player);
-            };
-
-            // When the player has been loaded and is ready to play etc
-            $scope.onPlayerReady = function (event) {
-                $scope.$apply(function(){
-                    console.log("Playa is ready");
-                    console.log($scope.player);
-                    // Lets also broadcast a change state for the others to catch up
-                    player_service.broadcast_change_state({"state": $scope.player.getPlayerState()});
-                    // Should try to just load the track so that the users can press play on the playa
-                });
-            };
-
-            // When the player changes a state
-            $scope.onPlayerStateChange = function(event) {
-                $scope.$apply(function(){
-                    console.log("Playa changed state");
-                    // unstarted
-                    if ($scope.player.getPlayerState() === -1){
-                        player_service.broadcast_change_state({
-                            "state": -1,
-                            "current_time": $scope.player.getCurrentTime()
-                        });
-                    }
-                    // ended
-                    if ($scope.player.getPlayerState() === 0){
-                        player_service.broadcast_change_state({
-                            "state": 0,
-                            "current_time": $scope.player.getCurrentTime()
-                        });
-                    }
-                    // playing
-                    if ($scope.player.getPlayerState() === 1){
-                        player_service.broadcast_change_state({
-                            "state": 1,
-                            "current_time": $scope.player.getCurrentTime()
-                        });
-                    }
-                    // paused
-                    if ($scope.player.getPlayerState() === 2){
-                        player_service.broadcast_change_state({
-                            "state": 2,
-                            "current_time": $scope.player.getCurrentTime()
-                        });
-                    }
-                    // buffering
-                    if ($scope.player.getPlayerState() === 3){
-                        player_service.broadcast_change_state({
-                            "state": 3,
-                            "current_time": $scope.player.getCurrentTime()
-                        });
-                    }
-                    // video cued
-                    if ($scope.player.getPlayerState() === 5){
-                        player_service.broadcast_change_state({
-                            "state": 5,
-                            "current_time": $scope.player.getCurrentTime()
-                        });
-                    }
-                });
-            };
-
-            // When the player has been loaded and is ready to play etc
-            $scope.onError = function (event) {
-                $scope.$apply(function(){
-                    console.log("Playa Encountered and ERROR");
-                    console.log(event)
-                });
-            };
+            // Bind once
+            $scope.player = player_service.getPlayer();
 
             $scope.start_playing = function (jukebox_id){
                 console.log('Yes I am starting...');
-                console.log($scope);
+                $scope.player = player_service.getPlayer();
+                console.log($scope.player);
                 jukebox_service.get_playing_track_async(jukebox_id).then(
                     function(status) {
                         if (status.code === 200) {
@@ -185,9 +102,92 @@ angular.module('mainApp.jukebox').directive('youtubePlayer', function($window, u
     }
 });
 
-angular.module('mainApp.jukebox').factory('player_service', function($rootScope) {
+angular.module('mainApp.jukebox').factory('player_service', function($rootScope, $window) {
 
     var player_service = {};
+
+     // This is called when the player is loaded from YT
+    $window.onYouTubeIframeAPIReady = function() {
+        player_service.player = new YT.Player('player', {
+            height: '250',
+            width: '400',
+            playerVars: {
+                'autoplay': 0,
+                'controls': 1,
+                'autohide': 2
+            },
+            events: {
+                'onReady': player_service.onPlayerReady,
+                'onStateChange': player_service.onPlayerStateChange,
+                'onError': player_service.onError
+            }
+        });
+        console.log(player_service.player);
+    };
+
+    // When the player has been loaded and is ready to play etc
+    player_service.onPlayerReady = function (event) {
+        // Lets also broadcast a change state for the others to catch up
+        player_service.broadcast_change_state({"state": player_service.player.getPlayerState()});
+        // Should try to just load the track so that the users can press play on the playa
+    };
+
+    // When the player changes a state
+    player_service.onPlayerStateChange = function(event) {
+        console.log("Playa changed state");
+        // unstarted
+        if (player_service.player.getPlayerState() === -1){
+            player_service.broadcast_change_state({
+                "state": -1,
+                "current_time": player_service.player.getCurrentTime()
+            });
+        }
+        // ended
+        if (player_service.player.getPlayerState() === 0){
+            player_service.broadcast_change_state({
+                "state": 0,
+                "current_time": player_service.player.getCurrentTime()
+            });
+        }
+        // playing
+        if (player_service.player.getPlayerState() === 1){
+            player_service.broadcast_change_state({
+                "state": 1,
+                "current_time": player_service.player.getCurrentTime()
+            });
+        }
+        // paused
+        if (player_service.player.getPlayerState() === 2){
+            player_service.broadcast_change_state({
+                "state": 2,
+                "current_time": player_service.player.getCurrentTime()
+            });
+        }
+        // buffering
+        if (player_service.player.getPlayerState() === 3){
+            player_service.broadcast_change_state({
+                "state": 3,
+                "current_time": player_service.player.getCurrentTime()
+            });
+        }
+        // video cued
+        if (player_service.player.getPlayerState() === 5){
+            player_service.broadcast_change_state({
+                "state": 5,
+                "current_time": player_service.player.getCurrentTime()
+            });
+        }
+    };
+
+    // When the player has been loaded and is ready to play etc
+    player_service.onError = function(event) {
+        console.log("Playa Encountered and ERROR");
+        console.log(event)
+    };
+
+    player_service.getPlayer = function(){
+        return player_service.player;
+    }
 
     player_service.broadcast_change_state = function(state){
         console.log("Broadcasting Player State change")
