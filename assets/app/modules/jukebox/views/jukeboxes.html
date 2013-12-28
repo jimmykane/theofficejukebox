@@ -13,8 +13,9 @@
         <div class=" jukebox-list">
             <div
             data-ng-repeat="jukebox in jukeboxes"
+            data-ng-click='go_to_jukebox(jukebox.id)'
             class="jukebox-list-item">
-                <a data-ng-click='go_to_jukebox(jukebox.id)' class="button">{[{ jukebox.title  }]}</a>
+                {[{ jukebox.title  }]}
             </div>
         </div>
     </div>

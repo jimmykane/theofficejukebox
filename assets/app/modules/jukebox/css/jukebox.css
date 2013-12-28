@@ -80,6 +80,13 @@
 }
 
 .jukebox-list-item{
+    margin-bottom: 4px;
+    padding: 0 4px 0 4px;
+    border: 1px solid #9d0a10;
+}
+
+.jukebox-list-item:hover{
+    cursor: pointer;
 }
 
 .queued_track_list{
