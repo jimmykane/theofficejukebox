@@ -127,68 +127,71 @@ angular.module('mainApp.jukebox').factory('player_service', function($rootScope,
 
     // When the player has been loaded and is ready to play etc
     player_service.onPlayerReady = function (event) {
-        // Lets also broadcast a change state for the others to catch up
-        player_service.broadcast_change_state({"state": player_service.player.getPlayerState()});
-        // Should try to just load the track so that the users can press play on the playa
+        $rootScope.$apply(function(){
+            // Lets also broadcast a change state for the others to catch up
+            player_service.broadcast_change_state({"state": player_service.player.getPlayerState()});
+            // Should try to just load the track so that the users can press play on the playa
+        });
     };
 
     // When the player changes a state
     player_service.onPlayerStateChange = function(event) {
-        console.log("Playa changed state");
-        // unstarted
-        if (player_service.player.getPlayerState() === -1){
-            player_service.broadcast_change_state({
-                "state": -1,
-                "current_time": player_service.player.getCurrentTime()
-            });
-        }
-        // ended
-        if (player_service.player.getPlayerState() === 0){
-            player_service.broadcast_change_state({
-                "state": 0,
-                "current_time": player_service.player.getCurrentTime()
-            });
-        }
-        // playing
-        if (player_service.player.getPlayerState() === 1){
-            player_service.broadcast_change_state({
-                "state": 1,
-                "current_time": player_service.player.getCurrentTime()
-            });
-        }
-        // paused
-        if (player_service.player.getPlayerState() === 2){
-            player_service.broadcast_change_state({
-                "state": 2,
-                "current_time": player_service.player.getCurrentTime()
-            });
-        }
-        // buffering
-        if (player_service.player.getPlayerState() === 3){
-            player_service.broadcast_change_state({
-                "state": 3,
-                "current_time": player_service.player.getCurrentTime()
-            });
-        }
-        // video cued
-        if (player_service.player.getPlayerState() === 5){
-            player_service.broadcast_change_state({
-                "state": 5,
-                "current_time": player_service.player.getCurrentTime()
-            });
-        }
+        $rootScope.$apply(function(){
+            console.log("Playa changed state");
+            // unstarted
+            if (player_service.player.getPlayerState() === -1){
+                player_service.broadcast_change_state({
+                    "state": -1,
+                    "current_time": player_service.player.getCurrentTime()
+                });
+            }
+            // ended
+            if (player_service.player.getPlayerState() === 0){
+                player_service.broadcast_change_state({
+                    "state": 0,
+                    "current_time": player_service.player.getCurrentTime()
+                });
+            }
+            // playing
+            if (player_service.player.getPlayerState() === 1){
+                player_service.broadcast_change_state({
+                    "state": 1,
+                    "current_time": player_service.player.getCurrentTime()
+                });
+            }
+            // paused
+            if (player_service.player.getPlayerState() === 2){
+                player_service.broadcast_change_state({
+                    "state": 2,
+                    "current_time": player_service.player.getCurrentTime()
+                });
+            }
+            // buffering
+            if (player_service.player.getPlayerState() === 3){
+                player_service.broadcast_change_state({
+                    "state": 3,
+                    "current_time": player_service.player.getCurrentTime()
+                });
+            }
+            // video cued
+            if (player_service.player.getPlayerState() === 5){
+                player_service.broadcast_change_state({
+                    "state": 5,
+                    "current_time": player_service.player.getCurrentTime()
+                });
+            }
+        });
     };
 
     // When the player has been loaded and is ready to play etc
     player_service.onError = function(event) {
-        console.log("Playa Encountered and ERROR");
-        console.log(event)
+        $rootScope.$apply(function(){
+            console.log("Playa Encountered and ERROR");
+            console.log(event)
+        });
     };
 
-    player_service.getPlayer = function(){
-        return player_service.player;
-    }
-
+    // BroadCasts here
     player_service.broadcast_change_state = function(state){
         console.log("Broadcasting Player State change")
         $rootScope.$broadcast('handlePlayerChangedState', state);
@@ -209,6 +212,10 @@ angular.module('mainApp.jukebox').factory('player_service', function($rootScope,
     player_service.broadcast_stop_playing = function(jukebox_id) {
         $rootScope.$broadcast('handleStopPlaying');
     };
+
+    player_service.getPlayer = function(){
+        return player_service.player;
+    }
 
     return player_service;
 
