@@ -119,7 +119,7 @@ angular.module('mainApp.jukebox').service('player_service', function($rootScope,
     // This is called when the player is loaded from YT
     $window.onYouTubeIframeAPIReady = function() {
         player_service.player = new YT.Player('player', {
-            height: '250',
+            height: '200',
             width: '400',
             playerVars: {
                 'autoplay': 0,
