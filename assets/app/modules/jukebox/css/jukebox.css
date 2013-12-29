@@ -4,9 +4,9 @@
 
 
 .view_port{
-    background: url('/assets/app/modules/jukebox/css/img/background_1920x1440.jpg');
+    background: url('/assets/app/modules/jukebox/css/img/bg.png');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-position: center center;
 }
 
