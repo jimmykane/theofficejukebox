@@ -12,6 +12,8 @@
         </h1>
         <div class="jukebox-list">
             Login with google on top and create your own
+            <br/>
+            <div class="jukebox-list-item" onclick="window.location.href='/register/'">Create New</div>
             <div
             data-ng-repeat="jukebox in jukeboxes"
             data-ng-click='go_to_jukebox(jukebox.id)'
