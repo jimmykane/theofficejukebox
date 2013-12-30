@@ -280,7 +280,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                     ui.show_notification_info('Track added to queue... Enjoy');
                     $scope.new_queued_track.video_url = '';
                 }else if (status.code === 400) {
-                    ui.show_notification_error('Bad request. Parameters are invailid... ? Are we serious here ?');
+                    ui.show_notification_error('Bad request. Parameters are invalid... ? Are we serious here ?');
                 }else if (status.code === 401) {
                     ui.show_notification_warning('Unauthorized. Probably you are logged out... :-(');
                 }else if (status.code === 403) {
