@@ -35,8 +35,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
         //console.log("Security Check");
         if (!user.id || !user.memberships)
             return false;
-        if (user.is_admin) // bad
-            return true;
         for (var i=0; i < user.memberships.length; i++ ){
             if (user.memberships[i].jukebox_id === jukebox.id
             && $scope.membership_types.admins.indexOf(user.memberships[i].type) !== -1){
@@ -51,8 +49,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
         //console.log("Security check", user);
         if (!user.id || !user.memberships)
             return false;
-        if (user.is_member)  // bad
-            return true;
         for (var i=0; i < user.memberships.length; i++ ){
             if (user.memberships[i].jukebox_id === jukebox.id
             && $scope.membership_types.members.indexOf(user.memberships[i].type) !== -1){
