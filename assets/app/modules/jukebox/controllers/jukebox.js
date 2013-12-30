@@ -82,7 +82,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
                     ui.show_notification_warning('Server says: "' + status.message
                     + '" I asked the backend about the reason and replied: "' + status.info +'"');
                 }else if (status.code === 404) {
-                    ui.show_notification_warning('He is talking again about 404\'s and shit...');
+                    ui.show_notification_warning('He is talking again about 404\'s and stuff...');
                 }else{
                     ui.show_notification_error('Unknown error');
                 }
@@ -270,7 +270,7 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
         if (match_groups && match_groups.length > 2 && video_id==false)
             video_id = match_groups[2];
         if (!video_id){
-            ui.show_notification_warning('Sorry could not add the track check the shit you pasted and try again. I did my best...');
+            ui.show_notification_warning('Sorry could not add the track check the stuff you pasted and try again. I did my best...');
             $scope.new_queued_track.video_url = '';
             return false;
         }
