@@ -99,7 +99,7 @@ angular.module('mainApp.jukebox').service('player_service', function($rootScope,
 
     // Helper for not downloading the api more than once
     player_service.bootstrap = function(){
-        var youtube_api_src = 'https://www.youtube.com/iframe_api';
+        var youtube_api_src = 'http://www.youtube.com/iframe_api';
         var scripts = document.getElementsByTagName('script');
         for (var i = scripts.length; i--;) {
             if (scripts[i].src == youtube_api_src){
