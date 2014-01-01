@@ -7,18 +7,18 @@
 
 angular.module('mainApp.jukebox').controller('jukebox_controller', function($scope, $location, $routeParams, $timeout, users_service, jukebox_service, ui, player_service) {
 
-    $scope.jukebox_id = $routeParams.jukebox_id;
-    //console.log($scope.jukebox_id)
-    $scope.jukeboxes = jukebox_service.jukeboxes();
+    // User checks
     $scope.user = users_service.user();
+    $scope.is_owner_or_admin = users_service.is_owner_or_admin;
+    $scope.is_member = users_service.is_member;
+    // Jukebox stuff
+    $scope.jukebox_id = $routeParams.jukebox_id;
+    $scope.jukeboxes = jukebox_service.jukeboxes();
+    // Properties stuff
     $scope.track_playing = jukebox_service.get_track_playing();
     $scope.new_queued_track = {};
     $scope.player_status = false;
     $scope.jukebox = false;
-    $scope.membership_types = {
-            'admins': ['admin','owner'],
-            'members': ['admin','owner', 'member']
-    };
 
     $scope.get_current_jukebox = function(){
         console.log('Getting current jukebox');
@@ -29,34 +29,6 @@ angular.module('mainApp.jukebox').controller('jukebox_controller', function($sco
             return false;
         $scope.jukebox = $scope.jukeboxes[found];
         return $scope.jukeboxes[found];
-    };
-
-    $scope.is_owner_or_admin = function(user, jukebox){
-        //console.log("Security Check");
-        if (!user.id || !user.memberships)
-            return false;
-        for (var i=0; i < user.memberships.length; i++ ){
-            if (user.memberships[i].jukebox_id === jukebox.id
-            && $scope.membership_types.admins.indexOf(user.memberships[i].type) !== -1){
-                user.is_admin = true;
-                return true;
-            }
-        }
-        return false;
-    };
-
-    $scope.is_member = function(user, jukebox){
-        //console.log("Security check", user);
-        if (!user.id || !user.memberships)
-            return false;
-        for (var i=0; i < user.memberships.length; i++ ){
-            if (user.memberships[i].jukebox_id === jukebox.id
-            && $scope.membership_types.members.indexOf(user.memberships[i].type) !== -1){
-                user.is_member = true;
-                return true;
-            }
-        }
-        return false;
     };
 
     $scope.start_playing_queued_track = function(jukebox, queued_track_id, seek, autostart) {

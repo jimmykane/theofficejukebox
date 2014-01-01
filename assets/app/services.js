@@ -56,6 +56,11 @@ mainApp.factory('users_service', function($http, $q) {
     var users_service = {};
     var user = {};
 
+    var membership_types = {
+            'admins': ['admin','owner'],
+            'members': ['admin','owner', 'member']
+    };
+
     users_service.get_current_user_async = function() {
         var deffered = $q.defer();
         $http.post('/AJAX/person/get/current', {
@@ -75,6 +80,34 @@ mainApp.factory('users_service', function($http, $q) {
             logging.error(response, status, headers, config);
         });
         return deffered.promise;
+    };
+
+    users_service.is_owner_or_admin = function(user, jukebox){
+        //console.log("Security Check");
+        if (!user.id || !user.memberships)
+            return false;
+        for (var i=0; i < user.memberships.length; i++ ){
+            if (user.memberships[i].jukebox_id === jukebox.id
+            && membership_types.admins.indexOf(user.memberships[i].type) !== -1){
+                user.is_admin = true;
+                return true;
+            }
+        }
+        return false;
+    };
+
+    users_service.is_member = function(user, jukebox){
+        //console.log("Security check", user);
+        if (!user.id || !user.memberships)
+            return false;
+        for (var i=0; i < user.memberships.length; i++ ){
+            if (user.memberships[i].jukebox_id === jukebox.id
+            && membership_types.members.indexOf(user.memberships[i].type) !== -1){
+                user.is_member = true;
+                return true;
+            }
+        }
+        return false;
     };
 
     users_service.user = function() {
