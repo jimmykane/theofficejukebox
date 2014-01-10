@@ -64,7 +64,7 @@ class RootPage(webapp2.RequestHandler):
         meta.title = self.app.config.get("project_name")
         meta.description = "Create your own Jukebox, add Youtube songs and listen with friends"
         meta.keywords = "Office jukebox, jukebox, office, youtube"
-        meta.image = self.app.config.get('domain_name') + "favicon.png"
+        meta.image = self.app.config.get('domain_name') + "assets/img/jukebox.png"
         return meta
 
 
