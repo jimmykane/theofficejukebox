@@ -55,20 +55,6 @@ class YouTubeTrack(Track):
         if data['data']['accessControl']['embed'] != 'allowed':
             return False
 
-        # Try to see if there are restrictions
-        try:
-            for restriction in data['data']['restrictions']:
-                logging.info(restriction)
-                if restriction['type'] == 'country':# maybe just check more?
-                    # if there are country restricitons we don't want these vids probably
-                    if 'NL' in restriction['countries']:
-                        logging.warning("Video has country restrictions to Netherlands")
-                        return False
-        except Exception as e:
-            logging.warning('Video does not have restrictions')
-            # has no restrictions let it pass
-            pass
-
         return title, duration
 
 class QueuedTrack(ndb.Expando, DictModel, NDBCommonModel):
