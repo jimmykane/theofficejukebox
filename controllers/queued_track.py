@@ -109,8 +109,6 @@ class AddSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
 
         track = YouTubeTrack.get_or_insert(video_id)
 
-        # should be in trans
-        # or maybe not since I can just check if they are set
         if not (track.duration and track.title):
             # Will try to get the info
             info = track.get_youtube_info
@@ -150,5 +148,4 @@ class AddSingleQueuedTrackHandler(webapp2.RequestHandler, JSONHandler):
         queued_track_dict = QueuedTrack._to_dict(queued_track)
         response = {'data': queued_track_dict}
         response.update({'status': self.get_status()})
-        #logging.info(response)
         self.response.out.write(json.dumps(response))
