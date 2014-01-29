@@ -73,7 +73,7 @@ class NextTrackHandler(webapp2.RequestHandler, JSONHandler):
 
         ndb.put_multi([next_track, player])
         taskqueue.add(
-            queue_name = "playercommands",
+            queue_name="playercommands",
             url="/playercommands/next/",
             method='POST',
             eta=datetime.datetime.now() + datetime.timedelta(0, player.track_duration),

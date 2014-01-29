@@ -1,13 +1,13 @@
-'''
+"""
 @author: Dimitrios Kanellopoulos
 @contact: jimmykane9@gmail.com
-'''
+"""
 import os
 import logging
 
 class JSONHandler():
 
-    '''
+    """
         msg(optional): A str with a message
         status_code(optional): The following subset of HTTP codes
             200(default): Success on operation.
@@ -17,7 +17,7 @@ class JSONHandler():
             404: Not found. Use it if the model is not found.
             500: Internal Server Error. If you can catch an exception.
 
-    '''
+    """
     def get_status (self, status_code=200, msg=None):
 
         # Put more here if needed
@@ -33,10 +33,9 @@ class JSONHandler():
         status = [ status for status in statuses if status['code'] == status_code][0]
         return status
 
-    # This should be moved elsewhere
+    # This should be moved elsewhere_
     def is_dev_server(self):
         return os.environ['SERVER_SOFTWARE'].startswith('Dev')
-
 
     def remove_html_markup(input):
 
