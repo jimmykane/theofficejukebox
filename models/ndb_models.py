@@ -1,7 +1,7 @@
-'''
+"""
 @author: Dimitrios Kanellopoulos
 @contact: jimmykane9@gmail.com
-'''
+"""
 import logging
 
 from google.appengine.ext import ndb
@@ -21,7 +21,7 @@ class DictModel():
         for cls_property in cls._properties:
             if cls_property in dict:
                 valid_properties.update({cls_property: dict[cls_property]})
-        # Update the id from the dict
+        # Update the id from the dict Not sure if needed
         if 'id' in dict: # if creating a new entity
                 valid_properties['id'] = dict['id']
         # Add the parent
@@ -37,10 +37,10 @@ class DictModel():
 ''' Class to help with shared model functions '''
 class NDBCommonModel:
 
-    '''
+    """
     Find if is the last child from the parent.
     Usefull if you want to check if it's last entry in a box,slide,post
-    '''
+    """
     @classmethod
     def is_the_only_remaining_child(cls, key):
         related_keys_count = cls.query(ancestor=key.parent()).count(keys_only=True)
