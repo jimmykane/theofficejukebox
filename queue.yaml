@@ -3,5 +3,5 @@ queue:
 - name: playercommands
   rate: 2/s
   retry_parameters:
-    task_retry_limit: 0
-    task_age_limit: 1s
+    task_retry_limit: 60
+    task_age_limit: 5m

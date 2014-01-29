@@ -377,8 +377,8 @@ class StartPlayingHandler(webapp2.RequestHandler, JSONHandler):
                 'track_key_id': player.track_key.id(),
                 # date will be in iso format 2013-10-09 07:54:56.871812
                 'track_queued_on': player.track_queued_on.isoformat()
-            },
-            headers={"X-AppEngine-FailFast":"true"} # for now
+            }
+            #headers={"X-AppEngine-FailFast":"true"} # for now
         )
         return True
 
